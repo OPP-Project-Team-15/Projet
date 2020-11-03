@@ -1,0 +1,7 @@
+C:\Users\Alexandre\OneDrive - De Vinci\Bureau\Dublin\POO\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.exe.config
+C:\Users\Alexandre\OneDrive - De Vinci\Bureau\Dublin\POO\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.exe
+C:\Users\Alexandre\OneDrive - De Vinci\Bureau\Dublin\POO\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.pdb
+C:\Users\Alexandre\OneDrive - De Vinci\Bureau\Dublin\POO\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csprojAssemblyReference.cache
+C:\Users\Alexandre\OneDrive - De Vinci\Bureau\Dublin\POO\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CoreCompileInputs.cache
+C:\Users\Alexandre\OneDrive - De Vinci\Bureau\Dublin\POO\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.exe
+C:\Users\Alexandre\OneDrive - De Vinci\Bureau\Dublin\POO\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.pdb
