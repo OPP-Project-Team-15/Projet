@@ -19,15 +19,9 @@ namespace Virtual_Global_College
     {
         private string branch;
         private string[,] timetable;
-        private double money = 0;
+        private List<string> feesHistory = new List<string>();
+        private bool paymentIsOk = false;
 
-        public Student(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string branch, string[,] timetable)
-            : base(name, surname, id, phoneNumber, sexe, mail, password)
-        {
-            Branch = branch;
-            Timetable = timetable;
-        }
-        
         public string Branch
         {
             get { return branch; }
@@ -54,6 +48,27 @@ namespace Virtual_Global_College
             }
         }
         public string[] CoursesPicked { get; set; }
+        public double Money {get; set; }
+        public List<string> FeesHistory
+        {
+            get { return feesHistory; }
+            set { feesHistory = value; }
+        }
+        public string ProcessPayment { get; set; }
+        public int TimesNumberOfPayment {get; set;}
+        public bool PaymentIsOk
+        {
+            get { return paymentIsOk; }
+            set { paymentIsOk = value; }
+        }
+        
+
+        public Student(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string branch, string[,] timetable)
+            : base(name, surname, id, phoneNumber, sexe, mail, password)
+        {
+            Branch = branch;
+            Timetable = timetable;
+        }
 
         public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
         
@@ -96,41 +111,78 @@ namespace Virtual_Global_College
         {
             Console.WriteLine("How much money would you add ?");
             double moneyAdded = Convert.ToDouble(Console.ReadLine());
-            this.money += moneyAdded;
+            this.Money += moneyAdded;
+            FeesHistory.Add($"Add {moneyAdded} euros");
         }
 
         public void Payment()
         {
-            Console.WriteLine("\nWhich payment process would you take ?\n\n- payment in once\n- payment in four times\n\nPlease write your response as it's written");
-            string process = Console.ReadLine();
-            
-            while (process != "payment in once" && process != "payment in four times")
-            {
-                Console.WriteLine("\nThis process doesn't exist, please write as it's written");
-                process = Console.ReadLine();
-            }
-            
-            bool possiblePayment = true;
-            if (process == "payment in once")
-            {
-                if (this.money <= 8000)
-                    possiblePayment = false;
-                else
-                    this.money -= 8000;
-            }
-
+            if (PaymentIsOk == true)
+                Console.WriteLine("The payment for the year is done");
             else
             {
-                if (this.money <= 2000)
-                    possiblePayment = false;
-                else
-                    this.money -= 2000;
-            }
+                if (TimesNumberOfPayment == 0)
+                {
+                    Console.WriteLine("\nWhich payment process would you take ? Please write your response as it's written\n- once\n- thrice");
+                    string process = Console.ReadLine();
+                    while (process != "once" && process != "thrice")
+                    {
+                        Console.WriteLine("\nThis process doesn't exist, please write as it's written");
+                        process = Console.ReadLine();
+                    }
 
-            if (possiblePayment == true)
-                Console.WriteLine($"\nThe payment has been done\nYou have {this.money} euros");
-            else
-                Console.WriteLine($"\nThe payment failed because you don't have enough money (You have {this.money} euros)");
+                    if (process == "once")
+                    {
+                        ProcessPayment = "once";
+                        FeesHistory.Add("Selected payment by once");
+                    }
+                    else
+                    {
+                        ProcessPayment = "thrice";
+                        FeesHistory.Add("Selected payment by thrice");
+                    }
+                }
+
+                bool possiblePayment = true;
+                if (ProcessPayment == "once")
+                {
+                    if (this.Money <= 9000)
+                        possiblePayment = false;
+                    else
+                    {
+                        this.Money -= 9000;
+                        FeesHistory.Add($"Spend 9000 euros for payment in once");
+                        PaymentIsOk = true;
+                    }
+                }
+
+                else
+                {
+                    if (this.Money <= 3000)
+                        possiblePayment = false;
+                    else
+                    {
+                        this.Money -= 3000;
+                        FeesHistory.Add($"Spend 3000 euros for payment in thrice");
+                        TimesNumberOfPayment++;
+                        if (TimesNumberOfPayment == 3)
+                            PaymentIsOk = true;
+                    }
+                }
+
+                if (possiblePayment == true)
+                    Console.WriteLine($"\nThe payment has been done\nYou have {this.Money} euros left");
+                else
+                    Console.WriteLine($"\nThe payment failed because you don't have enough money (You have {this.Money} euros)");
+            }
+        }
+
+        public void Print_Payment_History()
+        {
+            foreach (string element in FeesHistory)
+            {
+                Console.WriteLine(element);
+            }
         }
     }
 }

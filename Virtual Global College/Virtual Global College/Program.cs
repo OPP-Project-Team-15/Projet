@@ -31,7 +31,7 @@ namespace Virtual_Global_College
             string[,] timetable = { { "ok" } };
             Student student1 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
             Student student2 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
-
+            
             List<string> courses_name = new List<string>();
             courses_name.Add("Fluids Mechanics");
             courses_name.Add("Statistical Inference");
@@ -69,6 +69,10 @@ namespace Virtual_Global_College
 
             student1.Add_Money();
             student1.Payment();
+
+            Console.WriteLine("\n");
+            student1.Print_Payment_History();
+            Console.WriteLine($"\nThe payment for the year is done : {student1.PaymentIsOk}");
 
 
             Console.ReadKey();
