@@ -19,7 +19,6 @@ namespace Virtual_Global_College
     {
         private string branch;
         private string[,] timetable;
-        private string schoolName;
         private double money = 0;
 
         public Student(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string branch, string[,] timetable)
@@ -29,10 +28,6 @@ namespace Virtual_Global_College
             Timetable = timetable;
         }
         
-        public string SchoolName
-        {
-            get {return schoolName;}
-        }
         public string Branch
         {
             get { return branch; }
