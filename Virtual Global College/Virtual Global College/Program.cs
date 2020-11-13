@@ -11,7 +11,7 @@ namespace Virtual_Global_College
 {
     public class Program 
     {
-        //test aurelien fils de pute 
+        //test aurelien fils de pute de pd
         public static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
         {
             int index;
