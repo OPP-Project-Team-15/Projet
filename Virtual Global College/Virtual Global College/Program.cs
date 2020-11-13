@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +11,11 @@ namespace Virtual_Global_College
 {
     public class Program 
     {
+<<<<<<< HEAD
+=======
+
+        //DZDZDZ
+>>>>>>> 0accc53... Test pablo
         public static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
         {
             int index;
