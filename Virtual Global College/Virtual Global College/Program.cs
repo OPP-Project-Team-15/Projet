@@ -11,7 +11,7 @@ namespace Virtual_Global_College
 {
     class Program 
     {
-        //test paul crash
+        //test thomas crash
         static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
         {
             int index;
