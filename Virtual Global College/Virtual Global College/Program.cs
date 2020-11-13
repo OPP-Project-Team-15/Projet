@@ -11,11 +11,7 @@ namespace Virtual_Global_College
 {
     public class Program 
     {
-<<<<<<< HEAD
-        
-=======
-        // BONJOUR AURELIEN
->>>>>>> 9fa1acf... TEST 2
+// sa marche ?
         public static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
         {
             int index;
