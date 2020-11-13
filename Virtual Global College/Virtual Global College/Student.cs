@@ -99,14 +99,14 @@ namespace Virtual_Global_College
 
         public void Add_Money()
         {
-            Console.WriteLine("How much money would you add ?")
+            Console.WriteLine("How much money would you add ?");
             double moneyAdded = Convert.ToDouble(Console.ReadLine());
             this.money += moneyAdded;
         }
 
         public void Payment()
         {
-            Console.WriteLine("Which payment process would you take ?\n- payment in once\npayment in four times\nPlease write your response as it's written");
+            Console.WriteLine("\nWhich payment process would you take ?\n\n- payment in once\n- payment in four times\n\nPlease write your response as it's written");
             string process = Console.ReadLine();
             
             while (process != "payment in once" && process != "payment in four times")
@@ -119,27 +119,23 @@ namespace Virtual_Global_College
             if (process == "payment in once")
             {
                 if (this.money <= 8000)
-                {
                     possiblePayment = false;
-                    break;
-                }
-                this.money -= 8000;
+                else
+                    this.money -= 8000;
             }
 
             else
             {
                 if (this.money <= 2000)
-                {
                     possiblePayment = false;
-                    break;
-                }
-                this.money -= 2000;
+                else
+                    this.money -= 2000;
             }
 
             if (possiblePayment == true)
-                Console.WriteLine($"\nThe payment has been done\nYou have {this.money}€");
+                Console.WriteLine($"\nThe payment has been done\nYou have {this.money} euros");
             else
-                Console.WriteLine($"The payment failed because you don't have enough money (You have {this.money}€)");
+                Console.WriteLine($"\nThe payment failed because you don't have enough money (You have {this.money} euros)");
         }
     }
 }
