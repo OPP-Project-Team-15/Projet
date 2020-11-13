@@ -13,11 +13,14 @@ namespace Virtual_Global_College
         string SchoolName {get;}
         string SchoolInfo();
     }
+
+    
     public class Student : User
     {
         private string branch;
         private string[,] timetable;
         private string schoolName;
+        private double money = 0;
 
         public Student(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string branch, string[,] timetable)
             : base(name, surname, id, phoneNumber, sexe, mail, password)
@@ -58,8 +61,8 @@ namespace Virtual_Global_College
         public string[] CoursesPicked { get; set; }
 
         public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
-
-        public void CourseRegistration(List<string> courses)
+        
+        public void Course_Registration(List<string> courses)
         {
             string[] picks = new string[2];
 
@@ -92,6 +95,51 @@ namespace Virtual_Global_College
 
             Console.Write($"Thank you for your participation");
             this.CoursesPicked = picks;
+        }
+
+        public void Add_Money()
+        {
+            Console.WriteLine("How much money would you add ?")
+            double moneyAdded = Convert.ToDouble(Console.ReadLine());
+            this.money += moneyAdded;
+        }
+
+        public void Payment()
+        {
+            Console.WriteLine("Which payment process would you take ?\n- payment in once\npayment in four times\nPlease write your response as it's written");
+            string process = Console.ReadLine();
+            
+            while (process != "payment in once" && process != "payment in four times")
+            {
+                Console.WriteLine("\nThis process doesn't exist, please write as it's written");
+                process = Console.ReadLine();
+            }
+            
+            bool possiblePayment = true;
+            if (process == "payment in once")
+            {
+                if (this.money <= 8000)
+                {
+                    possiblePayment = false;
+                    break;
+                }
+                this.money -= 8000;
+            }
+
+            else
+            {
+                if (this.money <= 2000)
+                {
+                    possiblePayment = false;
+                    break;
+                }
+                this.money -= 2000;
+            }
+
+            if (possiblePayment == true)
+                Console.WriteLine($"\nThe payment has been done\nYou have {this.money}€");
+            else
+                Console.WriteLine($"The payment failed because you don't have enough money (You have {this.money}€)");
         }
     }
 }
