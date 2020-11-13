@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Virtual_Global_College
 {
-    public class Admin : User
+    public class Admin
     {/*
         private string [,] timetableOfClass;
 
