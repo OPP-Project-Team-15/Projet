@@ -11,7 +11,7 @@ namespace Virtual_Global_College
 {
     class Program 
     {
-
+        //test paul crash
         static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
         {
             int index;
@@ -22,10 +22,8 @@ namespace Virtual_Global_College
             }
         }
 
-
         static void Main(string[] args)
         {
-
             string[,] timetable = { { "ok" } };
             Student student1 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
             Student student2 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
@@ -37,9 +35,7 @@ namespace Virtual_Global_College
             courses_name.Add("Numerical Analysis");
             courses_name.Add("Data Structure");
 
-            
 
-            
             SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
 
             List<Student> Student_FluidsMechanics = new List<Student>();
@@ -66,9 +62,6 @@ namespace Virtual_Global_College
             Console.Write($"\n Students in Numerical Analysis : ");
             foreach (Student student in Student_NumericalAnalysis)
                 Console.Write($"{student.Name}");
-
-
-
 
 
             Console.ReadKey();
