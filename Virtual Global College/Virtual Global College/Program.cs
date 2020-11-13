@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Virtual_Global_College
 {
-    class Program 
+    public class Program 
     {
         //test thomas crash
-        static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
+        public static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
         {
             int index;
             foreach (string element in student.CoursesPicked)
@@ -22,7 +22,7 @@ namespace Virtual_Global_College
             }
         }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             string[,] timetable = { { "ok" } };
             Student student1 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Virtual_Global_College
 {
-    class Admin
+    public class Admin
     {
+
     }
 }
