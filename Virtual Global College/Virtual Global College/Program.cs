@@ -11,7 +11,7 @@ namespace Virtual_Global_College
 {
     class Program 
     {
-
+        //test paul crash
         static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
         {
             int index;
@@ -36,9 +36,6 @@ namespace Virtual_Global_College
             courses_name.Add("Data Structure");
 
 
-            //test
-            //test2
-            //test3
             SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
 
             List<Student> Student_FluidsMechanics = new List<Student>();
