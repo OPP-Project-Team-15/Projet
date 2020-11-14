@@ -62,7 +62,7 @@ namespace Virtual_Global_College
             get { return paymentIsOk; }
             set { paymentIsOk = value; }
         } //True if student has paid all the fees for the year
-
+        
 
         public Student(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string branch, string[,] timetable)
             : base(name, surname, id, phoneNumber, sexe, mail, password)
@@ -72,7 +72,7 @@ namespace Virtual_Global_College
         }
 
         public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
-
+        
         /// <summary>
         /// Allow the student the chooose his courses for the year
         /// <summary>
@@ -243,5 +243,5 @@ namespace Virtual_Global_College
             }
            
         }
-    }        
+    }
 }
