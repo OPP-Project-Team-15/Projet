@@ -115,7 +115,7 @@ namespace Virtual_Global_College
         /// <summary>
         public void Add_Money()
         {
-            Console.WriteLine("How much money would you add ?");
+            Console.WriteLine("How much money do you want to add?");
             double moneyAdded = Convert.ToDouble(Console.ReadLine());
             this.Money += moneyAdded;
             FeesHistory.Add($"Add {moneyAdded} euros");
