@@ -21,6 +21,7 @@ namespace Virtual_Global_College
         private string[,] timetable;
         private List<string> feesHistory = new List<string>();
         private bool paymentIsOk = false;
+        private List<string> 
 
         public string Branch
         {

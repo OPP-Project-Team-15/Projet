@@ -27,10 +27,8 @@ namespace Virtual_Global_College
             Password = password;
         }
 
-        public override string ToString()
-        {
-            return $"Profile :/n/n{Name} {Surname}/nId : {Id}/nPhone number : {PhoneNumber}/nSexe : {Sexe}/nMail : {Mail}/nPassword : {Password}";
-        }
+        public override string ToString() => $"Profile :/n/n{Name} {Surname}/nId : {Id}/nPhone number : {PhoneNumber}/nSexe : {Sexe}/nMail : {Mail}/nPassword : {Password}";
+        
 
         public bool VerifyLogin(string passwordToVerify)
         {
