@@ -28,9 +28,6 @@ namespace Virtual_Global_College
 
         public static void Main(string[] args)
         {
-            int number = 01;
-            Console.WriteLine(number);
-            Console.ReadKey();
             string[,] timetable = { { "ok" } };
             Student student1 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
             Student student2 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
@@ -69,13 +66,15 @@ namespace Virtual_Global_College
             Console.Write($"\n Students in Numerical Analysis : ");
             foreach (Student student in Student_NumericalAnalysis)
                 Console.Write($"{student.Name}");*/
-
+            /*
             student1.Add_Money();
             student1.Payment();
 
             Console.WriteLine("\n");
             student1.Print_Payment_History();
-            Console.WriteLine($"\nThe payment for the year is done : {student1.PaymentIsOk}");
+            Console.WriteLine($"\nThe payment for the year is done : {student1.PaymentIsOk}");*/
+
+            
 
 
             Console.ReadKey();
