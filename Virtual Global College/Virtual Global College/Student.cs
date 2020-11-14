@@ -14,7 +14,7 @@ namespace Virtual_Global_College
         string SchoolInfo();
     }
 
-    
+
     public class Student : User
     {
         private string branch;
@@ -48,20 +48,20 @@ namespace Virtual_Global_College
             }
         }
         public string[] CoursesPicked { get; set; } //Courses that student has chosen
-        public double Money {get; set; } //Money that student have in the school account
+        public double Money { get; set; } //Money that student have in the school account
         public List<string> FeesHistory
         {
             get { return feesHistory; }
             set { feesHistory = value; }
         } //History of actions relevant to the fees
         public string ProcessPayment { get; set; } //Payment in once or in thrice
-        public int TimesNumberOfPayment {get; set;} //Number of times student paid for a payment in several times
+        public int TimesNumberOfPayment { get; set; } //Number of times student paid for a payment in several times
         public bool PaymentIsOk
         {
             get { return paymentIsOk; }
             set { paymentIsOk = value; }
         } //True if student has paid all the fees for the year
-        
+
 
         public Student(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string branch, string[,] timetable)
             : base(name, surname, id, phoneNumber, sexe, mail, password)
@@ -71,7 +71,7 @@ namespace Virtual_Global_College
         }
 
         public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
-        
+
         /// <summary>
         /// Allow the student the chooose his courses for the year
         /// <summary>
@@ -197,5 +197,50 @@ namespace Virtual_Global_College
                 Console.WriteLine(element);
             }
         }
-    }
+
+        public void ModifyContact()
+        {
+            bool Modify = true;
+            Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Mail \n- Password");
+            string ModifyInfo = Console.ReadLine();
+
+            while (Modify)
+            {
+                switch (ModifyInfo)
+                {
+                    case "Phone number":
+                        Console.WriteLine("What is your new phone number ?");
+                        PhoneNumber = Console.ReadLine();
+                        Console.WriteLine("Your phone number has been changed");
+                        break;
+
+                    case "Mail":
+                        Console.WriteLine("What is your new mail ?");
+                        Mail = Console.ReadLine();
+                        Console.WriteLine("Your mail has been changed");
+                        break;
+
+                    case "Password":
+                        Console.WriteLine("What is your new password ?");
+                        Password = Console.ReadLine();
+                        Console.WriteLine("Your password has been changed");
+                        break;
+
+                }
+
+                Console.WriteLine("Do you want to change something else ? Please write your response as it's written\n- Yes \n- No");
+
+                while (Console.ReadLine() != "Yes" && Console.ReadLine() != "No")
+                {
+                    Console.WriteLine("\nPlease write as it's written : \n- Yes \n- No");
+                }
+
+                if (Console.ReadLine() == "No")
+                {
+                    Modify = false;
+                }
+            }
+           
+        }
+    }        
 }
