@@ -47,20 +47,20 @@ namespace Virtual_Global_College
                 timetable = value;
             }
         }
-        public string[] CoursesPicked { get; set; }
-        public double Money {get; set; }
+        public string[] CoursesPicked { get; set; } //Courses that student has chosen
+        public double Money {get; set; } //Money that student have in the school account
         public List<string> FeesHistory
         {
             get { return feesHistory; }
             set { feesHistory = value; }
-        }
-        public string ProcessPayment { get; set; }
-        public int TimesNumberOfPayment {get; set;}
+        } //History of actions relevant to the fees
+        public string ProcessPayment { get; set; } //Payment in once or in thrice
+        public int TimesNumberOfPayment {get; set;} //Number of times student paid for a payment in several times
         public bool PaymentIsOk
         {
             get { return paymentIsOk; }
             set { paymentIsOk = value; }
-        }
+        } //True if student has paid all the fees for the year
         
 
         public Student(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string branch, string[,] timetable)
@@ -72,6 +72,9 @@ namespace Virtual_Global_College
 
         public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
         
+        /// <summary>
+        /// Allow the student the chooose his courses for the year
+        /// <summary>
         public void Course_Registration(List<string> courses)
         {
             string[] picks = new string[2];
@@ -107,6 +110,9 @@ namespace Virtual_Global_College
             this.CoursesPicked = picks;
         }
 
+        /// <summary>
+        /// Allow the student to add money in his school account
+        /// <summary>
         public void Add_Money()
         {
             Console.WriteLine("How much money would you add ?");
@@ -115,6 +121,10 @@ namespace Virtual_Global_College
             FeesHistory.Add($"Add {moneyAdded} euros");
         }
 
+        /// <summary>
+        /// Allow the student to choose a process payment for the first use of the method
+        /// And allow the student to pay with the method he has chosen
+        /// <summary>
         public void Payment()
         {
             if (PaymentIsOk == true)
@@ -177,6 +187,9 @@ namespace Virtual_Global_College
             }
         }
 
+        /// <summary>
+        /// Print the content of the list "FeesHistory"
+        /// <summary>
         public void Print_Payment_History()
         {
             foreach (string element in FeesHistory)
