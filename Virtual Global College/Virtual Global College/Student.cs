@@ -158,37 +158,52 @@ namespace Virtual_Global_College
                     }
                 }
 
-                bool possiblePayment = true;
-                if (ProcessPayment == "once")
+                Console.WriteLine("\nDo you want to pay ? Please write your response as it's written\n- yes\n- no");
+                string payment = Console.ReadLine();
+                while (payment != "yes" && payment != "no")
                 {
-                    if (this.Money <= 9000)
-                        possiblePayment = false;
-                    else
-                    {
-                        this.Money -= 9000;
-                        FeesHistory.Add($"Spend 9000 euros for payment in once");
-                        PaymentIsOk = true;
-                    }
+                    Console.WriteLine("\nPlease write as it's written");
+                    payment = Console.ReadLine();
                 }
 
-                else
+                if (payment == "yes")
                 {
-                    if (this.Money <= 3000)
-                        possiblePayment = false;
-                    else
+                    bool possiblePayment = true;
+                    if (ProcessPayment == "once")
                     {
-                        this.Money -= 3000;
-                        FeesHistory.Add($"Spend 3000 euros for payment in thrice");
-                        TimesNumberOfPayment++;
-                        if (TimesNumberOfPayment == 3)
+                        if (this.Money <= 9000)
+                            possiblePayment = false;
+                        else
+                        {
+                            this.Money -= 9000;
+                            FeesHistory.Add($"Spend 9000 euros for payment in once");
                             PaymentIsOk = true;
+                        }
                     }
+
+                    else
+                    {
+                        if (this.Money <= 3000)
+                            possiblePayment = false;
+                        else
+                        {
+                            this.Money -= 3000;
+                            FeesHistory.Add($"Spend 3000 euros for payment in thrice");
+                            TimesNumberOfPayment++;
+                            if (TimesNumberOfPayment == 3)
+                                PaymentIsOk = true;
+                        }
+                    }
+
+                    if (possiblePayment == true)
+                        Console.WriteLine($"\nThe payment has been done\nYou have {this.Money} euros left");
+                    else
+                        Console.WriteLine($"\nThe payment failed because you don't have enough money (You have {this.Money} euros)");
                 }
 
-                if (possiblePayment == true)
-                    Console.WriteLine($"\nThe payment has been done\nYou have {this.Money} euros left");
                 else
-                    Console.WriteLine($"\nThe payment failed because you don't have enough money (You have {this.Money} euros)");
+                    Console.WriteLine("Thank you for your process choice");
+                
             }
         }
 
