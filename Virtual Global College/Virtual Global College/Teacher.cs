@@ -18,14 +18,14 @@ namespace Virtual_Global_College
 
         public override string ToString() => $"{base.ToString()}\n\nSubject : {Subject}";
 
-        public void Add_Assignment()
+        public string CreateAssignment()
         {
             Console.WriteLine("Specify the month number of the assignment :");
             int month = Convert.ToInt32(Console.ReadLine());
             while (month < 1 && month > 12)
             {
                 Console.WriteLine("Please write a mounth number between 1 and 12");
-                month = Console.ReadLine();
+                month = Convert.ToInt32(Console.ReadLine());
             }
             
             Console.WriteLine("\nSpecify the day number of the assignment :");
@@ -33,7 +33,7 @@ namespace Virtual_Global_College
             while (day < 1 && day > 31)
             {
                 Console.WriteLine("Please write a mounth number between 1 and 12");
-                day = Console.ReadLine();
+                day = Convert.ToInt32(Console.ReadLine());
             }
             
             Console.WriteLine("\nSpecify the year of the assignment :");
@@ -41,15 +41,17 @@ namespace Virtual_Global_College
             while (year < 2020)
             {
                 Console.WriteLine("Please write a year of 4 numbers, and superior than 2019");
-                year = Console.ReadLine();
+                year = Convert.ToInt32(Console.ReadLine());
             }
 
             DateTime assignmentDate = new DateTime(year, month, day);
 
-            Console.WriteLine("\nSpecify the assignment :")
+            Console.WriteLine("\nSpecify the assignment :");
             string assignmentContent = Console.ReadLine();
 
             string assignment = $"{assignmentDate.Month}/{assignmentDate.Day}/{assignmentDate.Year} {assignmentContent}";
+
+            return assignment;
         }
     }
 }
