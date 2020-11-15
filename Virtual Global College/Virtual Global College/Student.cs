@@ -214,21 +214,21 @@ namespace Virtual_Global_College
                 switch (ModifyInfo)
                 {
                     case "Phone number":
-                        Console.WriteLine("What is your new phone number ?");
+                        Console.WriteLine("\nWhat is your new phone number ?");
                         PhoneNumber = Console.ReadLine();
-                        Console.WriteLine("Your phone number has been changed");
+                        Console.WriteLine("\nYour phone number has been changed");
                         break;
 
                     case "Mail":
-                        Console.WriteLine("What is your new mail ?");
+                        Console.WriteLine("\nWhat is your new mail ?");
                         Mail = Console.ReadLine();
-                        Console.WriteLine("Your mail has been changed");
+                        Console.WriteLine("\nYour mail has been changed");
                         break;
 
                     case "Password":
-                        Console.WriteLine("What is your new password ?");
+                        Console.WriteLine("\nWhat is your new password ?");
                         Password = Console.ReadLine();
-                        Console.WriteLine("Your password has been changed");
+                        Console.WriteLine("\nYour password has been changed");
                         break;
                 }
 
@@ -245,10 +245,7 @@ namespace Virtual_Global_College
                 {
                     Modify = false;
                 }
-            }
-           
-        }
-
-        
+            }    
+        }    
     }        
 }
