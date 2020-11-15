@@ -20,7 +20,7 @@ namespace Virtual_Global_College
     {
         private string branch;
         private string[,] timetable;
-        private List<string> feesHistory = new List<string>();
+        private static List<string> feesHistory = new List<string>();
         private bool paymentIsOk = false;
         //private List<string> 
 
@@ -51,7 +51,7 @@ namespace Virtual_Global_College
         }
         public string[] CoursesPicked { get; set; } //Courses that student has chosen
         public double Money { get; set; } //Money that student have in the school account
-        public List<string> FeesHistory
+        public static List<string> FeesHistory
         {
             get { return feesHistory; }
             set { feesHistory = value; }
@@ -202,50 +202,5 @@ namespace Virtual_Global_College
                 Console.WriteLine(element);
             }
         }
-
-        public void ModifyContact()
-        {
-            bool Modify = true;
-
-            while (Modify)
-            {
-                Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Mail \n- Password");
-                string ModifyInfo = Console.ReadLine();
-                switch (ModifyInfo)
-                {
-                    case "Phone number":
-                        Console.WriteLine("\nWhat is your new phone number ?");
-                        PhoneNumber = Console.ReadLine();
-                        Console.WriteLine("\nYour phone number has been changed");
-                        break;
-
-                    case "Mail":
-                        Console.WriteLine("\nWhat is your new mail ?");
-                        Mail = Console.ReadLine();
-                        Console.WriteLine("\nYour mail has been changed");
-                        break;
-
-                    case "Password":
-                        Console.WriteLine("\nWhat is your new password ?");
-                        Password = Console.ReadLine();
-                        Console.WriteLine("\nYour password has been changed");
-                        break;
-                }
-
-                Console.WriteLine("Do you want to change something else ? Please write your response as it's written\n- Yes \n- No");
-
-                string response = Console.ReadLine();
-                while (response != "Yes" && response != "No")
-                {
-                    Console.WriteLine("\nPlease write as it's written : \n- Yes \n- No");
-                    response = Console.ReadLine();
-                }
-
-                if (response == "No")
-                {
-                    Modify = false;
-                }
-            }    
-        }    
     }        
 }

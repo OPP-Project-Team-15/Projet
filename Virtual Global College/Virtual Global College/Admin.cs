@@ -15,5 +15,12 @@ namespace Virtual_Global_College
         {
             TimetableOfClass = timetableOfClass;
         }
+
+        public void HistoryOfPayment()
+        {
+            Console.WriteLine(Student.FeesHistory);
+        }
+
+
     }
 }
