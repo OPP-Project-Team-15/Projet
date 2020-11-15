@@ -35,6 +35,7 @@ namespace Virtual_Global_College
                     branch = value;
             }
         }
+
         public string[,] Timetable
         {
             get { return timetable; }
@@ -56,6 +57,7 @@ namespace Virtual_Global_College
             get { return feesHistory; }
             set { feesHistory = value; }
         } //History of actions relevant to the fees
+
         public string ProcessPayment { get; set; } //Payment in once or in thrice
         public int TimesNumberOfPayment { get; set; } //Number of times student paid for a payment in several times
         public bool PaymentIsOk
@@ -78,7 +80,7 @@ namespace Virtual_Global_College
 
 
         /// <summary>
-        /// Allow the student the chooose his courses for the year
+        /// Allow the student to choose his courses for the year
         /// <summary>
         public void Course_Registration(List<string> courses)
         {
@@ -108,7 +110,10 @@ namespace Virtual_Global_College
                 picks[i] = answer;
 
                 if (i < 2)
+                {
+                    Console.WriteLine("Which courses would you want to pick ?\n");
                     answer = Console.ReadLine();
+                }
             }
 
             Console.Write($"Thank you for your participation");

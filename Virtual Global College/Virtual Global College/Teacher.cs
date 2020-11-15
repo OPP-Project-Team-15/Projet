@@ -8,15 +8,15 @@ namespace Virtual_Global_College
 {
     public class Teacher : User
     {
-        public string Subject { get; set; }
+        public List<string> Subjects { get; set; }
 
-        public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string subject)
+        public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, List<string> subject)
             : base(name, surname, id, phoneNumber, sexe, mail, password)
         {
-            Subject = subject;
+            Subjects = subject;
         }
 
-        public override string ToString() => $"{base.ToString()}\n\nSubject : {Subject}";
+        public override string ToString() => $"{base.ToString()}\n\nSubject : {Subjects}";
 
         public string CreateAssignment()
         {
@@ -52,6 +52,23 @@ namespace Virtual_Global_College
             string assignment = $"{assignmentDate.Month}/{assignmentDate.Day}/{assignmentDate.Year} {assignmentContent}";
 
             return assignment;
+        }
+
+        public void PublishGrade(Student studentGrade)
+        {
+            bool subjectExist = false;
+            string choice = "";
+            while(subjectExist == false)
+            {
+                Console.WriteLine("\nIn which subject do you want to put grade ?");
+                choice = Console.ReadLine();
+                subjectExist = Subjects.Contains(choice);
+            }
+            Console.WriteLine("\nGive a name for the assignment :");
+            string nameAssignment = Console.ReadLine();
+            Console.WriteLine("\nGive a grade for " + studentGrade.Name + " for " + choice);
+            int grade = Convert.ToInt32(Console.ReadLine());
+            // Ici ajouter les informations aux fichiers notes 
         }
     }
 }

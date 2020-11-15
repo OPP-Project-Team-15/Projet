@@ -66,13 +66,13 @@ namespace Virtual_Global_College
             Console.Write($"\n Students in Numerical Analysis : ");
             foreach (Student student in Student_NumericalAnalysis)
                 Console.Write($"{student.Name}");*/
-            /*
+            
             student1.Add_Money();
             student1.Payment();
 
             Console.WriteLine("\n");
             student1.Print_Payment_History();
-            Console.WriteLine($"\nThe payment for the year is done : {student1.PaymentIsOk}");*/
+            Console.WriteLine($"\nThe payment for the year is done : {student1.PaymentIsOk}");
 
             
 
