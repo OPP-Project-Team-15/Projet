@@ -10,7 +10,7 @@ namespace Virtual_Global_College
 {
     interface ISchool
     {
-        string SchoolName {get;}
+        string SchoolName { get; }
         string SchoolInfo();
     }
 
