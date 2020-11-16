@@ -8,9 +8,9 @@ namespace Virtual_Global_College
 {
     public class Teacher : User
     {
-        public List<string> Subjects { get; set; }
+        public SortedList<string, List<Student>> Subjects { get; set; }
 
-        public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, List<string> subject)
+        public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<string, List<Student>> subject)
             : base(name, surname, id, phoneNumber, sexe, mail, password)
         {
             Subjects = subject;
@@ -54,6 +54,10 @@ namespace Virtual_Global_College
             return assignment;
         }
 
+        /// <summary>
+        /// Allow the teacher to publish a new grade for a specific subject and a specific student
+        /// </summary>
+        /// <param name="studentGrade"></param>
         public void PublishGrade(Student studentGrade)
         {
             bool subjectExist = false;
@@ -62,13 +66,55 @@ namespace Virtual_Global_College
             {
                 Console.WriteLine("\nIn which subject do you want to put grade ?");
                 choice = Console.ReadLine();
-                subjectExist = Subjects.Contains(choice);
+                subjectExist = Subjects.Keys.Contains(choice);
             }
             Console.WriteLine("\nGive a name for the assignment :");
             string nameAssignment = Console.ReadLine();
             Console.WriteLine("\nGive a grade for " + studentGrade.Name + " for " + choice);
             int grade = Convert.ToInt32(Console.ReadLine());
-            // Ici ajouter les informations aux fichiers notes 
+            Console.WriteLine("Give a date for the exam :");
+            string date = Console.ReadLine();
+            // Ici ajouter les informations aux fichiers notes de la matiere en question
+        }
+
+        /// <summary>
+        /// Allow the teacher to see all the coordinates of a specific student
+        /// </summary>
+        public void studentCoordinates()
+        {
+            bool nameExist = false;
+            while (nameExist == false)
+            {
+                Console.WriteLine("From which student do you want to see the coordinate. Write a student who exist in your class.");
+                string name = Console.ReadLine();
+                int index = 0;
+                foreach (KeyValuePair<string,List<Student>> subj in Subjects)
+                {
+                    index++;
+                    if (nameExist == false)
+                    {
+                        foreach (Student stud in Subjects.Values[index])
+                        {
+                            nameExist = stud.Name.Contains(name);
+                        }
+                    }
+                }              
+
+                if(nameExist == true)
+                {
+                    Console.WriteLine("Do you want to see the coordinates of an other student ? Answer YES or NOT");
+                    string answer = Console.ReadLine();
+                    while (answer != "YES" || answer != "NOT")
+                    {
+                        Console.WriteLine("Do you want to see the coordinates of an other student ? Answer YES or NOT");
+                        answer = Console.ReadLine();
+                    }
+                    if (answer == "YES")
+                    {
+                        nameExist = false;
+                    }
+                }
+            }
         }
     }
 }
