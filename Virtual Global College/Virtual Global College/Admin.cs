@@ -8,9 +8,9 @@ namespace Virtual_Global_College
 {
     public class Admin : User
     {
-        public SortedList<string, List<Student>> TimetableOfClass { get; set; }
+        public SortedList<string[,], List<Student>> TimetableOfClass { get; set; }
 
-        public Admin(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<string, List<Student>> timetableOfClass) 
+        public Admin(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<string[,], List<Student>> timetableOfClass) 
         : base (name, surname, id, phoneNumber, sexe, mail, password)
         {
             TimetableOfClass = timetableOfClass;

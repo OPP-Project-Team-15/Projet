@@ -58,7 +58,7 @@ namespace Virtual_Global_College
         /// Allow the teacher to publish a new grade for a specific subject and a specific student
         /// </summary>
         /// <param name="studentGrade"></param>
-        public void PublishGrade(Student studentGrade)
+        public void PublishGrade(Student studentGraded)
         {
             bool subjectExist = false;
             string choice = "";
@@ -70,7 +70,7 @@ namespace Virtual_Global_College
             }
             Console.WriteLine("\nGive a name for the assignment :");
             string nameAssignment = Console.ReadLine();
-            Console.WriteLine("\nGive a grade for " + studentGrade.Name + " for " + choice);
+            Console.WriteLine("\nGive a grade for " + studentGraded.Name + " for " + choice);
             int grade = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Give a date for the exam :");
             string date = Console.ReadLine();
@@ -83,10 +83,11 @@ namespace Virtual_Global_College
         public void studentCoordinates()
         {
             bool nameExist = false;
+            Student student = null;
             while (nameExist == false)
             {
-                Console.WriteLine("From which student do you want to see the coordinate. Write a student who exist in your class.");
-                string name = Console.ReadLine();
+                Console.WriteLine("From which student do you want to see the coordinate. Write a surname of a student who exist in your class.");
+                string surname = Console.ReadLine();
                 int index = 0;
                 foreach (KeyValuePair<string,List<Student>> subj in Subjects)
                 {
@@ -95,13 +96,18 @@ namespace Virtual_Global_College
                     {
                         foreach (Student stud in Subjects.Values[index])
                         {
-                            nameExist = stud.Name.Contains(name);
+                            nameExist = stud.Surname.Contains(surname);
+                            if (nameExist == true)
+                            {
+                                student = stud;
+                            }
                         }
                     }
                 }              
 
                 if(nameExist == true)
                 {
+                    student.ToString();
                     Console.WriteLine("Do you want to see the coordinates of an other student ? Answer YES or NOT");
                     string answer = Console.ReadLine();
                     while (answer != "YES" || answer != "NOT")
