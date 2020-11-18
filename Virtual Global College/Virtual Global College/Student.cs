@@ -20,7 +20,7 @@ namespace Virtual_Global_College
     {
         private string branch;
         private string[,] timetable;
-        private List<string> feesHistory = new List<string>();
+        private static List<string> feesHistory = new List<string>();
         private bool paymentIsOk = false;
         //private List<string> 
 
@@ -35,6 +35,7 @@ namespace Virtual_Global_College
                     branch = value;
             }
         }
+
         public string[,] Timetable
         {
             get { return timetable; }
@@ -51,11 +52,12 @@ namespace Virtual_Global_College
         }
         public string[] CoursesPicked { get; set; } //Courses that student has chosen
         public double Money { get; set; } //Money that student have in the school account
-        public List<string> FeesHistory
+        public static List<string> FeesHistory
         {
             get { return feesHistory; }
             set { feesHistory = value; }
         } //History of actions relevant to the fees
+
         public string ProcessPayment { get; set; } //Payment in once or in thrice
         public int TimesNumberOfPayment { get; set; } //Number of times student paid for a payment in several times
         public bool PaymentIsOk
@@ -78,7 +80,7 @@ namespace Virtual_Global_College
 
 
         /// <summary>
-        /// Allow the student the chooose his courses for the year
+        /// Allow the student to choose his courses for the year
         /// <summary>
         public void Course_Registration(List<string> courses)
         {
@@ -108,7 +110,10 @@ namespace Virtual_Global_College
                 picks[i] = answer;
 
                 if (i < 2)
+                {
+                    Console.WriteLine("Which courses would you want to pick ?\n");
                     answer = Console.ReadLine();
+                }
             }
 
             Console.Write($"Thank you for your participation");
@@ -158,37 +163,52 @@ namespace Virtual_Global_College
                     }
                 }
 
-                bool possiblePayment = true;
-                if (ProcessPayment == "once")
+                Console.WriteLine("\nDo you want to pay ? Please write your response as it's written\n- yes\n- no");
+                string payment = Console.ReadLine();
+                while (payment != "yes" && payment != "no")
                 {
-                    if (this.Money <= 9000)
-                        possiblePayment = false;
-                    else
-                    {
-                        this.Money -= 9000;
-                        FeesHistory.Add($"Spend 9000 euros for payment in once");
-                        PaymentIsOk = true;
-                    }
+                    Console.WriteLine("\nPlease write as it's written");
+                    payment = Console.ReadLine();
                 }
 
-                else
+                if (payment == "yes")
                 {
-                    if (this.Money <= 3000)
-                        possiblePayment = false;
-                    else
+                    bool possiblePayment = true;
+                    if (ProcessPayment == "once")
                     {
-                        this.Money -= 3000;
-                        FeesHistory.Add($"Spend 3000 euros for payment in thrice");
-                        TimesNumberOfPayment++;
-                        if (TimesNumberOfPayment == 3)
+                        if (this.Money <= 9000)
+                            possiblePayment = false;
+                        else
+                        {
+                            this.Money -= 9000;
+                            FeesHistory.Add($"Spend 9000 euros for payment in once");
                             PaymentIsOk = true;
+                        }
                     }
+
+                    else
+                    {
+                        if (this.Money <= 3000)
+                            possiblePayment = false;
+                        else
+                        {
+                            this.Money -= 3000;
+                            FeesHistory.Add($"Spend 3000 euros for payment in thrice");
+                            TimesNumberOfPayment++;
+                            if (TimesNumberOfPayment == 3)
+                                PaymentIsOk = true;
+                        }
+                    }
+
+                    if (possiblePayment == true)
+                        Console.WriteLine($"\nThe payment has been done\nYou have {this.Money} euros left");
+                    else
+                        Console.WriteLine($"\nThe payment failed because you don't have enough money (You have {this.Money} euros)");
                 }
 
-                if (possiblePayment == true)
-                    Console.WriteLine($"\nThe payment has been done\nYou have {this.Money} euros left");
                 else
-                    Console.WriteLine($"\nThe payment failed because you don't have enough money (You have {this.Money} euros)");
+                    Console.WriteLine("Thank you for your process choice");
+                
             }
         }
 
@@ -202,53 +222,5 @@ namespace Virtual_Global_College
                 Console.WriteLine(element);
             }
         }
-
-        public void ModifyContact()
-        {
-            bool Modify = true;
-
-            while (Modify)
-            {
-                Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Mail \n- Password");
-                string ModifyInfo = Console.ReadLine();
-                switch (ModifyInfo)
-                {
-                    case "Phone number":
-                        Console.WriteLine("What is your new phone number ?");
-                        PhoneNumber = Console.ReadLine();
-                        Console.WriteLine("Your phone number has been changed");
-                        break;
-
-                    case "Mail":
-                        Console.WriteLine("What is your new mail ?");
-                        Mail = Console.ReadLine();
-                        Console.WriteLine("Your mail has been changed");
-                        break;
-
-                    case "Password":
-                        Console.WriteLine("What is your new password ?");
-                        Password = Console.ReadLine();
-                        Console.WriteLine("Your password has been changed");
-                        break;
-                }
-
-                Console.WriteLine("Do you want to change something else ? Please write your response as it's written\n- Yes \n- No");
-
-                string response = Console.ReadLine();
-                while (response != "Yes" && response != "No")
-                {
-                    Console.WriteLine("\nPlease write as it's written : \n- Yes \n- No");
-                    response = Console.ReadLine();
-                }
-
-                if (response == "No")
-                {
-                    Modify = false;
-                }
-            }
-           
-        }
-
-        
     }        
 }
