@@ -35,7 +35,7 @@ namespace Virtual_Global_College
                     branch = value;
             }
         }
-
+        d
         public string[,] Timetable
         {
             get { return timetable; }

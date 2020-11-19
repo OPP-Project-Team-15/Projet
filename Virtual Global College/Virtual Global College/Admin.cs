@@ -8,14 +8,38 @@ namespace Virtual_Global_College
 {
     public class Admin : User
     {
-        public SortedList<string[,], List<Student>> TimetableOfClass { get; set; }
+        public string[,]TimetableOfClass { get; set; }
 
-        public Admin(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<string[,], List<Student>> timetableOfClass) 
+        public Admin(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string[,] timetableOfClass) 
         : base (name, surname, id, phoneNumber, sexe, mail, password)
         {
             TimetableOfClass = timetableOfClass;
         }
 
+        /*public string[,] CreateTimetable()
+        {
+            int FirstYear = 0;
+            int FirstDay = 0;
+            int FirstMonth = 0;
+            int compt = 0;
+            try
+            {
+                Console.WriteLine("Enter the first year of student Timetable");
+                FirstYear = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter the first month of student Timetable");
+                FirstMonth = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Enter the first day of student Timetable");
+                FirstDay = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (DateTime)
+            {
+
+            }
+
+        }
+        */
+
+        /*
         public string CreateTimetable()
         {
             Console.WriteLine("Specify the month number of the course :");
@@ -51,6 +75,7 @@ namespace Virtual_Global_College
 
             return course;
         }
+        */
         public void HistoryOfPayment()
         {
             Console.WriteLine(Student.FeesHistory);
