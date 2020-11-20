@@ -6,6 +6,8 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
+
 
 namespace Virtual_Global_College
 {
@@ -24,10 +26,62 @@ namespace Virtual_Global_College
             }
         }
         
+        public static void Insert(SqlConnection conn, SqlCommand cmd)
+        {
+            Console.WriteLine("Veuillez rentrer vos informations \n 1 - Nom ");
+            string nom = Console.ReadLine();
+            Console.WriteLine("\n 2 - Prenom ");
+            string prenom = Console.ReadLine();
+            Console.WriteLine("\n 3 - Date de naissance (YYYY-MM-DD) ");
+            string dateNaissance = Console.ReadLine();
+            Console.WriteLine("\n 4 - Ville ");
+            string ville = Console.ReadLine();
+            Console.WriteLine("\n 5 - idSubject ");
+            int idSubject = Convert.ToInt32(Console.ReadLine());
+
+            try
+            {
+                string sql = ($"INSERT INTO Students (FirstName, LastName, DateNaissance, Ville, IdSubject) VALUES ('{prenom}', '{nom}', '{dateNaissance}', '{ville}', '{idSubject}')");
+                //Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                cmd = new MySqlCommand(sql, conn);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            conn.Close();
+            Console.WriteLine("You have been added to our data.");
+        } 
 
 
         public static void Main(string[] args)
         {
+            // LINK TO SQL
+            string connectionString = @"Data Source=DESKTOP-GHLL41C\SQLEXPRESS;Initial Catalog=Virtual Global College;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            SqlConnection cnn = new SqlConnection(connectionString);
+            cnn.Open();
+            
+            string sql = "SELECT Password FROM Students";
+            SqlCommand command = new SqlCommand(sql, cnn);
+            SqlDataReader dataReader = command.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                Console.WriteLine(dataReader[0]);
+            }
+
+            dataReader.Close();
+            command.Dispose();
+            cnn.Close();
+
+            //Console.ReadKey();
+            // END OF LINK TO SQL
+
+
+
             string[,] timetable = new string[16,9];
             Student student1 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
             Student student2 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
