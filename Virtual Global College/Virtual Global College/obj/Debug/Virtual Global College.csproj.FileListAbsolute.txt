@@ -25,3 +25,7 @@ C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Vi
 C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CoreCompileInputs.cache
 C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.exe
 C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.pdb
+C:\Users\33770\Source\Repos\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csprojAssemblyReference.cache
+C:\Users\33770\Source\Repos\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CoreCompileInputs.cache
+C:\Users\33770\Source\Repos\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.exe
+C:\Users\33770\Source\Repos\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.pdb
