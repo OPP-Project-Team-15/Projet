@@ -20,7 +20,7 @@ namespace Virtual_Global_College
     {
         private string branch;
         private string[,] timetable;
-        private LinkedList<string[,]> timetablePerWeek =  new LinkedList<string[,]>();
+        private LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
         private static List<string> feesHistory = new List<string>();
         private bool paymentIsOk = false;
         //private List<string> 
@@ -36,7 +36,7 @@ namespace Virtual_Global_College
                     branch = value;
             }
         }
-        
+
         public string[,] Timetable { get; set; }
 
         public string[] CoursesPicked { get; set; } //Courses that student has chosen
@@ -74,7 +74,7 @@ namespace Virtual_Global_College
             Timetable[0, 7] = "Sunday";
             for (int index1 = 8, index2 = 1; index1 <= 22; index1++, index2++)
             {
-                timetable[index2, 0] = Convert.ToString(index1 - 1) + " - " + Convert.ToString(index1 );
+                timetable[index2, 0] = Convert.ToString(index1 - 1) + " - " + Convert.ToString(index1);
             }
             for (int index = 1; index <= 30; index++)
             {
@@ -215,7 +215,7 @@ namespace Virtual_Global_College
 
                 else
                     Console.WriteLine("Thank you for your process choice");
-                
+
             }
         }
 
@@ -252,17 +252,56 @@ namespace Virtual_Global_College
         /// <summary>
         /// Show the timetable for a student
         /// </summary>
-        public void ToStringTimetable()
+        public void ToStringTimetable(string[,] tmtable)
         {
-            for (int index1 = 0; index1 < Timetable.GetLength(0); index1++)
+            for (int index1 = 0; index1 < tmtable.GetLength(0); index1++)
             {
-                for (int index2 = 0; index2 < Timetable.GetLength(1); index2++)
+                for (int index2 = 0; index2 < tmtable.GetLength(1); index2++)
                 {
-                    Console.Write(Timetable[index1, index2] + "\t\t");
+                    Console.Write(tmtable[index1, index2] + "\t\t");
                 }
                 Console.WriteLine();
             }
             Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Show the timetable for a student of the different week
+        /// </summary>
+        public void TimetableWeek()
+        {
+            bool choice = true;
+            LinkedListNode<string[,]> current = timetablePerWeek.First;
+            while (current != null && choice == true)
+            {
+                Console.Clear();
+                ToStringTimetable(current.Value);
+                Console.WriteLine();
+                Console.Write(current.Previous != null ? "< PREVIOUS [P]" : "");
+                Console.Write(current.Next != null ? "[N] NEXT >".PadLeft(76) : string.Empty);
+                Console.WriteLine();
+
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.N:
+                        if (current.Next != null)
+                        {
+                            current = current.Next;
+                        }
+                        break;
+                    case ConsoleKey.P:
+                        if (current.Previous != null)
+                        {
+                            current = current.Previous;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        choice = false;
+                        break;
+                    default:
+                        return;
+                }
+            }
         }
     }        
 }
