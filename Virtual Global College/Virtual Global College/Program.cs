@@ -28,7 +28,7 @@ namespace Virtual_Global_College
 
         public static void Main(string[] args)
         {
-            string[,] timetable = { { "ok" } };
+            string[,] timetable = new string[16,9];
             Student student1 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
             Student student2 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
             
@@ -39,7 +39,7 @@ namespace Virtual_Global_College
             courses_name.Add("Numerical Analysis");
             courses_name.Add("Data Structure");
 
-
+            //student1.ToStringTimetable();
             SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
 
             List<Student> Student_FluidsMechanics = new List<Student>();
@@ -75,7 +75,7 @@ namespace Virtual_Global_College
             Console.WriteLine($"\nThe payment for the year is done : {student1.PaymentIsOk}");
 
             
-
+            
 
             Console.ReadKey();
             

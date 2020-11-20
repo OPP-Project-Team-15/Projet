@@ -20,6 +20,7 @@ namespace Virtual_Global_College
     {
         private string branch;
         private string[,] timetable;
+        private LinkedList<string[,]> timetablePerWeek =  new LinkedList<string[,]>();
         private static List<string> feesHistory = new List<string>();
         private bool paymentIsOk = false;
         //private List<string> 
@@ -35,21 +36,9 @@ namespace Virtual_Global_College
                     branch = value;
             }
         }
-        d
-        public string[,] Timetable
-        {
-            get { return timetable; }
-            set
-            {
-                for (int i = 0; i < value.GetLength(0); i++)
-                    for (int j = 0; j < value.GetLength(1); j++)
-                    {
-                        if (value[i, j] == null)
-                            throw new Exception("The time slot [" + i + "," + j + "] isn't valid");
-                    }
-                timetable = value;
-            }
-        }
+        
+        public string[,] Timetable { get; set; }
+
         public string[] CoursesPicked { get; set; } //Courses that student has chosen
         public double Money { get; set; } //Money that student have in the school account
         public static List<string> FeesHistory
@@ -60,6 +49,7 @@ namespace Virtual_Global_College
 
         public string ProcessPayment { get; set; } //Payment in once or in thrice
         public int TimesNumberOfPayment { get; set; } //Number of times student paid for a payment in several times
+        public List<string> Attendance { get; set; } //List of the abscence with the date of the student
         public bool PaymentIsOk
         {
             get { return paymentIsOk; }
@@ -74,6 +64,23 @@ namespace Virtual_Global_College
         {
             Branch = branch;
             Timetable = timetable;
+            Timetable[0, 0] = "Hours";
+            Timetable[0, 1] = "Monday";
+            Timetable[0, 2] = "Tuesday";
+            Timetable[0, 3] = "Wednesday";
+            Timetable[0, 4] = "Thursday";
+            Timetable[0, 5] = "Friday";
+            Timetable[0, 6] = "Saturday";
+            Timetable[0, 7] = "Sunday";
+            for (int index1 = 8, index2 = 1; index1 <= 22; index1++, index2++)
+            {
+                timetable[index2, 0] = Convert.ToString(index1 - 1) + " - " + Convert.ToString(index1 );
+            }
+            for (int index = 1; index <= 30; index++)
+            {
+                Timetable[0, 8] = "Week" + Convert.ToString(index);
+                timetablePerWeek.AddLast(Timetable);
+            }
         }
 
         public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
@@ -221,6 +228,41 @@ namespace Virtual_Global_College
             {
                 Console.WriteLine(element);
             }
+        }
+
+        /// <summary>
+        /// Show the abscense of the student
+        /// </summary>
+        public void ToStringShowTheAttendance()
+        {
+            if (Attendance.Count != 0)
+            {
+                Console.WriteLine("The abscense of the student :");
+                foreach (string element in Attendance)
+                {
+                    Console.WriteLine(element);
+                }
+            }
+            else
+            {
+                Console.WriteLine("The student have no abscent");
+            }
+        }
+
+        /// <summary>
+        /// Show the timetable for a student
+        /// </summary>
+        public void ToStringTimetable()
+        {
+            for (int index1 = 0; index1 < Timetable.GetLength(0); index1++)
+            {
+                for (int index2 = 0; index2 < Timetable.GetLength(1); index2++)
+                {
+                    Console.Write(Timetable[index1, index2] + "\t\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
         }
     }        
 }
