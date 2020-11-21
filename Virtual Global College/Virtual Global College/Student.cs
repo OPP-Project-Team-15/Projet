@@ -19,7 +19,6 @@ namespace Virtual_Global_College
     public class Student : User
     {
         private string branch;
-        private string[,] timetable;
         private LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
         private static List<string> feesHistory = new List<string>();
         private bool paymentIsOk = false;
@@ -78,8 +77,16 @@ namespace Virtual_Global_College
             }
             for (int index = 1; index <= 30; index++)
             {
-                Timetable[0, 8] = "Week" + Convert.ToString(index);
-                timetablePerWeek.AddLast(Timetable);
+                string[,] timetablePerW = new string[16,9];
+                for (int index1 = 0; index1 < Timetable.GetLength(0); index1++)
+                {
+                    for (int index2 = 0; index2 < Timetable.GetLength(1); index2++)
+                    {
+                        timetablePerW[index1, index2] = Timetable[index1, index2];
+                    }
+                }
+                timetablePerW[0, 8] = "Week " + Convert.ToString(index);
+                timetablePerWeek.AddLast(timetablePerW);
             }
         }
 
