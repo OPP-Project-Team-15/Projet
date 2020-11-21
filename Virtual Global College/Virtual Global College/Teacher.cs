@@ -29,36 +29,31 @@ namespace Virtual_Global_College
                 subj = Console.ReadLine();
             }
 
-            Console.WriteLine("Specify the month number of the assignment :");
-            int month = Convert.ToInt32(Console.ReadLine());
-            while (month < 1 && month > 12)
+            Console.WriteLine("Specify the date of the assignment (MM-DD-YYYY) :");
+            string stringDate = Console.ReadLine();
+            char[] split = { '-' };
+            while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
             {
-                Console.WriteLine("Please write a mounth number between 1 and 12");
-                month = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Please separate by a '-'");
+                stringDate = Console.ReadLine();
             }
-            
-            Console.WriteLine("\nSpecify the day number of the assignment :");
-            int day = Convert.ToInt32(Console.ReadLine());
-            while (day < 1 && day > 31)
+            string[] dateSplited = stringDate.Split(split);
+            while (Convert.ToInt32(dateSplited[1]) > 31 || Convert.ToInt32(dateSplited[1]) < 0 || Convert.ToInt32(dateSplited[0]) > 12 || Convert.ToInt32(dateSplited[0]) < 0 || Convert.ToInt32(dateSplited[2]) > 2021 || Convert.ToInt32(dateSplited[2]) < 1900)
             {
-                Console.WriteLine("Please write a mounth number between 1 and 12");
-                day = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Please write your date of birth as the correct form (MM-DD-YYYY)");
+                stringDate = Console.ReadLine();
+                while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
+                {
+                    Console.WriteLine("Please separate by a '-'");
+                    stringDate = Console.ReadLine();
+                }
+                dateSplited = stringDate.Split(split);
             }
-            
-            Console.WriteLine("\nSpecify the year of the assignment :");
-            int year = Convert.ToInt32(Console.ReadLine());
-            while (year < 2020)
-            {
-                Console.WriteLine("Please write a year of 4 numbers, and superior than 2019");
-                year = Convert.ToInt32(Console.ReadLine());
-            }
-
-            DateTime assignmentDate = new DateTime(year, month, day);
 
             Console.WriteLine("\nSpecify the assignment :");
             string assignmentContent = Console.ReadLine();
 
-            string assignment = $"{subj} {assignmentDate.Month}/{assignmentDate.Day}/{assignmentDate.Year} {assignmentContent}";
+            string assignment = $"{Convert.ToInt32(dateSplited[0])}/{Convert.ToInt32(dateSplited[1])}/{Convert.ToInt32(dateSplited[2])} | {subj} | {assignmentContent}";
 
             return assignment;
         }

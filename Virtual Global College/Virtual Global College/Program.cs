@@ -25,7 +25,10 @@ namespace Virtual_Global_College
                 Student_Courses.Values.ElementAt(index).Add(student); // add the student in the right course
             }
         }
-        
+
+        /// <summary>
+        /// Add a student in the student data base using Alexander's SQL server
+        /// <summary>
         public static void Insert(SqlConnection conn, SqlCommand cmd)
         {
             Console.WriteLine("Please enter your informations \n 1 - Last name :");
@@ -37,7 +40,23 @@ namespace Virtual_Global_College
             Console.WriteLine("\n 3 - Date of birth (MM-DD-YYYY) :");
             string stringBirthDate = Console.ReadLine();
             char[] split = { '-' };
+            while (stringBirthDate[2] != '-' || stringBirthDate[5] != '-' || stringBirthDate.Length != 10)
+            {
+                Console.WriteLine("Please separate by a '-'");
+                stringBirthDate = Console.ReadLine();
+            }
             string[] birthDateSplited = stringBirthDate.Split(split);
+            while (Convert.ToInt32(birthDateSplited[1]) > 31 || Convert.ToInt32(birthDateSplited[1]) < 0 || Convert.ToInt32(birthDateSplited[0]) > 12 || Convert.ToInt32(birthDateSplited[0]) < 0 || Convert.ToInt32(birthDateSplited[2]) > 2021 || Convert.ToInt32(birthDateSplited[2]) < 1900)
+            {
+                Console.WriteLine("Please write your date of birth as the correct form (MM-DD-YYYY)");
+                stringBirthDate = Console.ReadLine();
+                while (stringBirthDate[2] != '-' || stringBirthDate[5] != '-' || stringBirthDate.Length != 10)
+                {
+                    Console.WriteLine("Please separate by a '-'");
+                    stringBirthDate = Console.ReadLine();
+                }
+                birthDateSplited = stringBirthDate.Split(split);
+            }
             DateTime birthDate = new DateTime(Convert.ToInt32(birthDateSplited[2]), Convert.ToInt32(birthDateSplited[0]), Convert.ToInt32(birthDateSplited[1]));
             
             Console.WriteLine("\n 4 - Sexe (write 'Male' or 'Female') :");
@@ -61,14 +80,19 @@ namespace Virtual_Global_College
             
             Console.WriteLine("\n 7 - Your new password :");
             string password = Console.ReadLine();
-            while (password == password.ToLower() || !password.Any(char.IsLetter) || !password.Any(char.IsDigit))
+            while (password.All(char.IsLetter) || password.All(char.IsDigit) || !password.Any(char.IsLower) || !password.Any(char.IsUpper))
             {
                 Console.WriteLine("The password must contain : a capital letter, a lower letter and a number");
                 password = Console.ReadLine();
             }
-            
+
             Console.WriteLine("\n 8 - Branch (write 'ESILV', 'EMLV' or 'IIM') :");
             string branch = Console.ReadLine();
+            while (branch != "ESILV" && branch != "EMLV" && branch != "IIM")
+            {
+                Console.WriteLine("Please write as it's written");
+                branch = Console.ReadLine();
+            }
 
 
             try
@@ -90,18 +114,6 @@ namespace Virtual_Global_College
 
         public static void Main(string[] args)
         {
-            string mot = "OK1";
-            Console.WriteLine(mot == mot.ToLower());
-            Console.ReadKey();
-            Console.WriteLine("\n 7 - Your new password :");
-            string password = Console.ReadLine();
-            while (password == password.ToLower() || password.All(char.IsLetter) || password.All(char.IsDigit))
-            {
-                Console.WriteLine("The password must contain : a capital letter, a lower letter and a number");
-                password = Console.ReadLine();
-            }
-            Console.ReadKey();
-
             // LINK TO SQL
             string connectionString = @"Data Source=DESKTOP-GHLL41C\SQLEXPRESS;Initial Catalog=Virtual Global College;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             SqlConnection conn = new SqlConnection(connectionString);
