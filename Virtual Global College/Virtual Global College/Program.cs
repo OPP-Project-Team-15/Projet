@@ -126,7 +126,7 @@ namespace Virtual_Global_College
             courses_name.Add("Numerical Analysis");
             courses_name.Add("Data Structure");
 
-            //student1.ToStringTimetable();
+            student1.TimetableWeek();
             SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
 
             List<Student> Student_FluidsMechanics = new List<Student>();
