@@ -20,7 +20,48 @@ namespace Virtual_Global_College
 
         public override string ToString() => $"{base.ToString()}\n\nSubject : {SubjectStudent}";
 
-       
+        public string Create_Assignment()
+        {
+            string subj = "";
+            bool subjExist = false;
+            while (subjExist != true)
+            {
+                Console.WriteLine("Specify the subject of the assignment :");
+                subj = Console.ReadLine();
+                for (int index1 = 0; index1 < SubjectStudent.Count && subjExist != true; index1++)
+                {
+                    subjExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(subj);
+                }
+            }
+
+            Console.WriteLine("Specify the date of the assignment (MM-DD-YYYY) :");
+            string stringDate = Console.ReadLine();
+            char[] split = { '-' };
+            while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
+            {
+                Console.WriteLine("Please separate by a '-'");
+                stringDate = Console.ReadLine();
+            }
+            string[] dateSplited = stringDate.Split(split);
+            while (Convert.ToInt32(dateSplited[1]) > 31 || Convert.ToInt32(dateSplited[1]) < 0 || Convert.ToInt32(dateSplited[0]) > 12 || Convert.ToInt32(dateSplited[0]) < 0 || Convert.ToInt32(dateSplited[2]) > 2021 || Convert.ToInt32(dateSplited[2]) < 1900)
+            {
+                Console.WriteLine("Please write your date of birth as the correct form (MM-DD-YYYY)");
+                stringDate = Console.ReadLine();
+                while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
+                {
+                    Console.WriteLine("Please separate by a '-'");
+                    stringDate = Console.ReadLine();
+                }
+                dateSplited = stringDate.Split(split);
+            }
+
+            Console.WriteLine("\nSpecify the assignment :");
+            string assignmentContent = Console.ReadLine();
+
+            string assignment = $"{Convert.ToInt32(dateSplited[0])}/{Convert.ToInt32(dateSplited[1])}/{Convert.ToInt32(dateSplited[2])} | {subj} | {assignmentContent}";
+
+            return assignment;
+        }
 
 
         /// <summary>
