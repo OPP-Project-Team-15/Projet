@@ -134,6 +134,7 @@ namespace Virtual_Global_College
         /// </summary>
         public void CreateExamOrCourse()
         {
+            List<Student> studentNewSubject = new List<Student>();
             Console.WriteLine("What do you want to do ? ");
             Console.WriteLine("1 Create a course");
             Console.WriteLine("2 Create an exam");
@@ -156,7 +157,7 @@ namespace Virtual_Global_College
             bool subjExist = false;
             while (subjExist != true)
             {
-                Console.WriteLine("Specify the subject of the assignment :");
+                Console.WriteLine("Specify the subject :");
                 subj = Console.ReadLine();
                 for (int index1 = 0; index1 < SubjectStudent.Count && subjExist != true; index1++)
                 {
@@ -164,15 +165,18 @@ namespace Virtual_Global_College
                 }
             }
 
-            Console.WriteLine("Specify the week of the assignment :");
             string week = "week ";
-            int number = 0;
-            while (number < 1 && number > 30)
+            if (cx == 2 || cx == 3)
             {
-                Console.WriteLine("Please write a number week between 1 and 30 :");
-                number = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Specify the week :");
+                int number = 0;
+                while (number < 1 && number > 30)
+                {
+                    Console.WriteLine("Please write a number week between 1 and 30 :");
+                    number = Convert.ToInt32(Console.ReadLine());
+                }
+                week = week + number;
             }
-            week = week + number;
 
             string day = "";
             while (day != "Monday" || day != "Tuesday" || day != "Wednesday" || day != "Thursday" || day != "Friday" || day != "Saturday" || day != "Sunday")
@@ -199,6 +203,7 @@ namespace Virtual_Global_College
                 {
                     foreach (Student stud in list.Value)
                     {
+                        studentNewSubject.Add(stud);
                         foreach (string[,] timetable in stud.timetablePerWeek)
                         {
                             if (timetable[0, 8] == week)
@@ -209,7 +214,7 @@ namespace Virtual_Global_College
                                 {
                                     if (cx == 2)
                                     {
-                                        timetable[i[0], i[1]] = "Assignment : " + subj;
+                                        timetable[i[0], i[1]] = "Exam : " + subj;
                                     }
                                     else if (cx == 3)
                                     {
@@ -220,6 +225,11 @@ namespace Virtual_Global_College
                         }
                     }
                 }
+            }
+            if (cx == 3)
+            {
+                Subject newSubj = new Subject(subj, branc, day, hour);
+                SubjectStudent.Add(newSubj, studentNewSubject);
             }
         }
 
