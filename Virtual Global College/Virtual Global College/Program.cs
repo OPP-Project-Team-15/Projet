@@ -146,11 +146,14 @@ namespace Virtual_Global_College
             Subject Numerical = new Subject("Numerical Analysis", "ESILV", "Wednesday", "16 - 17");
             Subject Data = new Subject("Data Structure", "ESILV", "Friday", "14 - 15");
 
+            Student_FluidsMechanics.Add(student1);
+            Student_StatisticalInference.Add(student1);
+
             Student_Courses.Add(Fluids, Student_FluidsMechanics);
-            Student_Courses.Add(Stats, Student_StatisticalInference);
-            Student_Courses.Add(Oop, Student_OOP);
-            Student_Courses.Add(Numerical, Student_NumericalAnalysis);
-            Student_Courses.Add(Data, Student_DataStructure);
+            //Student_Courses.Add(Stats, Student_StatisticalInference);
+            //Student_Courses.Add(Oop, Student_OOP);
+            //Student_Courses.Add(Numerical, Student_NumericalAnalysis);
+            //Student_Courses.Add(Data, Student_DataStructure);
 
             // Code inutile juste pour tester 
             Admin th = new Admin("John", "Rohley", "754455", "0889455226", "Male", "john.gawie@gmail.com", "PassWordhd", Student_Courses);

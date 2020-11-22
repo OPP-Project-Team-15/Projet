@@ -91,7 +91,10 @@ namespace Virtual_Global_College
                     {
                         string[] tab = new string[2] { list.Key.Hours, list.Key.Day };
                         int[] i = SearchTheIndexOfAnXAndYofMatrix(timetable, tab);
-                        timetable[i[0],i[1]] = list.Key.NameSubject;
+                        if (i[0] != 0 && i[1] != 0)
+                        {
+                            timetable[i[0], i[1]] = list.Key.NameSubject;
+                        }
                     }
                 }
             }
@@ -114,11 +117,11 @@ namespace Virtual_Global_College
                     {
                         if (index1 == 0 && timetab[index2,index3] == cdx[0])
                         {
-                            index[index1] = index3;
+                            index[index1] = index2;
                         }
                         else if (index1 == 1 && timetab[index2, index3] == cdx[1])
                         {
-                            index[index1] = index2;
+                            index[index1] = index3;
                         }
                     }
                 }
@@ -126,9 +129,12 @@ namespace Virtual_Global_College
             return index;
         }
 
-        public void ModifyTimetable()
+        /// <summary>
+        /// Allow the admin to create a course
+        /// </summary>
+        public void CreatingCourse()
         {
-
+            
         }
 
         public void HistoryOfPayment()
