@@ -89,10 +89,41 @@ namespace Virtual_Global_College
                 {
                     foreach (string[,] timetable in stud.timetablePerWeek)
                     {
-                        timetable[1,2] = list.Key.NameSubject;
+                        string[] tab = new string[2] { list.Key.Hours, list.Key.Day };
+                        int[] i = SearchTheIndexOfAnXAndYofMatrix(timetable, tab);
+                        timetable[i[0],i[1]] = list.Key.NameSubject;
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// To find the index x and y in a matrix
+        /// </summary>
+        /// <param name="timetab"></param>
+        /// <param name="cdx"></param>
+        /// <returns></returns>
+        public int[] SearchTheIndexOfAnXAndYofMatrix(string[,] timetab, string[] cdx)
+        {
+            int[] index = new int[2];
+            for (int index1 = 0; index1 < cdx.Length; index1++)
+            {
+                for (int index2 = 0; index2 < timetab.GetLength(0); index2++)
+                {
+                    for (int index3 = 0; index3 < timetab.GetLength(1); index3++)
+                    {
+                        if (index1 == 0 && timetab[index2,index3] == cdx[0])
+                        {
+                            index[index1] = index3;
+                        }
+                        else if (index1 == 1 && timetab[index2, index3] == cdx[1])
+                        {
+                            index[index1] = index2;
+                        }
+                    }
+                }
+            }
+            return index;
         }
 
         public void ModifyTimetable()

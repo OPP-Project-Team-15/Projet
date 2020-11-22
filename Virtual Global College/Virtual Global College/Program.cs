@@ -140,7 +140,7 @@ namespace Virtual_Global_College
             List<Student> Student_NumericalAnalysis = new List<Student>();
             List<Student> Student_DataStructure = new List<Student>();
 
-            Subject Fluids = new Subject("Fluids Mechanics", "ESILV", "Monday", "8 - 9"); ;
+            Subject Fluids = new Subject("Fluids Mechanics", "ESILV", "Monday", "8 - 9");
             Subject Stats = new Subject("Statistical Inference", "ESILV", "Tuesday", "9 - 10");
             Subject Oop = new Subject("OOP", "ESILV", "Tuesday", "14 - 15");
             Subject Numerical = new Subject("Numerical Analysis", "ESILV", "Wednesday", "16 - 17");
