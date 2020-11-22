@@ -25,7 +25,10 @@ namespace Virtual_Global_College
                 Student_Courses.Values.ElementAt(index).Add(student); // add the student in the right course
             }
         }
-        
+
+        /// <summary>
+        /// Add a student in the student data base using Alexander's SQL server
+        /// <summary>
         public static void Insert(SqlConnection conn, SqlCommand cmd)
         {
             Console.WriteLine("Please enter your informations \n 1 - Last name :");
@@ -37,7 +40,23 @@ namespace Virtual_Global_College
             Console.WriteLine("\n 3 - Date of birth (MM-DD-YYYY) :");
             string stringBirthDate = Console.ReadLine();
             char[] split = { '-' };
+            while (stringBirthDate[2] != '-' || stringBirthDate[5] != '-' || stringBirthDate.Length != 10)
+            {
+                Console.WriteLine("Please separate by a '-'");
+                stringBirthDate = Console.ReadLine();
+            }
             string[] birthDateSplited = stringBirthDate.Split(split);
+            while (Convert.ToInt32(birthDateSplited[1]) > 31 || Convert.ToInt32(birthDateSplited[1]) < 0 || Convert.ToInt32(birthDateSplited[0]) > 12 || Convert.ToInt32(birthDateSplited[0]) < 0 || Convert.ToInt32(birthDateSplited[2]) > 2021 || Convert.ToInt32(birthDateSplited[2]) < 1900)
+            {
+                Console.WriteLine("Please write your date of birth as the correct form (MM-DD-YYYY)");
+                stringBirthDate = Console.ReadLine();
+                while (stringBirthDate[2] != '-' || stringBirthDate[5] != '-' || stringBirthDate.Length != 10)
+                {
+                    Console.WriteLine("Please separate by a '-'");
+                    stringBirthDate = Console.ReadLine();
+                }
+                birthDateSplited = stringBirthDate.Split(split);
+            }
             DateTime birthDate = new DateTime(Convert.ToInt32(birthDateSplited[2]), Convert.ToInt32(birthDateSplited[0]), Convert.ToInt32(birthDateSplited[1]));
             
             Console.WriteLine("\n 4 - Sexe (write 'Male' or 'Female') :");
@@ -61,14 +80,19 @@ namespace Virtual_Global_College
             
             Console.WriteLine("\n 7 - Your new password :");
             string password = Console.ReadLine();
-            while (password == password.ToLower() || !password.Any(char.IsLetter) || !password.Any(char.IsDigit))
+            while (password.All(char.IsLetter) || password.All(char.IsDigit) || !password.Any(char.IsLower) || !password.Any(char.IsUpper))
             {
                 Console.WriteLine("The password must contain : a capital letter, a lower letter and a number");
                 password = Console.ReadLine();
             }
-            
+
             Console.WriteLine("\n 8 - Branch (write 'ESILV', 'EMLV' or 'IIM') :");
             string branch = Console.ReadLine();
+            while (branch != "ESILV" && branch != "EMLV" && branch != "IIM")
+            {
+                Console.WriteLine("Please write as it's written");
+                branch = Console.ReadLine();
+            }
 
 
             try
@@ -90,45 +114,27 @@ namespace Virtual_Global_College
 
         public static void Main(string[] args)
         {
-            string mot = "OK1";
-            Console.WriteLine(mot == mot.ToLower());
-            Console.ReadKey();
-            Console.WriteLine("\n 7 - Your new password :");
-            string password = Console.ReadLine();
-            while (password == password.ToLower() || password.All(char.IsLetter) || password.All(char.IsDigit))
-            {
-                Console.WriteLine("The password must contain : a capital letter, a lower letter and a number");
-                password = Console.ReadLine();
-            }
-            Console.ReadKey();
+            // --------------- LINK TO SQL ---------------
 
-            // LINK TO SQL
             string connectionString = @"Data Source=DESKTOP-GHLL41C\SQLEXPRESS;Initial Catalog=Virtual Global College;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = null;
             //SqlDataReader dataReader = null;
 
-            Insert(conn, cmd);
 
             Console.ReadKey();
-            // END OF LINK TO SQL
+
+            //------------ END OF LINK TO SQL ------------
 
 
 
             string[,] timetable = new string[16,9];
-            Student student1 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
-            Student student2 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
-            
-            List<string> courses_name = new List<string>();
-            courses_name.Add("Fluids Mechanics");
-            courses_name.Add("Statistical Inference");
-            courses_name.Add("OOP");
-            courses_name.Add("Numerical Analysis");
-            courses_name.Add("Data Structure");
-
+            Student student1 = new Student("Jake", "Gawie", "040578", "0678164957", "Male", "jake.gawie@gmail.com", "PassWord1", "ESILV", timetable);
             student1.TimetableWeek();
-            SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
 
+
+            List<string> courses_name = new List<string> { "Fluids Mechanics", "Statistical Inference", "OOP", "Numerical Analysis", "Data Structure" };
+            SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
             List<Student> Student_FluidsMechanics = new List<Student>();
             List<Student> Student_StatisticalInference = new List<Student>();
             List<Student> Student_OOP = new List<Student>();
@@ -144,24 +150,7 @@ namespace Virtual_Global_College
             /*
             student1.Course_Registration(courses_name);
             Student_Courses_Attribution(student1, Student_Courses);
-            Console.Write($"\n\n Students in OOP : ");
-            foreach (Student student in Student_OOP)
-                Console.Write($"{student.Name}");
-            Console.Write($"\n Students in Fluids Mechanics : ");
-            foreach (Student student in Student_FluidsMechanics)
-                Console.Write($"{student.Name}");
-            Console.Write($"\n Students in Numerical Analysis : ");
-            foreach (Student student in Student_NumericalAnalysis)
-                Console.Write($"{student.Name}");*/
-            
-            student1.Add_Money();
-            student1.Payment();
-
-            Console.WriteLine("\n");
-            student1.Print_Payment_History();
-            Console.WriteLine($"\nThe payment for the year is done : {student1.PaymentIsOk}");
-
-            
+            */
             
 
             Console.ReadKey();
