@@ -8,25 +8,30 @@ namespace Virtual_Global_College
 {
     public class Teacher : User
     {
-        public SortedList<string, List<Student>> SubjectStudent { get; set; }
-        public SortedList<string, List<string[,]>> Grade { get; set; }
+        public SortedList<Subject, List<Student>> SubjectStudent { get; set; }
+        public SortedList<Subject, List<string[,]>> Grade { get; set; }
 
-        public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<string, List<Student>> subject)
+        public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<Subject, List<Student>> subject)
             : base(name, surname, id, phoneNumber, sexe, mail, password)
         {
             SubjectStudent = subject;
+
         }
 
         public override string ToString() => $"{base.ToString()}\n\nSubject : {SubjectStudent}";
 
         public string CreateAssignment()
         {
-            Console.WriteLine("Specify the subject of the assignment :");
-            string subj = Console.ReadLine();
-            while (SubjectStudent.ContainsKey(subj) != true)
+            string subj = "";
+            bool subjExist = false;
+            while (subjExist != true)
             {
-                Console.WriteLine("Please write a mounth number between 1 and 12");
+                Console.WriteLine("Specify the subject of the assignment :");
                 subj = Console.ReadLine();
+                for (int index1 = 0; index1 < SubjectStudent.Count && subjExist != true; index1++)
+                {
+                    subjExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(subj);
+                }
             }
 
             Console.WriteLine("Specify the date of the assignment (MM-DD-YYYY) :");
@@ -70,7 +75,10 @@ namespace Virtual_Global_College
             {
                 Console.WriteLine("\nIn which subject do you want to put grade ?");
                 choice = Console.ReadLine();
-                subjectExist = SubjectStudent.Keys.Contains(choice);
+                for (int index1 = 0; index1 < SubjectStudent.Count && subjectExist != true; index1++)
+                {
+                    subjectExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(choice);
+                }
             }
             Console.WriteLine("\nGive a name for the assignment :");
             string nameAssignment = Console.ReadLine();
@@ -93,7 +101,7 @@ namespace Virtual_Global_College
                 Console.WriteLine("From which student do you want to see the coordinate. Write a surname of a student who exist in your class.");
                 string surname = Console.ReadLine();
                 int index = 0;
-                foreach (KeyValuePair<string,List<Student>> subj in SubjectStudent)
+                foreach (KeyValuePair<Subject,List<Student>> subj in SubjectStudent)
                 {
                     index++;
                     if (nameExist == false)
@@ -135,6 +143,7 @@ namespace Virtual_Global_College
         public void CreateGrade()
         {
 
+            Console.WriteLine("Do you want to publish the grade ?");
         }
 
 
@@ -150,7 +159,7 @@ namespace Virtual_Global_College
                 Console.WriteLine("From which student do you want to see the attendance. Write a surname of a student who exist in your class.");
                 string surname = Console.ReadLine();
                 int index = 0;
-                foreach (KeyValuePair<string, List<Student>> subj in SubjectStudent)
+                foreach (KeyValuePair<Subject, List<Student>> subj in SubjectStudent)
                 {
                     index++;
                     if (nameExist == false)

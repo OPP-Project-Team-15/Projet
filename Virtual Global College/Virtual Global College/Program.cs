@@ -130,28 +130,41 @@ namespace Virtual_Global_College
 
             string[,] timetable = new string[16,9];
             Student student1 = new Student("Jake", "Gawie", "040578", "0678164957", "Male", "jake.gawie@gmail.com", "PassWord1", "ESILV", timetable);
-            student1.TimetableWeek();
 
 
             List<string> courses_name = new List<string> { "Fluids Mechanics", "Statistical Inference", "OOP", "Numerical Analysis", "Data Structure" };
-            SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
+            SortedList<Subject, List<Student>> Student_Courses = new SortedList<Subject, List<Student>>();
             List<Student> Student_FluidsMechanics = new List<Student>();
             List<Student> Student_StatisticalInference = new List<Student>();
             List<Student> Student_OOP = new List<Student>();
             List<Student> Student_NumericalAnalysis = new List<Student>();
             List<Student> Student_DataStructure = new List<Student>();
 
-            Student_Courses.Add("Fluids Mechanics", Student_FluidsMechanics);
-            Student_Courses.Add("Statistical Inference", Student_StatisticalInference);
-            Student_Courses.Add("OOP", Student_OOP);
-            Student_Courses.Add("Numerical Analysis", Student_NumericalAnalysis);
-            Student_Courses.Add("Data Structure", Student_DataStructure);
+            Subject Fluids = new Subject("Fluids Mechanics", "ESILV", "Monday", "8 - 9");
+            Subject Stats = new Subject("Statistical Inference", "ESILV", "Tuesday", "9 - 10");
+            Subject Oop = new Subject("OOP", "ESILV", "Tuesday", "14 - 15");
+            Subject Numerical = new Subject("Numerical Analysis", "ESILV", "Wednesday", "16 - 17");
+            Subject Data = new Subject("Data Structure", "ESILV", "Friday", "14 - 15");
+
+            Student_FluidsMechanics.Add(student1);
+            Student_StatisticalInference.Add(student1);
+
+            Student_Courses.Add(Fluids, Student_FluidsMechanics);
+            //Student_Courses.Add(Stats, Student_StatisticalInference);
+            //Student_Courses.Add(Oop, Student_OOP);
+            //Student_Courses.Add(Numerical, Student_NumericalAnalysis);
+            //Student_Courses.Add(Data, Student_DataStructure);
+
+            // Code inutile juste pour tester 
+            Admin th = new Admin("John", "Rohley", "754455", "0889455226", "Male", "john.gawie@gmail.com", "PassWordhd", Student_Courses);
+            th.SubjectMandatory();
+            student1.TimetableWeek();
 
             /*
             student1.Course_Registration(courses_name);
             Student_Courses_Attribution(student1, Student_Courses);
             */
-            
+
 
             Console.ReadKey();
             
