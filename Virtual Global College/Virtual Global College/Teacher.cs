@@ -15,6 +15,7 @@ namespace Virtual_Global_College
             : base(name, surname, id, phoneNumber, sexe, mail, password)
         {
             SubjectStudent = subject;
+
         }
 
         public override string ToString() => $"{base.ToString()}\n\nSubject : {SubjectStudent}";
@@ -140,6 +141,7 @@ namespace Virtual_Global_College
         public void CreateGrade()
         {
 
+            Console.WriteLine("Do you want to publish the grade ?");
         }
 
 
