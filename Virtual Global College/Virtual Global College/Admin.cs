@@ -132,7 +132,7 @@ namespace Virtual_Global_College
         /// <summary>
         /// Allow the admin to create a course
         /// </summary>
-        public void CreatingCourse()
+        public void CreatingCourseOrModifyTimetable()
         {
             
         }
