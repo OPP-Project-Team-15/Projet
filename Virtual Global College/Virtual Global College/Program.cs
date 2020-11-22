@@ -109,7 +109,31 @@ namespace Virtual_Global_College
 
             conn.Close();
             Console.WriteLine("You have been added to our data.");
-        } 
+        }
+
+        public static void Read(string sql, SqlConnection conn, SqlCommand cmd, SqlDataReader dataReader)
+        {
+            try
+            {
+                conn.Open();
+
+                cmd = new SqlCommand(sql, conn);
+                dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Console.WriteLine(dataReader[0] + " " + dataReader[1] + " étudie la matière " + dataReader[2] + "\n");
+                }
+                dataReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            conn.Close();
+            Console.WriteLine("Done.");
+        }
 
 
         public static void Main(string[] args)
@@ -119,8 +143,10 @@ namespace Virtual_Global_College
             string connectionString = @"Data Source=DESKTOP-GHLL41C\SQLEXPRESS;Initial Catalog=Virtual Global College;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = null;
-            //SqlDataReader dataReader = null;
-
+            SqlDataReader dataReader = null;
+            string sql = "SELECT Students.LastName, Students.FirstName, Students.IdFluidsMechanicsTeacher FROM Students INNER JOIN Teachers ON Students.IdFluidsMechanicsTeacher = Teachers.IdTeacher ORDER BY LastName ASC "; //INNER JOIN Filiere ON etudiant.idFiliere = Filiere.nomFiliere (Filiere.nomFiliere = Etudiant.idFiliere)
+            string sql1 = "SELECT Teachers.FirstName FROM Teachers INNER JOIN Students ON Teachers.IdTeacher = Students.IdFluidsMechanicsTeacher WHERE Students.FirstName = 'Vincent'";
+            Read(sql, conn, cmd, dataReader);
 
             Console.ReadKey();
 

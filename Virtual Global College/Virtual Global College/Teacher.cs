@@ -93,12 +93,11 @@ namespace Virtual_Global_College
             return index;
         }
 
-
         /// <summary>
         /// Allow the teacher to publish a new grade for a specific subject and a specific student
         /// </summary>
         /// <param name="studentGrade"></param>
-        public void PublishGrade(Student studentGraded)
+        public void Publish_Grade(Student studentGraded)
         {
             bool subjectExist = false;
             string choice = "";
@@ -123,7 +122,7 @@ namespace Virtual_Global_College
         /// <summary>
         /// Allow the teacher to see all the coordinates of a specific student
         /// </summary>
-        public void studentCoordinates()
+        public void Student_Coordinates()
         {
             bool nameExist = false;
             Student student = null;
@@ -171,12 +170,11 @@ namespace Virtual_Global_College
         /// <summary>
         /// Allow the teacher to put a new grade 
         /// </summary>
-        public void CreateGrade()
+        public void Create_Grade()
         {
 
             Console.WriteLine("Do you want to publish the grade ?");
         }
-
 
         /// <summary>
         /// Allow the teacher to see all the attendance of a specific student
