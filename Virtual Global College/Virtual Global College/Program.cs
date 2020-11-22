@@ -114,33 +114,27 @@ namespace Virtual_Global_College
 
         public static void Main(string[] args)
         {
-            // LINK TO SQL
+            // --------------- LINK TO SQL ---------------
+
             string connectionString = @"Data Source=DESKTOP-GHLL41C\SQLEXPRESS;Initial Catalog=Virtual Global College;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             SqlConnection conn = new SqlConnection(connectionString);
             SqlCommand cmd = null;
             //SqlDataReader dataReader = null;
 
-            Insert(conn, cmd);
 
             Console.ReadKey();
-            // END OF LINK TO SQL
+
+            //------------ END OF LINK TO SQL ------------
 
 
 
             string[,] timetable = new string[16,9];
-            Student student1 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
-            Student student2 = new Student("Jake", "Smith", "1234", "0601020304", "male", "jakesmith@gmail.com", "jsmith", "ESILV", timetable);
-            
-            List<string> courses_name = new List<string>();
-            courses_name.Add("Fluids Mechanics");
-            courses_name.Add("Statistical Inference");
-            courses_name.Add("OOP");
-            courses_name.Add("Numerical Analysis");
-            courses_name.Add("Data Structure");
-
+            Student student1 = new Student("Jake", "Gawie", "040578", "0678164957", "Male", "jake.gawie@gmail.com", "PassWord1", "ESILV", timetable);
             student1.TimetableWeek();
-            SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
 
+
+            List<string> courses_name = new List<string> { "Fluids Mechanics", "Statistical Inference", "OOP", "Numerical Analysis", "Data Structure" };
+            SortedList<string, List<Student>> Student_Courses = new SortedList<string, List<Student>>();
             List<Student> Student_FluidsMechanics = new List<Student>();
             List<Student> Student_StatisticalInference = new List<Student>();
             List<Student> Student_OOP = new List<Student>();
@@ -156,24 +150,7 @@ namespace Virtual_Global_College
             /*
             student1.Course_Registration(courses_name);
             Student_Courses_Attribution(student1, Student_Courses);
-            Console.Write($"\n\n Students in OOP : ");
-            foreach (Student student in Student_OOP)
-                Console.Write($"{student.Name}");
-            Console.Write($"\n Students in Fluids Mechanics : ");
-            foreach (Student student in Student_FluidsMechanics)
-                Console.Write($"{student.Name}");
-            Console.Write($"\n Students in Numerical Analysis : ");
-            foreach (Student student in Student_NumericalAnalysis)
-                Console.Write($"{student.Name}");*/
-            
-            student1.Add_Money();
-            student1.Payment();
-
-            Console.WriteLine("\n");
-            student1.Print_Payment_History();
-            Console.WriteLine($"\nThe payment for the year is done : {student1.PaymentIsOk}");
-
-            
+            */
             
 
             Console.ReadKey();
