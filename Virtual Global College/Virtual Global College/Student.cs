@@ -20,7 +20,6 @@ namespace Virtual_Global_College
     {
         private string branch;
         public LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
-        private static List<string> feesHistory = new List<string>();
         private bool paymentIsOk = false;
         //private List<string> 
 
@@ -35,17 +34,10 @@ namespace Virtual_Global_College
                     branch = value;
             }
         }
-
         public string[,] Timetable { get; set; }
-
         public string[] CoursesPicked { get; set; } //Courses that student has chosen
         public double Money { get; set; } //Money that student have in the school account
-        public static List<string> FeesHistory
-        {
-            get { return feesHistory; }
-            set { feesHistory = value; }
-        } //History of actions relevant to the fees
-
+        public static List<string> FeesHistory { get; set; } //History of actions relevant to the fees
         public string ProcessPayment { get; set; } //Payment in once or in thrice
         public int TimesNumberOfPayment { get; set; } //Number of times student paid for a payment in several times
         public List<string> Attendance { get; set; } //List of the abscence with the date of the student
@@ -54,6 +46,7 @@ namespace Virtual_Global_College
             get { return paymentIsOk; }
             set { paymentIsOk = value; }
         } //True if student has paid all the fees for the year
+        public List<string> Assignment { get; set; }
 
 
 
@@ -91,7 +84,6 @@ namespace Virtual_Global_College
         }
 
         public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
-
 
         /// <summary>
         /// Allow the student to choose his courses for the year
