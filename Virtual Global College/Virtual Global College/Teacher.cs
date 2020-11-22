@@ -20,78 +20,7 @@ namespace Virtual_Global_College
 
         public override string ToString() => $"{base.ToString()}\n\nSubject : {SubjectStudent}";
 
-        public void CreateAssignment()
-        {
-            string branc = "";
-            while(branc != "ESILV" || branc != "EMLV" || branc != "IIM")
-            {
-                Console.WriteLine("Give the name of the branch. The branch must exist.");
-                branc = Console.ReadLine();
-            }
-
-            string subj = "";
-            bool subjExist = false;
-            while (subjExist != true)
-            {
-                Console.WriteLine("Specify the subject of the assignment :");
-                subj = Console.ReadLine();
-                for (int index1 = 0; index1 < SubjectStudent.Count && subjExist != true; index1++)
-                {
-                    subjExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(subj);
-                }
-            }
-
-            Console.WriteLine("Specify the week of the assignment :");
-            string week = "week ";
-            int number = 0;
-            while (number < 1 && number > 30)
-            {
-                Console.WriteLine("Please write a number week between 1 and 30 :");
-                number = Convert.ToInt32(Console.ReadLine());
-            }
-            week = week + number;
-
-            string day = "";
-            while (day != "Monday" || day != "Tuesday" || day != "Wednesday" || day != "Thursday" || day != "Friday" || day != "Saturday" || day != "Sunday")
-            {
-                Console.WriteLine("Specify the day of the assignment :");
-                day = Console.ReadLine();
-            }
-
-            int num = 0;
-            string hour = "";
-            while (num < 7 && num > 21)
-            {
-                Console.WriteLine("Specify the start of the assignment. It can start at minimum at 7 and maximum at 21. Every assignment last one hour. You must give exactly one hour.");
-                num = Convert.ToInt32(Console.ReadLine());
-            }
-            hour = num + " - " + Convert.ToString(num+1);
-
-            string[] assignment = new string[5] {branc, subj, week, day, hour};
-            
-
-            foreach (KeyValuePair<Subject, List<Student>> list in SubjectStudent)
-            {
-                if (list.Key.Branch == branc)
-                {
-                    foreach (Student stud in list.Value)
-                    {
-                        foreach (string[,] timetable in stud.timetablePerWeek)
-                        {
-                            if (timetable[0, 8] == week)
-                            {
-                                string[] tab = new string[2] { hour, day };
-                                int[] i = SearchTheIndexOfAnXAndYofMatrix(timetable, tab);
-                                if (i[0] != 0 && i[1] != 0)
-                                {
-                                    timetable[i[0], i[1]] = subj;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+       
 
 
         /// <summary>
