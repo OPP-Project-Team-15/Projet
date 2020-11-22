@@ -130,15 +130,21 @@ namespace Virtual_Global_College
         }
 
         /// <summary>
-        /// Allow the admin to create a course
+        /// Allow the admin to modify the timetable
         /// </summary>
-        public void CreatingCourseOrModifyTimetable()
+        public void CreateExamOrCourse()
         {
-            
-        }
+            Console.WriteLine("What do you want to do ? ");
+            Console.WriteLine("1 Create a course");
+            Console.WriteLine("2 Create an exam");
+            Console.WriteLine("3 Delete a course");
+            int cx = Convert.ToInt32(Console.ReadLine());
+            while(cx != 1 || cx != 2 || cx != 3)
+            {
+                Console.WriteLine("Write something either 1 or 2 or 3");
+                cx = Convert.ToInt32(Console.ReadLine());
+            }
 
-        public void CreateExam()
-        {
             string branc = "";
             while (branc != "ESILV" || branc != "EMLV" || branc != "IIM")
             {
@@ -186,7 +192,7 @@ namespace Virtual_Global_College
 
             string[] assignment = new string[5] { branc, subj, week, day, hour };
 
-
+            
             foreach (KeyValuePair<Subject, List<Student>> list in SubjectStudent)
             {
                 if (list.Key.Branch == branc)
@@ -201,7 +207,14 @@ namespace Virtual_Global_College
                                 int[] i = SearchTheIndexOfAnXAndYofMatrix(timetable, tab);
                                 if (i[0] != 0 && i[1] != 0)
                                 {
-                                    timetable[i[0], i[1]] = "Assignment : " + subj;
+                                    if (cx == 2)
+                                    {
+                                        timetable[i[0], i[1]] = "Assignment : " + subj;
+                                    }
+                                    else if (cx == 3)
+                                    {
+                                        timetable[i[0], i[1]] = null;
+                                    }
                                 }
                             }
                         }
