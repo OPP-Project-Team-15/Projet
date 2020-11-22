@@ -20,8 +20,15 @@ namespace Virtual_Global_College
 
         public override string ToString() => $"{base.ToString()}\n\nSubject : {SubjectStudent}";
 
-        public string CreateAssignment()
+        public void CreateAssignment()
         {
+            string branc = "";
+            while(branc != "ESILV" || branc != "EMLV" || branc != "IIM")
+            {
+                Console.WriteLine("Give the name of the branch. The branch must exist.");
+                branc = Console.ReadLine();
+            }
+
             string subj = "";
             bool subjExist = false;
             while (subjExist != true)
@@ -34,34 +41,88 @@ namespace Virtual_Global_College
                 }
             }
 
-            Console.WriteLine("Specify the date of the assignment (MM-DD-YYYY) :");
-            string stringDate = Console.ReadLine();
-            char[] split = { '-' };
-            while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
+            Console.WriteLine("Specify the week of the assignment :");
+            string week = "week ";
+            int number = 0;
+            while (number < 1 && number > 30)
             {
-                Console.WriteLine("Please separate by a '-'");
-                stringDate = Console.ReadLine();
+                Console.WriteLine("Please write a number week between 1 and 30 :");
+                number = Convert.ToInt32(Console.ReadLine());
             }
-            string[] dateSplited = stringDate.Split(split);
-            while (Convert.ToInt32(dateSplited[1]) > 31 || Convert.ToInt32(dateSplited[1]) < 0 || Convert.ToInt32(dateSplited[0]) > 12 || Convert.ToInt32(dateSplited[0]) < 0 || Convert.ToInt32(dateSplited[2]) > 2021 || Convert.ToInt32(dateSplited[2]) < 1900)
+            week = week + number;
+
+            string day = "";
+            while (day != "Monday" || day != "Tuesday" || day != "Wednesday" || day != "Thursday" || day != "Friday" || day != "Saturday" || day != "Sunday")
             {
-                Console.WriteLine("Please write your date of birth as the correct form (MM-DD-YYYY)");
-                stringDate = Console.ReadLine();
-                while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
+                Console.WriteLine("Specify the day of the assignment :");
+                day = Console.ReadLine();
+            }
+
+            int num = 0;
+            string hour = "";
+            while (num < 7 && num > 21)
+            {
+                Console.WriteLine("Specify the start of the assignment. It can start at minimum at 7 and maximum at 21. Every assignment last one hour. You must give exactly one hour.");
+                num = Convert.ToInt32(Console.ReadLine());
+            }
+            hour = num + " - " + Convert.ToString(num+1);
+
+            string[] assignment = new string[5] {branc, subj, week, day, hour};
+            
+
+            foreach (KeyValuePair<Subject, List<Student>> list in SubjectStudent)
+            {
+                if (list.Key.Branch == branc)
                 {
-                    Console.WriteLine("Please separate by a '-'");
-                    stringDate = Console.ReadLine();
+                    foreach (Student stud in list.Value)
+                    {
+                        foreach (string[,] timetable in stud.timetablePerWeek)
+                        {
+                            if (timetable[0, 8] == week)
+                            {
+                                string[] tab = new string[2] { hour, day };
+                                int[] i = SearchTheIndexOfAnXAndYofMatrix(timetable, tab);
+                                if (i[0] != 0 && i[1] != 0)
+                                {
+                                    timetable[i[0], i[1]] = subj;
+                                }
+                            }
+                        }
+                    }
                 }
-                dateSplited = stringDate.Split(split);
             }
-
-            Console.WriteLine("\nSpecify the assignment :");
-            string assignmentContent = Console.ReadLine();
-
-            string assignment = $"{Convert.ToInt32(dateSplited[0])}/{Convert.ToInt32(dateSplited[1])}/{Convert.ToInt32(dateSplited[2])} | {subj} | {assignmentContent}";
-
-            return assignment;
         }
+
+
+        /// <summary>
+        /// To find the index x and y in a matrix
+        /// </summary>
+        /// <param name="timetab"></param>
+        /// <param name="cdx"></param>
+        /// <returns></returns>
+        public int[] SearchTheIndexOfAnXAndYofMatrix(string[,] timetab, string[] cdx)
+        {
+            int[] index = new int[2];
+            for (int index1 = 0; index1 < cdx.Length; index1++)
+            {
+                for (int index2 = 0; index2 < timetab.GetLength(0); index2++)
+                {
+                    for (int index3 = 0; index3 < timetab.GetLength(1); index3++)
+                    {
+                        if (index1 == 0 && timetab[index2, index3] == cdx[0])
+                        {
+                            index[index1] = index2;
+                        }
+                        else if (index1 == 1 && timetab[index2, index3] == cdx[1])
+                        {
+                            index[index1] = index3;
+                        }
+                    }
+                }
+            }
+            return index;
+        }
+
 
         /// <summary>
         /// Allow the teacher to publish a new grade for a specific subject and a specific student
