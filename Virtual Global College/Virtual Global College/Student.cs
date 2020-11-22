@@ -19,7 +19,7 @@ namespace Virtual_Global_College
     public class Student : User
     {
         private string branch;
-        private LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
+        public LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
         private static List<string> feesHistory = new List<string>();
         private bool paymentIsOk = false;
         //private List<string> 
@@ -252,7 +252,7 @@ namespace Virtual_Global_College
             }
             else
             {
-                Console.WriteLine("The student have no abscent");
+                Console.WriteLine("The student have no abscense.");
             }
         }
 
