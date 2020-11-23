@@ -64,13 +64,13 @@ namespace Virtual_Global_College
             Timetable[0, 5] = "Friday";
             Timetable[0, 6] = "Saturday";
             Timetable[0, 7] = "Sunday";
-            for (int index1 = 8, index2 = 1; index1 <= 22; index1++, index2++)
+            for (int index1 = 8, index2 = 1; index1 <= 21; index1++, index2++)
             {
                 timetable[index2, 0] = Convert.ToString(index1 - 1) + " - " + Convert.ToString(index1);
             }
             for (int index = 1; index <= 30; index++)
             {
-                string[,] timetablePerW = new string[16,9];
+                string[,] timetablePerW = new string[15,9];
                 for (int index1 = 0; index1 < Timetable.GetLength(0); index1++)
                 {
                     for (int index2 = 0; index2 < Timetable.GetLength(1); index2++)
@@ -83,7 +83,7 @@ namespace Virtual_Global_College
             }
         }
 
-        public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
+        public override string ToString() => $"{base.ToString()}\n\nType : Student\nBranch : {branch}";
 
         /// <summary>
         /// Allow the student to choose his courses for the year
@@ -101,12 +101,17 @@ namespace Virtual_Global_College
             }
             Console.WriteLine();
 
-            string answer;
-            answer = Console.ReadLine();
+            string answer = "";
 
 
             for (int i = 0; i < 2; i++)
             {
+                if (i < 2)
+                {
+                    Console.WriteLine("Which courses would you want to pick ?\n");
+                    answer = Console.ReadLine();
+                }
+
                 while (courses.Contains(answer) != true)
                 {
                     Console.WriteLine("This course doesn't exist. Please select another one\n");
@@ -114,12 +119,6 @@ namespace Virtual_Global_College
                 }
                 Console.WriteLine($"The course {answer} has been taken\n");
                 picks[i] = answer;
-
-                if (i < 2)
-                {
-                    Console.WriteLine("Which courses would you want to pick ?\n");
-                    answer = Console.ReadLine();
-                }
             }
 
             Console.Write($"Thank you for your participation");
@@ -257,8 +256,29 @@ namespace Virtual_Global_College
             {
                 for (int index2 = 0; index2 < tmtable.GetLength(1); index2++)
                 {
-                    Console.Write(tmtable[index1, index2] + "\t\t      ");
+                    if (tmtable[index1, index2] == null)
+                    {
+                        for(int i = 0; i < tmtable[0,index2].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write("\t           ");
+                    }
+                    else
+                    {
+                        Console.Write(tmtable[index1, index2] + "\t           ");
+                        if (tmtable[index1,index2].Length < tmtable[0, index2].Length)
+                        {
+                            for (int i = 0; i < tmtable[0, index2].Length - tmtable[index1, index2].Length; i++)
+                            {
+                                Console.Write(" ");
+                            }
+                        }
+                    }
                 }
+                Console.WriteLine();
+                Console.Write("--------------------------------------------------------------------------------------");
+                Console.Write("--------------------------------------------------------------------------------------");
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -300,6 +320,70 @@ namespace Virtual_Global_College
                     default:
                         return;
                 }
+            }
+        }
+
+        /// <summary>
+        /// We create the report card of the student
+        /// </summary>
+        public void ReportCard(SortedList<Subject, string[,]> Grade)
+        {
+            List<string[]> gradeOfTheStudent = new List<string[]>();
+            string[] start = new string[1] { "Report card of " + Name + Surname + " :" };
+            gradeOfTheStudent.Add(start);
+            string[] start2 = new string[5] { "Name Assignment :", "NameSubject :", "Date :", "Hours :", "Grade :" };
+            gradeOfTheStudent.Add(start2);
+            foreach (KeyValuePair<Subject, string[,]> grade in Grade)
+            {
+                for(int index = 0; index < grade.Value.GetLength(0); index++)
+                {
+                    if (grade.Value[index,1] == Id)
+                    {
+                        string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3,0], grade.Value[index,2]};
+                        gradeOfTheStudent.Add(mark);
+                    }
+                }
+            }
+            ToStringGradeStudent(gradeOfTheStudent);
+        }
+
+        /// <summary>
+        /// Show the report card for a student
+        /// </summary>
+        public void ToStringGradeStudent(List<string[]> grade)
+        {
+            int index2 = 0;
+            foreach (string[] exam in grade)
+            {
+                index2++;
+                for (int index1 = 0; index1 < exam.Length; index1++)
+                {
+                    if (exam[index1].Length < grade[0].Length)
+                    {
+                        for (int i = 0; i < grade[0].Length - exam[index1].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write(exam[index1] + "\t\t\t\t      ");
+                        Console.Write(exam[index1]);
+                    }
+                    else if (grade[0].Length < exam[index1].Length)
+                    {
+                        for (int i = 0; i < 32 + "      ".Length - exam[index1].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write(exam[index1]);
+                    }
+                    else
+                    {
+                        Console.Write(exam[index1] + "\t\t\t\t      ");
+                    }
+                }
+                Console.WriteLine();
+                Console.Write("--------------------------------------------------------------------------------------------------------");
+                Console.Write("--------------------------------------------------------------------------------------------------------");
+                Console.WriteLine();
             }
         }
     }        

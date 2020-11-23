@@ -14,7 +14,7 @@ namespace Virtual_Global_College
         public string PhoneNumber { get; set; }
         public string Sexe { get; }
         public string Mail { get; set; }
-        public string Password { get; set; }
+        public string Password { get; set; }        
 
         public User (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password)
         {
@@ -27,7 +27,7 @@ namespace Virtual_Global_College
             Password = password;
         }
 
-        public override string ToString() => $"Profile :/n/n{Name} {Surname}/nId : {Id}/nPhone number : {PhoneNumber}/nSexe : {Sexe}/nMail : {Mail}/nPassword : {Password}";
+        public override string ToString() => $"Profile :\n\n{Name} {Surname}\nId : {Id}/nPhone number : {PhoneNumber}\nSexe : {Sexe}\nMail : {Mail}\nPassword : {Password}";
         
 
         public bool VerifyLogin(string passwordToVerify)
