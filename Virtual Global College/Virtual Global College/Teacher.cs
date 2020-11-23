@@ -182,7 +182,12 @@ namespace Virtual_Global_College
             Subject newSubj = new Subject(subj, branc, day, hour, Convert.ToString(numb));
 
             bool subjectFind = false;
-            int index = -1;
+            int index = 1;
+            if(SubjectStudent.ElementAt(0).Key.NameSubject == newSubj.NameSubject)
+            {
+                subjectFind = true;
+                index = 0;
+            }
             foreach (KeyValuePair<Subject, List<Student>> subject in SubjectStudent)
             {
                 if (subject.Key.NameSubject != newSubj.NameSubject && subjectFind == false)
