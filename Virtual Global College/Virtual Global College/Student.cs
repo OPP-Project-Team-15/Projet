@@ -19,8 +19,7 @@ namespace Virtual_Global_College
     public class Student : User
     {
         private string branch;
-        private string[,] timetable;
-        private static List<string> feesHistory = new List<string>();
+        public LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
         private bool paymentIsOk = false;
         //private List<string> 
 
@@ -35,36 +34,19 @@ namespace Virtual_Global_College
                     branch = value;
             }
         }
-        d
-        public string[,] Timetable
-        {
-            get { return timetable; }
-            set
-            {
-                for (int i = 0; i < value.GetLength(0); i++)
-                    for (int j = 0; j < value.GetLength(1); j++)
-                    {
-                        if (value[i, j] == null)
-                            throw new Exception("The time slot [" + i + "," + j + "] isn't valid");
-                    }
-                timetable = value;
-            }
-        }
+        public string[,] Timetable { get; set; }
         public string[] CoursesPicked { get; set; } //Courses that student has chosen
         public double Money { get; set; } //Money that student have in the school account
-        public static List<string> FeesHistory
-        {
-            get { return feesHistory; }
-            set { feesHistory = value; }
-        } //History of actions relevant to the fees
-
+        public static List<string> FeesHistory { get; set; } //History of actions relevant to the fees
         public string ProcessPayment { get; set; } //Payment in once or in thrice
         public int TimesNumberOfPayment { get; set; } //Number of times student paid for a payment in several times
+        public List<string> Attendance { get; set; } //List of the abscence with the date of the student
         public bool PaymentIsOk
         {
             get { return paymentIsOk; }
             set { paymentIsOk = value; }
         } //True if student has paid all the fees for the year
+        public List<string> Assignment { get; set; }
 
 
 
@@ -74,10 +56,34 @@ namespace Virtual_Global_College
         {
             Branch = branch;
             Timetable = timetable;
+            Timetable[0, 0] = "Hours";
+            Timetable[0, 1] = "Monday";
+            Timetable[0, 2] = "Tuesday";
+            Timetable[0, 3] = "Wednesday";
+            Timetable[0, 4] = "Thursday";
+            Timetable[0, 5] = "Friday";
+            Timetable[0, 6] = "Saturday";
+            Timetable[0, 7] = "Sunday";
+            for (int index1 = 8, index2 = 1; index1 <= 21; index1++, index2++)
+            {
+                timetable[index2, 0] = Convert.ToString(index1 - 1) + " - " + Convert.ToString(index1);
+            }
+            for (int index = 1; index <= 30; index++)
+            {
+                string[,] timetablePerW = new string[15,9];
+                for (int index1 = 0; index1 < Timetable.GetLength(0); index1++)
+                {
+                    for (int index2 = 0; index2 < Timetable.GetLength(1); index2++)
+                    {
+                        timetablePerW[index1, index2] = Timetable[index1, index2];
+                    }
+                }
+                timetablePerW[0, 8] = "Week " + Convert.ToString(index);
+                timetablePerWeek.AddLast(timetablePerW);
+            }
         }
 
-        public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
-
+        public override string ToString() => $"{base.ToString()}\n\nType : Student\nBranch : {branch}";
 
         /// <summary>
         /// Allow the student to choose his courses for the year
@@ -95,12 +101,17 @@ namespace Virtual_Global_College
             }
             Console.WriteLine();
 
-            string answer;
-            answer = Console.ReadLine();
+            string answer = "";
 
 
             for (int i = 0; i < 2; i++)
             {
+                if (i < 2)
+                {
+                    Console.WriteLine("Which courses would you want to pick ?\n");
+                    answer = Console.ReadLine();
+                }
+
                 while (courses.Contains(answer) != true)
                 {
                     Console.WriteLine("This course doesn't exist. Please select another one\n");
@@ -108,12 +119,6 @@ namespace Virtual_Global_College
                 }
                 Console.WriteLine($"The course {answer} has been taken\n");
                 picks[i] = answer;
-
-                if (i < 2)
-                {
-                    Console.WriteLine("Which courses would you want to pick ?\n");
-                    answer = Console.ReadLine();
-                }
             }
 
             Console.Write($"Thank you for your participation");
@@ -208,7 +213,7 @@ namespace Virtual_Global_College
 
                 else
                     Console.WriteLine("Thank you for your process choice");
-                
+
             }
         }
 
@@ -220,6 +225,140 @@ namespace Virtual_Global_College
             foreach (string element in FeesHistory)
             {
                 Console.WriteLine(element);
+            }
+        }
+
+        /// <summary>
+        /// Show the abscense of the student
+        /// </summary>
+        public void ToStringShowTheAttendance()
+        {
+            if (Attendance.Count != 0)
+            {
+                Console.WriteLine("The abscense of the student :");
+                foreach (string element in Attendance)
+                {
+                    Console.WriteLine(element);
+                }
+            }
+            else
+            {
+                Console.WriteLine("The student have no abscense.");
+            }
+        }
+
+        /// <summary>
+        /// Show the timetable for a student
+        /// </summary>
+        public void ToStringTimetable(string[,] tmtable)
+        {
+            for (int index1 = 0; index1 < tmtable.GetLength(0); index1++)
+            {
+                for (int index2 = 0; index2 < tmtable.GetLength(1); index2++)
+                {
+                    if (tmtable[index1, index2] == null)
+                    {
+                        for(int i = 0; i < tmtable[0,index2].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write("\t           ");
+                    }
+                    else
+                    {
+                        Console.Write(tmtable[index1, index2] + "\t           ");
+                        if (tmtable[index1,index2].Length < tmtable[0, index2].Length)
+                        {
+                            for (int i = 0; i < tmtable[0, index2].Length - tmtable[index1, index2].Length; i++)
+                            {
+                                Console.Write(" ");
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine();
+                Console.Write("--------------------------------------------------------------------------------------");
+                Console.Write("--------------------------------------------------------------------------------------");
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Show the timetable for a student of the different week
+        /// </summary>
+        public void TimetableWeek()
+        {
+            bool choice = true;
+            LinkedListNode<string[,]> current = timetablePerWeek.First;
+            while (current != null && choice == true)
+            {
+                Console.Clear();
+                ToStringTimetable(current.Value);
+                Console.WriteLine();
+                Console.Write(current.Previous != null ? "< PREVIOUS [P]" : "");
+                Console.Write(current.Next != null ? "[N] NEXT >".PadLeft(76) : string.Empty);
+                Console.WriteLine();
+
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.N:
+                        if (current.Next != null)
+                        {
+                            current = current.Next;
+                        }
+                        break;
+                    case ConsoleKey.P:
+                        if (current.Previous != null)
+                        {
+                            current = current.Previous;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        choice = false;
+                        break;
+                    default:
+                        return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// We create the report card of the student
+        /// </summary>
+        public void ReportCard(SortedList<Subject, string[,]> Grade)
+        {
+            List<string[]> gradeOfTheStudent = new List<string[]>();
+            string[] start = new string[1] { "Report card of " + Name + Surname + " :" };
+            gradeOfTheStudent.Add(start);
+            string[] start2 = new string[5] { "Name Assignment", "NameSubject", "Date", "Hours", "Grade" };
+            gradeOfTheStudent.Add(start2);
+            foreach (KeyValuePair<Subject, string[,]> grade in Grade)
+            {
+                for(int index = 0; index < grade.Value.GetLength(0); index++)
+                {
+                    if (grade.Value[index,1] == Id)
+                    {
+                        string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3,0], grade.Value[index,2]};
+                        gradeOfTheStudent.Add(mark);
+                    }
+                }
+            }
+            ToStringGradeStudent(gradeOfTheStudent);
+        }
+
+        /// <summary>
+        /// Show the report card for a student
+        /// </summary>
+        public void ToStringGradeStudent(List<string[]> grade)
+        {
+            foreach (string[] exam in grade)
+            {
+                for (int index1 = 0; index1 < exam.Length; index1++)
+                {
+                    Console.Write(exam[index1] + "\t\t\t");
+                }
+                Console.WriteLine();
             }
         }
     }        
