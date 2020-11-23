@@ -21,7 +21,6 @@ namespace Virtual_Global_College
         private string branch;
         public LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
         private bool paymentIsOk = false;
-        //private List<string> 
 
         public string Branch
         {
