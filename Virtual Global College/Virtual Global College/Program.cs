@@ -182,11 +182,11 @@ namespace Virtual_Global_College
             List<Student> Student_NumericalAnalysis = new List<Student>();
             List<Student> Student_DataStructure = new List<Student>();
 
-            Subject Fluids = new Subject("Fluids Mechanics", "ESILV", "Monday", "8 - 9");
-            Subject Stats = new Subject("Statistical Inference", "ESILV", "Tuesday", "9 - 10");
-            Subject Oop = new Subject("OOP", "ESILV", "Tuesday", "14 - 15");
-            Subject Numerical = new Subject("Numerical Analysis", "ESILV", "Wednesday", "16 - 17");
-            Subject Data = new Subject("Data Structure", "ESILV", "Friday", "14 - 15");
+            Subject Fluids = new Subject("Fluids Mechanics", "ESILV", "Monday", "8 - 9", "1");
+            Subject Stats = new Subject("Statistical Inference", "ESILV", "Tuesday", "9 - 10", "2");
+            Subject Oop = new Subject("OOP", "ESILV", "Tuesday", "14 - 15", "3");
+            Subject Numerical = new Subject("Numerical Analysis", "ESILV", "Wednesday", "16 - 17", "4");
+            Subject Data = new Subject("Data Structure", "ESILV", "Friday", "14 - 15", "5");
 
             Student_FluidsMechanics.Add(student1);
             Student_StatisticalInference.Add(student1);
@@ -219,7 +219,7 @@ namespace Virtual_Global_College
             th.SubjectMandatory();
             student1.TimetableWeek();
             Console.WriteLine();
-            //th.CreateExamOrCourse();
+            //th.CreateExamOrCourse(Student_Courses.Count);
             //student1.TimetableWeek();
             //Console.WriteLine();
 
@@ -229,10 +229,14 @@ namespace Virtual_Global_College
             SortedList<Subject, string[,]> Grade = new SortedList<Subject, string[,]>();
             Teacher Luc = new Teacher("Luc", "Skywalker", "456456", "0225894589", "male", "lucSlywalker@gmail.com", "password0", Student_Courses, Grade);
             //Luc.studentCoordinates();
-            Luc.CreateGrade();
+            int num = Luc.CreateGrade(Student_Courses.Count);
             Luc.ShowGrade();
-            Luc.CreateGrade();
+            Luc.CreateGrade(num);
             Luc.ShowGrade();
+
+            Console.WriteLine();
+            Console.WriteLine();
+            student1.ReportCard(Luc.Grade);
 
             Console.ReadKey();
             

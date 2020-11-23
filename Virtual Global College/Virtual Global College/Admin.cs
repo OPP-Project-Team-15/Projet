@@ -71,7 +71,7 @@ namespace Virtual_Global_College
         /// <summary>
         /// Allow the admin to modify the timetable
         /// </summary>
-        public void CreateExamOrCourse()
+        public void CreateExamOrCourse(int numb)
         {
             List<Student> studentNewSubject = new List<Student>();
             Console.WriteLine("What do you want to do ? ");
@@ -186,7 +186,7 @@ namespace Virtual_Global_College
             }
             if (cx == 1)
             {
-                Subject newSubj = new Subject(subj, branc, day, hour);
+                Subject newSubj = new Subject(subj, branc, day, hour, Convert.ToString(numb++));
                 SubjectStudent.Add(newSubj, studentNewSubject);
                 SubjectMandatory();
             }

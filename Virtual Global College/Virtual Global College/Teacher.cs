@@ -115,7 +115,7 @@ namespace Virtual_Global_College
         /// <summary>
         /// Allow the teacher to put a new grade 
         /// </summary>
-        public void CreateGrade()
+        public int CreateGrade(int numb)
         {
             Console.WriteLine("Publish grade :");
             Console.WriteLine();
@@ -178,13 +178,14 @@ namespace Virtual_Global_College
             }
             hour = num + " - " + Convert.ToString(num + 1);
 
-            Subject newSubj = new Subject(subj, branc, day, hour);
+            numb = numb + 1;
+            Subject newSubj = new Subject(subj, branc, day, hour, Convert.ToString(numb));
 
             bool subjectFind = false;
             int index = -1;
             foreach (KeyValuePair<Subject, List<Student>> subject in SubjectStudent)
             {
-                if (subject.Key.NameSubject != newSubj.NameSubject || subjectFind == false)
+                if (subject.Key.NameSubject != newSubj.NameSubject && subjectFind == false)
                 {
                     subjectFind = true;
                     index++;
@@ -209,6 +210,8 @@ namespace Virtual_Global_College
             }
 
             Grade.Add(newSubj, gradeOfAnExam);
+
+            return numb;
         }
 
         /// <summary>
@@ -231,18 +234,11 @@ namespace Virtual_Global_College
         /// </summary>
         public void ShowGrade()
         {
-            if (GradePerAssignment == null)
+            foreach (string[,] subjectGrade in Grade.Values)
             {
-                foreach (string[,] subjectGrade in Grade.Values)
-                {
-                    GradePerAssignment.AddLast(subjectGrade);
-                }
+                GradePerAssignment.AddLast(subjectGrade);
             }
-            else
-            {
-                GradePerAssignment.AddLast(Grade.Values.Last());
-            }
-            TimetableWeek();
+            GradeExam();
         }
 
         /// <summary>
@@ -292,7 +288,7 @@ namespace Virtual_Global_College
         /// <summary>
         /// Show the grade for an exam
         /// </summary>
-        public void TimetableWeek()
+        public void GradeExam()
         {
             bool choice = true;
             LinkedListNode<string[,]> current = GradePerAssignment.First;
@@ -326,6 +322,7 @@ namespace Virtual_Global_College
                         return;
                 }
             }
+            GradePerAssignment.Clear();
         }
 
         /// <summary>
