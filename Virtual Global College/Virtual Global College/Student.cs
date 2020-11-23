@@ -83,7 +83,7 @@ namespace Virtual_Global_College
             }
         }
 
-        public override string ToString() => $"{base.ToString()}\n\nType : Student\n Branch : {branch}";
+        public override string ToString() => $"{base.ToString()}\n\nType : Student\nBranch : {branch}";
 
         /// <summary>
         /// Allow the student to choose his courses for the year
@@ -326,7 +326,7 @@ namespace Virtual_Global_College
         /// <summary>
         /// We create the report card of the student
         /// </summary>
-        public void ReportCard()
+        public void ReportCard(SortedList<Subject, string[,]> Grade)
         {
             List<string[]> gradeOfTheStudent = new List<string[]>();
             string[] start = new string[1] { "Report card of " + Name + Surname + " :" };

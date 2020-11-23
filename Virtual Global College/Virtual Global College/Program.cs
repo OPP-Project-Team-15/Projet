@@ -219,15 +219,20 @@ namespace Virtual_Global_College
             th.SubjectMandatory();
             student1.TimetableWeek();
             Console.WriteLine();
-            th.CreateExamOrCourse();
-            student1.TimetableWeek();
-            Console.WriteLine();
+            //th.CreateExamOrCourse();
+            //student1.TimetableWeek();
+            //Console.WriteLine();
 
-            student1.Course_Registration(courses_name);
-            Student_Courses_Attribution(student1, Student_Courses);
+            //student1.Course_Registration(courses_name);
+            //Student_Courses_Attribution(student1, Student_Courses);
 
-            Teacher Luc = new Teacher("Luc", "Skywalker", "456456", "0225894589", "male", "lucSlywalker@gmail.com", "password0", Student_Courses);
-
+            SortedList<Subject, string[,]> Grade = new SortedList<Subject, string[,]>();
+            Teacher Luc = new Teacher("Luc", "Skywalker", "456456", "0225894589", "male", "lucSlywalker@gmail.com", "password0", Student_Courses, Grade);
+            //Luc.studentCoordinates();
+            Luc.CreateGrade();
+            Luc.ShowGrade();
+            Luc.CreateGrade();
+            Luc.ShowGrade();
 
             Console.ReadKey();
             

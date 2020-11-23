@@ -9,13 +9,14 @@ namespace Virtual_Global_College
     public class Teacher : User
     {
         public LinkedList<string[,]> GradePerAssignment = new LinkedList<string[,]>();
+        public SortedList<Subject, string[,]> Grade { get; set; }
         public SortedList<Subject, List<Student>> SubjectStudent { get; set; }
 
-        public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<Subject, List<Student>> subject)
+        public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<Subject, List<Student>> subject, SortedList<Subject, string[,]> grade)
             : base(name, surname, id, phoneNumber, sexe, mail, password)
         {
             SubjectStudent = subject;
-
+            Grade = grade;
         }
 
         public override string ToString() => $"{base.ToString()}\n\nSubject : {SubjectStudent}";
@@ -70,7 +71,6 @@ namespace Virtual_Global_College
         public void studentCoordinates()
         {
             bool nameExist = false;
-            Student student = null;
             while (nameExist == false)
             {
                 Console.WriteLine("From which student do you want to see the coordinate. Write a surname of a student who exist in your class.");
@@ -78,28 +78,28 @@ namespace Virtual_Global_College
                 int index = 0;
                 foreach (KeyValuePair<Subject,List<Student>> subj in SubjectStudent)
                 {
-                    index++;
                     if (nameExist == false)
                     {
                         foreach (Student stud in SubjectStudent.Values[index])
                         {
-                            nameExist = stud.Surname.Contains(surname);
-                            if (nameExist == true)
+                            if (nameExist == false)
                             {
-                                student = stud;
-                                student.ToString();
-                                Console.WriteLine();
+                                nameExist = stud.Surname.Contains(surname);
+                                if (nameExist == true)
+                                {
+                                    Console.WriteLine(stud.ToString());
+                                    Console.WriteLine();
+                                }
                             }
                         }
                     }
+                    index++;
                 }              
 
                 if(nameExist == true)
-                {
-                    student.ToString();
-                    Console.WriteLine("Do you want to see the coordinates of an other student ? Answer YES or NOT");
+                {   Console.WriteLine("Do you want to see the coordinates of an other student ? Answer YES or NOT");
                     string answer = Console.ReadLine();
-                    while (answer != "YES" || answer != "NOT")
+                    while (answer != "YES" && answer != "NOT")
                     {
                         Console.WriteLine("Do you want to see the coordinates of an other student ? Answer YES or NOT");
                         answer = Console.ReadLine();
@@ -117,8 +117,10 @@ namespace Virtual_Global_College
         /// </summary>
         public void CreateGrade()
         {
+            Console.WriteLine("Publish grade :");
+            Console.WriteLine();
             string branc = "";
-            while (branc != "ESILV" || branc != "EMLV" || branc != "IIM")
+            while (branc != "ESILV" && branc != "EMLV" && branc != "IIM")
             {
                 Console.WriteLine("Give the name of the branch. The branch must exist.");
                 branc = Console.ReadLine();
@@ -140,7 +142,7 @@ namespace Virtual_Global_College
             string nameAssignment = Console.ReadLine();
 
             string day = "";
-            while (day != "Monday" || day != "Tuesday" || day != "Wednesday" || day != "Thursday" || day != "Friday" || day != "Saturday" || day != "Sunday")
+            while (day != "Monday" && day != "Tuesday" && day != "Wednesday" && day != "Thursday" && day != "Friday" && day != "Saturday" && day != "Sunday")
             {
                 Console.WriteLine("Specify the day of the assignment :");
                 day = Console.ReadLine();
@@ -157,7 +159,7 @@ namespace Virtual_Global_College
             string[] dateSplited = stringDate.Split(split);
             while (Convert.ToInt32(dateSplited[1]) > 31 || Convert.ToInt32(dateSplited[1]) < 0 || Convert.ToInt32(dateSplited[0]) > 12 || Convert.ToInt32(dateSplited[0]) < 0 || Convert.ToInt32(dateSplited[2]) > 2021 || Convert.ToInt32(dateSplited[2]) < 1900)
             {
-                Console.WriteLine("Please write your date of birth as the correct form (MM-DD-YYYY)");
+                Console.WriteLine("Please write the date as the correct form (MM-DD-YYYY)");
                 stringDate = Console.ReadLine();
                 while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
                 {
@@ -169,30 +171,31 @@ namespace Virtual_Global_College
 
             int num = 0;
             string hour = "";
-            while (num < 7 && num > 21)
+            while (num < 7 || num > 20)
             {
-                Console.WriteLine("Specify the start of the assignment. It can start at minimum at 7 and maximum at 21. Every assignment last one hour. You must give exactly one hour.");
+                Console.WriteLine("Specify the start of the assignment. It can start at minimum at 7 and maximum at 20. Every assignment last one hour. You must give exactly one hour.");
                 num = Convert.ToInt32(Console.ReadLine());
             }
             hour = num + " - " + Convert.ToString(num + 1);
-            Console.WriteLine("Do you want to publish the grade ?");
 
             Subject newSubj = new Subject(subj, branc, day, hour);
 
-            int index = 0;
+            bool subjectFind = false;
+            int index = -1;
             foreach (KeyValuePair<Subject, List<Student>> subject in SubjectStudent)
             {
-                while (subject.Key.NameSubject != newSubj.NameSubject)
+                if (subject.Key.NameSubject != newSubj.NameSubject || subjectFind == false)
                 {
+                    subjectFind = true;
                     index++;
                 }
             }
             
-            string[,] gradeOfAnExam = new string[SubjectStudent.ElementAt(index).Value.Count, 3];
+            string[,] gradeOfAnExam = new string[SubjectStudent.ElementAt(index).Value.Count+1, 3];
             gradeOfAnExam[0, 0] = nameAssignment;
             gradeOfAnExam[1, 0] = newSubj.NameSubject;
             gradeOfAnExam[2, 0] = "Date " + stringDate;
-            gradeOfAnExam[3, 0] = "Hours :" + newSubj.NameSubject;
+            gradeOfAnExam[3, 0] = "Hours : " + newSubj.Hours;
             gradeOfAnExam[0, 1] = "Student";
             gradeOfAnExam[0, 2] = "Grade";
 
@@ -201,7 +204,8 @@ namespace Virtual_Global_College
             {
                 gradeOfAnExam[ih, 1] = stud.Id;
                 int mark = PublishGrade(stud);
-                gradeOfAnExam[1, ih] = Convert.ToString(mark);
+                gradeOfAnExam[ih, 2] = Convert.ToString(mark);
+                ih++;
             }
 
             Grade.Add(newSubj, gradeOfAnExam);
@@ -250,7 +254,35 @@ namespace Virtual_Global_College
             {
                 for (int index2 = 0; index2 < grade.GetLength(1); index2++)
                 {
-                    Console.Write(grade[index1, index2] + "\t\t      ");
+                    if (grade[index1, index2] == null)
+                    {
+                        for (int i = 0; i < grade[0, 0].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write(grade[index1, index2] + "\t\t\t\t      ");
+                    }
+                    else if (index1 < 4)
+                    {
+                        if ((grade[0, 0].Length < grade[index1, 0].Length) && index2 == 0)
+                        {
+                            int number = grade[index1, 0].Length;
+
+                            Console.Write(grade[index1, index2]);
+                            for (int i = 0; i < 32 + "      ".Length - number; i++)
+                            {
+                                Console.Write(" ");
+                            }
+                        }
+                        else
+                        {
+                            Console.Write(grade[index1, index2] + "\t\t\t\t      ");
+                        }
+                    }
+                    else 
+                    {
+                        Console.Write(grade[index1, index2] + "\t\t\t\t      ");
+                    }
                 }
                 Console.WriteLine();
             }
@@ -258,7 +290,7 @@ namespace Virtual_Global_College
         }
 
         /// <summary>
-        /// Show the timetable for a student of the different week
+        /// Show the grade for an exam
         /// </summary>
         public void TimetableWeek()
         {
@@ -302,7 +334,6 @@ namespace Virtual_Global_College
         public void Attendance()
         {
             bool nameExist = false;
-            Student student = null;
             while (nameExist == false)
             {
                 Console.WriteLine("From which student do you want to see the attendance. Write a surname of a student who exist in your class.");
@@ -318,8 +349,7 @@ namespace Virtual_Global_College
                             nameExist = stud.Surname.Contains(surname);
                             if (nameExist == true)
                             {
-                                student = stud;
-                                student.ToStringShowTheAttendance();
+                                stud.ToStringShowTheAttendance();
                                 Console.WriteLine();
                             }
                         }
@@ -328,7 +358,6 @@ namespace Virtual_Global_College
 
                 if (nameExist == true)
                 {
-                    student.ToString();
                     Console.WriteLine("Do you want to see the attendance of an other student ? Answer YES or NOT");
                     string answer = Console.ReadLine();
                     while (answer != "YES" || answer != "NOT")
