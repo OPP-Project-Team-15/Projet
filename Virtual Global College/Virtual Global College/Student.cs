@@ -331,7 +331,7 @@ namespace Virtual_Global_College
             List<string[]> gradeOfTheStudent = new List<string[]>();
             string[] start = new string[1] { "Report card of " + Name + Surname + " :" };
             gradeOfTheStudent.Add(start);
-            string[] start2 = new string[5] { "Name Assignment", "NameSubject", "Date", "Hours", "Grade" };
+            string[] start2 = new string[5] { "Name Assignment :", "NameSubject :", "Date :", "Hours :", "Grade :" };
             gradeOfTheStudent.Add(start2);
             foreach (KeyValuePair<Subject, string[,]> grade in Grade)
             {
@@ -352,12 +352,37 @@ namespace Virtual_Global_College
         /// </summary>
         public void ToStringGradeStudent(List<string[]> grade)
         {
+            int index2 = 0;
             foreach (string[] exam in grade)
             {
+                index2++;
                 for (int index1 = 0; index1 < exam.Length; index1++)
                 {
-                    Console.Write(exam[index1] + "\t\t\t");
+                    if (exam[index1].Length < grade[0].Length)
+                    {
+                        for (int i = 0; i < grade[0].Length - exam[index1].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write(exam[index1] + "\t\t\t\t      ");
+                        Console.Write(exam[index1]);
+                    }
+                    else if (grade[0].Length < exam[index1].Length)
+                    {
+                        for (int i = 0; i < 32 + "      ".Length - exam[index1].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write(exam[index1]);
+                    }
+                    else
+                    {
+                        Console.Write(exam[index1] + "\t\t\t\t      ");
+                    }
                 }
+                Console.WriteLine();
+                Console.Write("--------------------------------------------------------------------------------------------------------");
+                Console.Write("--------------------------------------------------------------------------------------------------------");
                 Console.WriteLine();
             }
         }
