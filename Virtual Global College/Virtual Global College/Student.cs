@@ -257,7 +257,25 @@ namespace Virtual_Global_College
             {
                 for (int index2 = 0; index2 < tmtable.GetLength(1); index2++)
                 {
-                    Console.Write(tmtable[index1, index2] + "\t           ");
+                    if (tmtable[index1, index2] == null)
+                    {
+                        for(int i = 0; i < tmtable[0,index2].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                        Console.Write("\t           ");
+                    }
+                    else
+                    {
+                        Console.Write(tmtable[index1, index2] + "\t           ");
+                        if (tmtable[index1,index2].Length < tmtable[0, index2].Length)
+                        {
+                            for (int i = 0; i < tmtable[0, index2].Length - tmtable[index1, index2].Length; i++)
+                            {
+                                Console.Write(" ");
+                            }
+                        }
+                    }
                 }
                 Console.WriteLine();
                 Console.Write("--------------------------------------------------------------------------------------");
