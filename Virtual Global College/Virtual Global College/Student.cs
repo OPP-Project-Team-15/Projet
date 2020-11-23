@@ -302,5 +302,44 @@ namespace Virtual_Global_College
                 }
             }
         }
+
+        /// <summary>
+        /// We create the report card of the student
+        /// </summary>
+        public void ReportCard()
+        {
+            List<string[]> gradeOfTheStudent = new List<string[]>();
+            string[] start = new string[1] { "Report card of " + Name + Surname + " :" };
+            gradeOfTheStudent.Add(start);
+            string[] start2 = new string[5] { "Name Assignment", "NameSubject", "Date", "Hours", "Grade" };
+            gradeOfTheStudent.Add(start2);
+            foreach (KeyValuePair<Subject, string[,]> grade in Grade)
+            {
+                for(int index = 0; index < grade.Value.GetLength(0); index++)
+                {
+                    if (grade.Value[index,1] == Id)
+                    {
+                        string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3,0], grade.Value[index,2]};
+                        gradeOfTheStudent.Add(mark);
+                    }
+                }
+            }
+            ToStringGradeStudent(gradeOfTheStudent);
+        }
+
+        /// <summary>
+        /// Show the report card for a student
+        /// </summary>
+        public void ToStringGradeStudent(List<string[]> grade)
+        {
+            foreach (string[] exam in grade)
+            {
+                for (int index1 = 0; index1 < exam.Length; index1++)
+                {
+                    Console.Write(exam[index1] + "\t\t\t");
+                }
+                Console.WriteLine();
+            }
+        }
     }        
 }

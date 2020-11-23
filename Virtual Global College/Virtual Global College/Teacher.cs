@@ -10,7 +10,6 @@ namespace Virtual_Global_College
     {
         public LinkedList<string[,]> GradePerAssignment = new LinkedList<string[,]>();
         public SortedList<Subject, List<Student>> SubjectStudent { get; set; }
-        public SortedList<Subject, string[,]> Grade { get; set; }
 
         public Teacher (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, SortedList<Subject, List<Student>> subject)
             : base(name, surname, id, phoneNumber, sexe, mail, password)
@@ -204,6 +203,8 @@ namespace Virtual_Global_College
                 int mark = PublishGrade(stud);
                 gradeOfAnExam[1, ih] = Convert.ToString(mark);
             }
+
+            Grade.Add(newSubj, gradeOfAnExam);
         }
 
         /// <summary>
@@ -212,8 +213,12 @@ namespace Virtual_Global_College
         /// <param name="studentGrade"></param>
         public int PublishGrade(Student studentGraded)
         {
-            Console.WriteLine("\nGive a grade for " + studentGraded.Name);
-            int grade = Convert.ToInt32(Console.ReadLine());
+            int grade = -1;
+            while (grade < 0 || grade > 20)
+            {
+                Console.WriteLine("\nGive a grade between 0 and 20 for " + studentGraded.Name);
+                grade = Convert.ToInt32(Console.ReadLine());
+            }
             return grade;
         }
 

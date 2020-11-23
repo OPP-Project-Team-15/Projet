@@ -15,6 +15,7 @@ namespace Virtual_Global_College
         public string Sexe { get; }
         public string Mail { get; set; }
         public string Password { get; set; }
+        public SortedList<Subject, string[,]> Grade { get; set; }
 
         public User (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password)
         {
