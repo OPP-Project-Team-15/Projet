@@ -216,12 +216,12 @@ namespace Virtual_Global_College
 
             // Code inutile juste pour tester 
             Admin th = new Admin("John", "Rohley", "754455", "0889455226", "Male", "john.gawie@gmail.com", "PassWordhd", Student_Courses);
-            th.SubjectMandatory();
-            student1.TimetableWeek();
-            Console.WriteLine();
-            //th.CreateExamOrCourse(Student_Courses.Count);
+            //th.SubjectMandatory();
             //student1.TimetableWeek();
             //Console.WriteLine();
+            //th.CreateExamOrCourse(Student_Courses.Count);
+            student1.TimetableWeek();
+            Console.WriteLine();
 
             //student1.Course_Registration(courses_name);
             //Student_Courses_Attribution(student1, Student_Courses);
