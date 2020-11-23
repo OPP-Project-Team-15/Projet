@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace Virtual_Global_College
 {
-    public class Assignment
+    class Grade
     {
         [Key]
-        public int IdAssignment { get; set; }
-        public DateTime Date { get; set; }
+        public int IdGrade { get; set; }
         public string Subject { get; set; }
-        public string Name { get; set; }
+        public decimal Mark { get; set; }
         public int IdStudent { get; set; }
     }
 }

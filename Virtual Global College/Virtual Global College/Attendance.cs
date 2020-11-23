@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Virtual_Global_College
 {
-    public class Assignment
+    class Attendance
     {
         [Key]
-        public int IdAssignment { get; set; }
+        public int IdAttendance { get; set; }
         public DateTime Date { get; set; }
         public string Subject { get; set; }
         public string Name { get; set; }
