@@ -257,8 +257,11 @@ namespace Virtual_Global_College
             {
                 for (int index2 = 0; index2 < tmtable.GetLength(1); index2++)
                 {
-                    Console.Write(tmtable[index1, index2] + "\t\t      ");
+                    Console.Write(tmtable[index1, index2] + "\t           ");
                 }
+                Console.WriteLine();
+                Console.Write("--------------------------------------------------------------------------------------");
+                Console.Write("--------------------------------------------------------------------------------------");
                 Console.WriteLine();
             }
             Console.WriteLine();

@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace Virtual_Global_College
 {
-    public class Program 
+    public class Program
     {
         /// <summary>
         /// Add a student in the student lists of his courses
@@ -138,19 +138,19 @@ namespace Virtual_Global_College
 
         public static void Main(string[] args)
         {
-            // --------------- LINK TO SQL ---------------
+            //// --------------- LINK TO SQL ---------------
 
-            string connectionString = @"Data Source=DESKTOP-GHLL41C\SQLEXPRESS;Initial Catalog=Virtual Global College;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            SqlConnection conn = new SqlConnection(connectionString);
-            SqlCommand cmd = null;
-            SqlDataReader dataReader = null;
-            string sql = "SELECT Students.LastName, Students.FirstName, Students.IdFluidsMechanicsTeacher FROM Students INNER JOIN Teachers ON Students.IdFluidsMechanicsTeacher = Teachers.IdTeacher ORDER BY LastName ASC "; //INNER JOIN Filiere ON etudiant.idFiliere = Filiere.nomFiliere (Filiere.nomFiliere = Etudiant.idFiliere)
-            string sql1 = "SELECT Teachers.FirstName FROM Teachers INNER JOIN Students ON Teachers.IdTeacher = Students.IdFluidsMechanicsTeacher WHERE Students.FirstName = 'Vincent'";
-            Read(sql, conn, cmd, dataReader);
+            //string connectionString = @"Data Source=DESKTOP-GHLL41C\SQLEXPRESS;Initial Catalog=Virtual Global College;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            //SqlConnection conn = new SqlConnection(connectionString);
+            //SqlCommand cmd = null;
+            //SqlDataReader dataReader = null;
+            //string sql = "SELECT Students.LastName, Students.FirstName, Students.IdFluidsMechanicsTeacher FROM Students INNER JOIN Teachers ON Students.IdFluidsMechanicsTeacher = Teachers.IdTeacher ORDER BY LastName ASC "; //INNER JOIN Filiere ON etudiant.idFiliere = Filiere.nomFiliere (Filiere.nomFiliere = Etudiant.idFiliere)
+            //string sql1 = "SELECT Teachers.FirstName FROM Teachers INNER JOIN Students ON Teachers.IdTeacher = Students.IdFluidsMechanicsTeacher WHERE Students.FirstName = 'Vincent'";
+            //Read(sql, conn, cmd, dataReader);
 
-            Console.ReadKey();
+            //Console.ReadKey();
 
-            //------------ END OF LINK TO SQL ------------
+            ////------------ END OF LINK TO SQL ------------
 
 
 
@@ -174,12 +174,15 @@ namespace Virtual_Global_College
 
             Student_FluidsMechanics.Add(student1);
             Student_StatisticalInference.Add(student1);
+            Student_OOP.Add(student1);
+            Student_NumericalAnalysis.Add(student1);
+            Student_DataStructure.Add(student1);
 
             Student_Courses.Add(Fluids, Student_FluidsMechanics);
-            //Student_Courses.Add(Stats, Student_StatisticalInference);
-            //Student_Courses.Add(Oop, Student_OOP);
-            //Student_Courses.Add(Numerical, Student_NumericalAnalysis);
-            //Student_Courses.Add(Data, Student_DataStructure);
+            Student_Courses.Add(Stats, Student_StatisticalInference);
+            Student_Courses.Add(Oop, Student_OOP);
+            Student_Courses.Add(Numerical, Student_NumericalAnalysis);
+            Student_Courses.Add(Data, Student_DataStructure);
 
             // Code inutile juste pour tester 
             Admin th = new Admin("John", "Rohley", "754455", "0889455226", "Male", "john.gawie@gmail.com", "PassWordhd", Student_Courses);
