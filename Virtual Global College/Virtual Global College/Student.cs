@@ -64,13 +64,13 @@ namespace Virtual_Global_College
             Timetable[0, 5] = "Friday";
             Timetable[0, 6] = "Saturday";
             Timetable[0, 7] = "Sunday";
-            for (int index1 = 8, index2 = 1; index1 <= 22; index1++, index2++)
+            for (int index1 = 8, index2 = 1; index1 <= 21; index1++, index2++)
             {
                 timetable[index2, 0] = Convert.ToString(index1 - 1) + " - " + Convert.ToString(index1);
             }
             for (int index = 1; index <= 30; index++)
             {
-                string[,] timetablePerW = new string[16,9];
+                string[,] timetablePerW = new string[15,9];
                 for (int index1 = 0; index1 < Timetable.GetLength(0); index1++)
                 {
                     for (int index2 = 0; index2 < Timetable.GetLength(1); index2++)
@@ -101,12 +101,17 @@ namespace Virtual_Global_College
             }
             Console.WriteLine();
 
-            string answer;
-            answer = Console.ReadLine();
+            string answer = "";
 
 
             for (int i = 0; i < 2; i++)
             {
+                if (i < 2)
+                {
+                    Console.WriteLine("Which courses would you want to pick ?\n");
+                    answer = Console.ReadLine();
+                }
+
                 while (courses.Contains(answer) != true)
                 {
                     Console.WriteLine("This course doesn't exist. Please select another one\n");
@@ -114,12 +119,6 @@ namespace Virtual_Global_College
                 }
                 Console.WriteLine($"The course {answer} has been taken\n");
                 picks[i] = answer;
-
-                if (i < 2)
-                {
-                    Console.WriteLine("Which courses would you want to pick ?\n");
-                    answer = Console.ReadLine();
-                }
             }
 
             Console.Write($"Thank you for your participation");

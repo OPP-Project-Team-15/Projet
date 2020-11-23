@@ -227,9 +227,16 @@ namespace Virtual_Global_College
         /// </summary>
         public void ShowGrade()
         {
-            foreach(string[,] subjectGrade in Grade.Values)
+            if (GradePerAssignment == null)
             {
-                GradePerAssignment.AddLast(subjectGrade);
+                foreach (string[,] subjectGrade in Grade.Values)
+                {
+                    GradePerAssignment.AddLast(subjectGrade);
+                }
+            }
+            else
+            {
+                GradePerAssignment.AddLast(Grade.Values.Last());
             }
             TimetableWeek();
         }

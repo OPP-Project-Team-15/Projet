@@ -16,12 +16,20 @@ namespace Virtual_Global_College
         /// <summary>
         /// Add a student in the student lists of his courses
         /// <summary>
-        public static void Student_Courses_Attribution(Student student, SortedList<string, List<Student>> Student_Courses)
+        public static void Student_Courses_Attribution(Student student, SortedList<Subject, List<Student>> Student_Courses)
         {
-            int index;
+            int index = 0;
+            bool subjectOk = false;
             foreach (string element in student.CoursesPicked)
             {
-                index = Student_Courses.IndexOfKey(element); // obtain the index of the course in the Sorted List
+                foreach(KeyValuePair<Subject, List<Student>> list in Student_Courses)
+                {
+                    if (subjectOk == false)
+                    {
+                        subjectOk = list.Key.NameSubject.Contains(element);
+                        index++; // obtain the index of the course in the Sorted List
+                    }
+                }
                 Student_Courses.Values.ElementAt(index).Add(student); // add the student in the right course
             }
         }
@@ -154,8 +162,16 @@ namespace Virtual_Global_College
 
 
 
-            string[,] timetable = new string[16,9];
+            string[,] timetable = new string[15,9];
             Student student1 = new Student("Jake", "Gawie", "040578", "0678164957", "Male", "jake.gawie@gmail.com", "PassWord1", "ESILV", timetable);
+            Student student2 = new Student("Camille", "Toc", "256456", "0556455251", "Female", "camille.gawie@gmail.com", "PassWord2", "ESILV", timetable);
+            Student student3 = new Student("Juliette", "Buc", "456789", "0689758545", "Female", "juliette.gawie@gmail.com", "PassWord3", "ESILV", timetable);
+            Student student4 = new Student("Gregoire", "Sar", "589456", "0778955225", "Male", "gregoire.gawie@gmail.com", "PassWord4", "ESILV", timetable);
+            Student student5 = new Student("Aurelien", "Git", "782598", "0112254558", "Male", "aurelien.gawie@gmail.com", "PassWord5", "ESILV", timetable);
+            Student student6 = new Student("Remy", "Jet", "735964", "0112236554", "Male", "remy.gawie@gmail.com", "PassWord6", "ESILV", timetable);
+            Student student7 = new Student("Justine", "Sla", "764946", "0256788965", "Femelle", "justine.gawie@gmail.com", "PassWord7", "ESILV", timetable);
+            Student student8 = new Student("Jean", "Hut", "893156", "0558788965", "Male", "jean.gawie@gmail.com", "PassWord8", "ESILV", timetable);
+            Student student9 = new Student("Alexandre", "Yod", "125489", "044554552", "Male", "alexandre.gawie@gmail.com", "PassWord9", "ESILV", timetable);
 
 
             List<string> courses_name = new List<string> { "Fluids Mechanics", "Statistical Inference", "OOP", "Numerical Analysis", "Data Structure" };
@@ -178,6 +194,20 @@ namespace Virtual_Global_College
             Student_NumericalAnalysis.Add(student1);
             Student_DataStructure.Add(student1);
 
+            Student_FluidsMechanics.Add(student2);
+            Student_FluidsMechanics.Add(student3);
+            Student_FluidsMechanics.Add(student4);
+            Student_FluidsMechanics.Add(student5);
+            Student_FluidsMechanics.Add(student6);
+            Student_FluidsMechanics.Add(student7);
+
+            Student_OOP.Add(student2);
+            Student_OOP.Add(student3);
+            Student_OOP.Add(student4);
+            Student_OOP.Add(student6);
+            Student_OOP.Add(student8);
+            Student_OOP.Add(student9);
+
             Student_Courses.Add(Fluids, Student_FluidsMechanics);
             Student_Courses.Add(Stats, Student_StatisticalInference);
             Student_Courses.Add(Oop, Student_OOP);
@@ -188,11 +218,15 @@ namespace Virtual_Global_College
             Admin th = new Admin("John", "Rohley", "754455", "0889455226", "Male", "john.gawie@gmail.com", "PassWordhd", Student_Courses);
             th.SubjectMandatory();
             student1.TimetableWeek();
+            Console.WriteLine();
+            th.CreateExamOrCourse();
+            student1.TimetableWeek();
+            Console.WriteLine();
 
-            /*
             student1.Course_Registration(courses_name);
             Student_Courses_Attribution(student1, Student_Courses);
-            */
+
+            Teacher Luc = new Teacher("Luc", "Skywalker", "456456", "0225894589", "male", "lucSlywalker@gmail.com", "password0", Student_Courses);
 
 
             Console.ReadKey();

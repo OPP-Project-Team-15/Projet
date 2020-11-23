@@ -79,14 +79,14 @@ namespace Virtual_Global_College
             Console.WriteLine("2 Create an exam");
             Console.WriteLine("3 Delete a course");
             int cx = Convert.ToInt32(Console.ReadLine());
-            while(cx != 1 || cx != 2 || cx != 3)
+            while(cx != 1 && cx != 2 && cx != 3)
             {
                 Console.WriteLine("Write something either 1 or 2 or 3");
                 cx = Convert.ToInt32(Console.ReadLine());
             }
 
             string branc = "";
-            while (branc != "ESILV" || branc != "EMLV" || branc != "IIM")
+            while (branc != "ESILV" && branc != "EMLV" && branc != "IIM")
             {
                 Console.WriteLine("Give the name of the branch. The branch must exist.");
                 branc = Console.ReadLine();
@@ -94,22 +94,30 @@ namespace Virtual_Global_College
 
             string subj = "";
             bool subjExist = false;
-            while (subjExist != true)
+            if (cx == 2 || cx == 3)
+            {
+                while (subjExist != true)
+                {
+                    Console.WriteLine("Specify the subject :");
+                    subj = Console.ReadLine();
+                    for (int index1 = 0; index1 < SubjectStudent.Count && subjExist != true; index1++)
+                    {
+                        subjExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(subj);
+                    }
+                }
+            }
+            else
             {
                 Console.WriteLine("Specify the subject :");
                 subj = Console.ReadLine();
-                for (int index1 = 0; index1 < SubjectStudent.Count && subjExist != true; index1++)
-                {
-                    subjExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(subj);
-                }
             }
 
-            string week = "week ";
+            string week = "Week ";
             if (cx == 2 || cx == 3)
             {
                 Console.WriteLine("Specify the week :");
                 int number = 0;
-                while (number < 1 && number > 30)
+                while (number < 1 || number > 30)
                 {
                     Console.WriteLine("Please write a number week between 1 and 30 :");
                     number = Convert.ToInt32(Console.ReadLine());
@@ -118,17 +126,17 @@ namespace Virtual_Global_College
             }
 
             string day = "";
-            while (day != "Monday" || day != "Tuesday" || day != "Wednesday" || day != "Thursday" || day != "Friday" || day != "Saturday" || day != "Sunday")
+            while (day != "Monday" && day != "Tuesday" && day != "Wednesday" && day != "Thursday" && day != "Friday" && day != "Saturday" && day != "Sunday")
             {
-                Console.WriteLine("Specify the day of the assignment :");
+                Console.WriteLine("Specify the day :");
                 day = Console.ReadLine();
             }
 
             int num = 0;
             string hour = "";
-            while (num < 7 && num > 21)
+            while (num < 7 || num > 20)
             {
-                Console.WriteLine("Specify the start of the assignment. It can start at minimum at 7 and maximum at 21. Every assignment last one hour. You must give exactly one hour.");
+                Console.WriteLine("Specify the start. It can start at minimum at 7 and maximum at 20. If it's an assignment it must last one hour. You must give exactly one hour.");
                 num = Convert.ToInt32(Console.ReadLine());
             }
             hour = num + " - " + Convert.ToString(num + 1);
@@ -142,7 +150,18 @@ namespace Virtual_Global_College
                 {
                     foreach (Student stud in list.Value)
                     {
-                        studentNewSubject.Add(stud);
+                        bool existAlready = false;
+                        foreach (Student t in studentNewSubject)
+                        {
+                            if(existAlready == false && t.Id == stud.Id)
+                            {
+                                existAlready = true;
+                            }
+                        }
+                        if (existAlready == false)
+                        {
+                            studentNewSubject.Add(stud);
+                        }
                         foreach (string[,] timetable in stud.timetablePerWeek)
                         {
                             if (timetable[0, 8] == week)
@@ -155,7 +174,7 @@ namespace Virtual_Global_College
                                     {
                                         timetable[i[0], i[1]] = "Exam : " + subj;
                                     }
-                                    else if (cx == 3)
+                                    else if (cx == 3 && list.Key.NameSubject == subj)
                                     {
                                         timetable[i[0], i[1]] = null;
                                     }
@@ -169,6 +188,7 @@ namespace Virtual_Global_College
             {
                 Subject newSubj = new Subject(subj, branc, day, hour);
                 SubjectStudent.Add(newSubj, studentNewSubject);
+                SubjectMandatory();
             }
         }
 
