@@ -362,7 +362,7 @@ namespace Virtual_Global_College
                 {
                     Console.WriteLine("Do you want to see the attendance of an other student ? Answer YES or NOT");
                     string answer = Console.ReadLine();
-                    while (answer != "YES" || answer != "NOT")
+                    while (answer != "YES" && answer != "NOT")
                     {
                         Console.WriteLine("Do you want to see the attendance of an other student ? Answer YES or NOT");
                         answer = Console.ReadLine();
