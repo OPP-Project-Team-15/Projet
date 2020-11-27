@@ -338,8 +338,16 @@ namespace Virtual_Global_College
                 {
                     if (grade.Value[index,1] == Id)
                     {
-                        string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3,0], grade.Value[index,2]};
-                        gradeOfTheStudent.Add(mark);
+                        if (grade.Value[index, 2].Length == 1)
+                        {
+                            string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3, 0], 0 + grade.Value[index, 2] };
+                            gradeOfTheStudent.Add(mark);
+                        }
+                        else
+                        {
+                            string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3, 0], grade.Value[index, 2] };
+                            gradeOfTheStudent.Add(mark);
+                        }
                     }
                 }
             }

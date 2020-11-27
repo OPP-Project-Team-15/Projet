@@ -18,13 +18,6 @@ C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global Colleg
 C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.exe.config
 C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.exe
 C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.pdb
-C:/Users/thoma/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.exe.config
-C:/Users/thoma/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.exe
-C:/Users/thoma/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.pdb
-C:/Users/thoma/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csprojAssemblyReference.cache
-C:/Users/thoma/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csproj.CoreCompileInputs.cache
-C:/Users/thoma/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.exe
-C:/Users/thoma/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.pdb
 C:/Users/33770/Source/Repos/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csprojAssemblyReference.cache
 C:/Users/33770/Source/Repos/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csproj.CoreCompileInputs.cache
 C:/Users/33770/Source/Repos/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.exe
@@ -36,3 +29,14 @@ C:/Users/33770/Source/Repos/Projet/Virtual Global College/Virtual Global College
 /Users/remi/Projects/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csproj.CoreCompileInputs.cache
 /Users/remi/Projects/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.exe
 /Users/remi/Projects/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.pdb
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.exe.config
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.exe
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.pdb
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CoreCompileInputs.cache
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CopyComplete
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.exe
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.pdb
