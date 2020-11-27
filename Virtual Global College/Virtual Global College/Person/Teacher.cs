@@ -263,9 +263,13 @@ namespace Virtual_Global_College
                         }
                         Console.Write(grade[index1, index2] + "\t\t\t\t      ");
                     }
-                    else if (index1 < 4)
+                    else
                     {
-                        if ((grade[0, 0].Length < grade[index1, 0].Length) && index2 == 0)
+                        if (grade[index1, index2].Length < grade[0, index2].Length)
+                        {
+                            Console.Write(grade[index1, index2] + "\t\t\t\t      ");
+                        }
+                        else if (grade[index1, index2].Length > grade[0, index2].Length)
                         {
                             int number = grade[index1, 0].Length;
 
@@ -279,10 +283,6 @@ namespace Virtual_Global_College
                         {
                             Console.Write(grade[index1, index2] + "\t\t\t\t      ");
                         }
-                    }
-                    else 
-                    {
-                        Console.Write(grade[index1, index2] + "\t\t\t\t      ");
                     }
                 }
                 Console.WriteLine();
