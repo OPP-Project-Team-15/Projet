@@ -144,7 +144,7 @@ namespace Virtual_Global_College
             string day = "";
             while (day != "Monday" && day != "Tuesday" && day != "Wednesday" && day != "Thursday" && day != "Friday" && day != "Saturday" && day != "Sunday")
             {
-                Console.WriteLine("Specify the day of the assignment :");
+                Console.WriteLine("Specify the day of the assignment. The first letter in uppercase and the other on lowercase :");
                 day = Console.ReadLine();
             }
 
