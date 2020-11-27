@@ -29,3 +29,8 @@ C:\Users\33770\Source\Repos\Projet\Virtual Global College\Virtual Global College
 C:\Users\33770\Source\Repos\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CoreCompileInputs.cache
 C:\Users\33770\Source\Repos\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.exe
 C:\Users\33770\Source\Repos\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.pdb
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CopyComplete
