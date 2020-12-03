@@ -159,6 +159,9 @@ namespace Virtual_Global_College
             //Console.ReadKey();
 
             ////------------ END OF LINK TO SQL ------------
+            ///
+
+            Console.WriteLine("New branch");
 
 
 
