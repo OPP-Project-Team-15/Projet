@@ -5,6 +5,9 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+using System.Windows;
+
 
 namespace Virtual_Global_College
 {
@@ -19,8 +22,11 @@ namespace Virtual_Global_College
     public class Student : User
     {
         private string branch;
-        public LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
         private bool paymentIsOk = false;
+        public LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
+
+
+        #region : Properties
 
         public string Branch
         {
@@ -34,118 +40,218 @@ namespace Virtual_Global_College
             }
         }
         public string[,] Timetable { get; set; }
-        public string[] CoursesPicked { get; set; } //Courses that student has chosen
-        public double Money { get; set; } //Money that student have in the school account
-        public static List<string> FeesHistory { get; set; } //History of actions relevant to the fees
+        public decimal Money { get; set; } //Money that student have in his school account
         public string ProcessPayment { get; set; } //Payment in once or in thrice
-        public int TimesNumberOfPayment { get; set; } //Number of times student paid for a payment in several times
-        public List<string> Attendance { get; set; } //List of the abscence with the date of the student
+        public int NumberOfPayment { get; set; } //Number of times student paid for a payment in several times
         public bool PaymentIsOk
         {
             get { return paymentIsOk; }
             set { paymentIsOk = value; }
         } //True if student has paid all the fees for the year
-        public List<string> Assignment { get; set; }
+        public bool SubjectsPicked { get; set; }
+        #endregion
 
 
 
+        #region : Methods
 
-        public Student(string name, string surname, string id, string phoneNumber, string sexe, string mail, string password, string branch, string[,] timetable)
-            : base(name, surname, id, phoneNumber, sexe, mail, password)
+        public string ToString(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
-            Branch = branch;
-            Timetable = timetable;
-            Timetable[0, 0] = "Hours";
-            Timetable[0, 1] = "Monday";
-            Timetable[0, 2] = "Tuesday";
-            Timetable[0, 3] = "Wednesday";
-            Timetable[0, 4] = "Thursday";
-            Timetable[0, 5] = "Friday";
-            Timetable[0, 6] = "Saturday";
-            Timetable[0, 7] = "Sunday";
-            for (int index1 = 8, index2 = 1; index1 <= 21; index1++, index2++)
+            string sql = $"SELECT Id, LastName, FirstName, BirthDate, Sexe, PhoneNumber, Mail, Branch FROM Students WHERE Id='{Id}'";
+            cmd = new MySqlCommand(sql, conn);
+            List<string> informations = Program.Pick(conn, cmd, rdr);
+
+            string student_Informations = $"\nStudent Informations :\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}";
+            student_Informations += $"Sexe : {informations.ElementAt(4)}\nPhone Number : {informations.ElementAt(5)}\nMail : {informations.ElementAt(6)}\nBranch : {informations.ElementAt(7)}";
+
+            return student_Informations;
+        }
+
+
+        /// <summary>
+        /// Allow the student to choose his/her courses for the year
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        /// <param name="random"></param>
+        public void Course_Registration(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr, Random random)
+        {
+            if (SubjectsPicked)
+                Console.WriteLine("You have already chosen your courses");
+            else
             {
-                timetable[index2, 0] = Convert.ToString(index1 - 1) + " - " + Convert.ToString(index1);
-            }
-            for (int index = 1; index <= 30; index++)
-            {
-                string[,] timetablePerW = new string[15,9];
-                for (int index1 = 0; index1 < Timetable.GetLength(0); index1++)
+                // VARIABLES CREATIONS
+                string sql;
+                int indexRandom;
+                List<string> TeachersId = new List<string>(); //Contains the ID of all the teachers who teach a subject (required firstly, then not required) of the student branch
+                List<string> TeachersSubjects = new List<string>(); //Contains the subject of all the teachers
+                List<string> Subjects = new List<string>(); //Contains the required subjects firstly, and then the non required subjects
+                List<string> SubjectId = new List<string>();
+
+
+                // ------------------- WE BEGIN WITH THE REQUIREDS SUBJECTS --------------------
+
+                // We obtain the list of the Id teachers who teach a required subject of the student branch
+                sql = $"SELECT IdTeacher FROM SubjectsTeachers INNER JOIN Subjects ON SubjectsTeachers.IdSubject = Subjects.IdSubject WHERE Branch='{Branch}' AND Required='1'";
+                cmd = new MySqlCommand(sql, conn);
+                TeachersId = Program.Pick(conn, cmd, rdr);
+
+                // We obtain the list of the exact subject of each teachers of the last list
+                sql = $"SELECT NameSubject FROM Subjects INNER JOIN SubjectsTeachers ON Subjects.IdSubject = SubjectsTeachers.IdSubject AND Required='1' WHERE Branch='{Branch}'";
+                cmd = new MySqlCommand(sql, conn);
+                TeachersSubjects = Program.Pick(conn, cmd, rdr);
+
+                // We obtain the list of the requireds subjects
+                sql = $"SELECT NameSubject FROM Subjects WHERE Required='1' AND Branch='{Branch}'";
+                cmd = new MySqlCommand(sql, conn);
+                Subjects = Program.Pick(conn, cmd, rdr);
+
+                // INSERT A SQL INSTANCE FOR EACH LINK BETWEEN A STUDENT AND A TEACHER (student who has class with a teacher with a required subject)
+                for (int i = 0; i < Subjects.Count; i++)
                 {
-                    for (int index2 = 0; index2 < Timetable.GetLength(1); index2++)
+                    // We obtain the Id of each required subject
+                    sql = $"SELECT IdSubject FROM Subjects WHERE NameSubject='{Subjects.ElementAt(i)}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    SubjectId = Program.Pick(conn, cmd, rdr);
+
+                    // We obtain the index of the Id of a random teacher who teachs this subject
+                    indexRandom = random.Next(TeachersId.Count);
+                    while (TeachersSubjects.ElementAt(indexRandom) != Subjects.ElementAt(i))
+                        indexRandom = random.Next(TeachersId.Count);
+
+                    // We insert the instance
+                    //sql = $"INSERT INTO TeachersStudents (IdStudent, IdTeacher, IdSubject) VALUES ('{Id}', '{Convert.ToInt32(TeachersId.ElementAt(indexRandom))}', '{SubjectId.ElementAt(0)}')";
+                    sql = "INSERT INTO TeachersStudents SET IdStudent = @idstudent, IdTeacher = @idteacher, IdSubject = @idsubject";
+                    cmd = new MySqlCommand(sql, conn);
+                    cmd.Prepare();
+                    cmd.Parameters.AddWithValue("@idstudent", Id);
+                    cmd.Parameters.AddWithValue("@idteacher", Convert.ToInt32(TeachersId.ElementAt(indexRandom)));
+                    cmd.Parameters.AddWithValue("@idsubject", SubjectId.ElementAt(0));
+                    Program.Insert(conn, cmd, rdr);
+                }
+
+                Console.WriteLine($"The requireds subjects in {Branch} are : ");
+                foreach (string subject in Subjects)
+                {
+                    Console.WriteLine($"{Subjects.IndexOf(subject) + 1} - {subject}");
+                }
+                Console.WriteLine($"For these requireds subjects, you have been affected randomly in a teacher classroom.\n\nThe non requireds subjects in {Branch} are :");
+
+
+                // ------------------- THEN, WE WORK WITH THE NON REQUIREDS SUBJECTS -------------------
+
+                // We print the non requireds subjects
+                sql = $"SELECT NameSubject FROM Subjects WHERE Branch='{Branch}' AND Required = '0'";
+                cmd = new MySqlCommand(sql, conn);
+                Program.Read(conn, cmd, rdr, 3);
+
+                // We obtain the pick of the student
+                Console.WriteLine("\nPlease select 2 non requireds subjects by writing the name of the subjects as it's written :");
+                string answer;
+                bool exist;
+                List<string> NotRequiredSubjectsPicked = new List<string>();
+                for (int i = 0; i < 2; i++)
+                {
+                    if (i != 0)
+                        Console.WriteLine("\nThank you. Please select the second non required subject :");
+
+                    answer = Console.ReadLine();
+                    sql = $"SELECT NameSubject FROM Subjects WHERE NameSubject='{answer}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    exist = Program.Exist(answer, conn, cmd, rdr);
+                    while (!exist)
                     {
-                        timetablePerW[index1, index2] = Timetable[index1, index2];
+                        Console.WriteLine("\nThis subject doesn't exist. Please write as it's written :");
+                        answer = Console.ReadLine();
+                        sql = $"SELECT NameSubject FROM Subjects WHERE NameSubject='{answer}'";
+                        cmd = new MySqlCommand(sql, conn);
+                        exist = Program.Exist(answer, conn, cmd, rdr);
                     }
+                    NotRequiredSubjectsPicked.Add(answer);
                 }
-                timetablePerW[0, 8] = "Week " + Convert.ToString(index);
-                timetablePerWeek.AddLast(timetablePerW);
+
+                // We obtain the list of the Id teachers who teach a non required subject of the student branch
+                sql = $"SELECT IdTeacher FROM SubjectsTeachers INNER JOIN Subjects ON SubjectsTeachers.IdSubject = Subjects.IdSubject WHERE Branch='{Branch}' AND Required='0'";
+                cmd = new MySqlCommand(sql, conn);
+                TeachersId = Program.Pick(conn, cmd, rdr);
+
+                // We obtain the list of the exact subject of each teachers of the last list
+                sql = $"SELECT NameSubject FROM Subjects INNER JOIN SubjectsTeachers ON Subjects.IdSubject = SubjectsTeachers.IdSubject WHERE Branch='{Branch}' AND Required='0'";
+                cmd = new MySqlCommand(sql, conn);
+                TeachersSubjects = Program.Pick(conn, cmd, rdr);
+
+                // INSERT A SQL INSTANCE FOR EACH LINK BETWEEN A STUDENT AND A TEACHER (student who has class with a teacher with a non required subject)
+                for (int i = 0; i < NotRequiredSubjectsPicked.Count; i++)
+                {
+                    // We obtain the Id of each non required subject
+                    sql = $"SELECT IdSubject FROM Subjects WHERE NameSubject='{NotRequiredSubjectsPicked.ElementAt(i)}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    SubjectId = Program.Pick(conn, cmd, rdr);
+
+                    // We obtain the index of the Id of a random teacher who teachs this subject
+                    indexRandom = random.Next(TeachersId.Count);
+                    while (TeachersSubjects.ElementAt(indexRandom) != NotRequiredSubjectsPicked.ElementAt(i))
+                        indexRandom = random.Next(TeachersId.Count);
+
+                    // We insert the instance
+                    //sqlInsert = $"INSERT INTO TeachersStudents (IdStudent, IdTeacher, IdSubject) VALUES ('{Id}', '{Convert.ToInt32(TeachersId.ElementAt(indexRandom))}', '{SubjectId.ElementAt(0)}')";
+                    sql = "INSERT INTO TeachersStudents SET IdStudent = @idstudent, IdTeacher = @idteacher, IdSubject = @idsubject";
+                    cmd = new MySqlCommand(sql, conn);
+                    cmd.Prepare();
+                    cmd.Parameters.AddWithValue("@idstudent", Id);
+                    cmd.Parameters.AddWithValue("@idteacher", Convert.ToInt32(TeachersId.ElementAt(indexRandom)));
+                    cmd.Parameters.AddWithValue("@idsubject", SubjectId.ElementAt(0));
+                    Program.Insert(conn, cmd, rdr);
+                }
+
+                Console.WriteLine("\nYour courses have been saved. You have been affected randomly in a teacher classroom for these non required subjects too.\nHave a good day :)");
+                SubjectsPicked = true;
             }
         }
 
-        public override string ToString() => $"{base.ToString()}\n\nType : Student\nBranch : {branch}";
-
         /// <summary>
-        /// Allow the student to choose his courses for the year
-        /// <summary>
-        public void Course_Registration(List<string> courses)
-        {
-            string[] picks = new string[2];
-
-            Console.WriteLine("Which courses would you want to pick ?\n");
-            int compt = 1;
-            foreach (string element in courses)
-            {
-                Console.WriteLine($"{compt} - {element}");
-                compt++;
-            }
-            Console.WriteLine();
-
-            string answer = "";
-
-
-            for (int i = 0; i < 2; i++)
-            {
-                if (i < 2)
-                {
-                    Console.WriteLine("Which courses would you want to pick ?\n");
-                    answer = Console.ReadLine();
-                }
-
-                while (courses.Contains(answer) != true)
-                {
-                    Console.WriteLine("This course doesn't exist. Please select another one\n");
-                    answer = Console.ReadLine();
-                }
-                Console.WriteLine($"The course {answer} has been taken\n");
-                picks[i] = answer;
-            }
-
-            Console.Write($"Thank you for your participation");
-            this.CoursesPicked = picks;
-        }
-
-        /// <summary>
-        /// Allow the student to add money in his school account
-        /// <summary>
-        public void Add_Money()
+        /// Allow the student to add money in his/her school account
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmdInsert"></param>
+        /// <param name="rdr"></param>
+        public void Add_Money(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
             Console.WriteLine("How much money do you want to add?");
-            double moneyAdded = Convert.ToDouble(Console.ReadLine());
+            decimal moneyAdded = Convert.ToDecimal(Console.ReadLine());
             this.Money += moneyAdded;
-            FeesHistory.Add($"Add {moneyAdded} euros");
+            DateTime thisDay = DateTime.Today;
+            string FeeName = $"Added {moneyAdded} euros to your school account";
+            //string sqlInsert = $"INSERT INTO Fees (Date, Amount, Name, IdStudent) VALUES ('{thisDay}','{moneyAdded}', '{FeeName}', '{Id}')";
+            string sql = "INSERT INTO Fees SET Date = @date, Amount = @amount, Name = @name, IdStudent = @idstudent";
+            cmd = new MySqlCommand(sql, conn);
+            cmd.Prepare();
+            cmd.Parameters.AddWithValue("@date", thisDay);
+            cmd.Parameters.AddWithValue("@amount", moneyAdded);
+            cmd.Parameters.AddWithValue("@name", FeeName);
+            cmd.Parameters.AddWithValue("@idstudent", Id);
+            Program.Insert(conn, cmd, rdr);
         }
 
         /// <summary>
         /// Allow the student to choose a process payment for the first use of the method
         /// And allow the student to pay with the method he has chosen
-        /// <summary>
-        public void Payment()
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmdInsert"></param>
+        /// <param name="rdr"></param>
+        public void Payment(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            string FeeName;
+            string sql;
+            DateTime thisDay = DateTime.Today;
+
             if (PaymentIsOk == true)
                 Console.WriteLine("The payment for the year is done");
             else
             {
-                if (TimesNumberOfPayment == 0)
+                if (ProcessPayment == null)
                 {
                     Console.WriteLine("\nWhich payment process would you take ? Please write your response as it's written\n- once\n- thrice");
                     string process = Console.ReadLine();
@@ -155,19 +261,38 @@ namespace Virtual_Global_College
                         process = Console.ReadLine();
                     }
 
+
                     if (process == "once")
                     {
                         ProcessPayment = "once";
-                        FeesHistory.Add("Selected payment by once");
+                        FeeName = "Selected payment by once";
+                        //sqlInsert = $"INSERT INTO Fees (Date, Amount, Name, IdStudent) VALUES ('{thisDay}','0', '{FeeName}', '{Id}')";
+                        sql = "INSERT INTO Fees SET Date = @date, Amount = @amount, Name = @name, IdStudent = @idstudent";
+                        cmd = new MySqlCommand(sql, conn);
+                        cmd.Prepare();
+                        cmd.Parameters.AddWithValue("@date", thisDay);
+                        cmd.Parameters.AddWithValue("@amount", 0);
+                        cmd.Parameters.AddWithValue("@name", FeeName);
+                        cmd.Parameters.AddWithValue("@idstudent", Id);
+                        Program.Insert(conn, cmd, rdr);
                     }
                     else
                     {
                         ProcessPayment = "thrice";
-                        FeesHistory.Add("Selected payment by thrice");
+                        FeeName = "Selected payment by thrice";
+                        //sqlInsert = $"INSERT INTO Fees (Date, Amount, Name, IdStudent) VALUES ('{thisDay}','0', '{FeeName}', '{Id}')";
+                        sql = "INSERT INTO Fees SET Date = @date, Amount = @amount, Name = @name, IdStudent = @idstudent";
+                        cmd = new MySqlCommand(sql, conn);
+                        cmd.Prepare();
+                        cmd.Parameters.AddWithValue("@date", thisDay);
+                        cmd.Parameters.AddWithValue("@amount", 0);
+                        cmd.Parameters.AddWithValue("@name", FeeName);
+                        cmd.Parameters.AddWithValue("@idstudent", Id);
+                        Program.Insert(conn, cmd, rdr);
                     }
                 }
 
-                Console.WriteLine("\nDo you want to pay ? Please write your response as it's written\n- yes\n- no");
+                Console.WriteLine($"\nYour process payment is : {ProcessPayment}\nDo you want to pay ? Please write your response as it's written\n- yes\n- no");
                 string payment = Console.ReadLine();
                 while (payment != "yes" && payment != "no")
                 {
@@ -185,7 +310,17 @@ namespace Virtual_Global_College
                         else
                         {
                             this.Money -= 9000;
-                            FeesHistory.Add($"Spend 9000 euros for payment in once");
+                            FeeName = "Spend 9000 euros for payment in once";
+                            //sqlInsert = $"INSERT INTO Fees (Date, Amount, Name, IdStudent) VALUES ('{thisDay}','9000', '{FeeName}', '{Id}')";
+                            sql = "INSERT INTO Fees SET Date = @date, Amount = @amount, Name = @name, IdStudent = @idstudent";
+                            cmd = new MySqlCommand(sql, conn);
+                            cmd.Prepare();
+                            cmd.Parameters.AddWithValue("@date", thisDay);
+                            cmd.Parameters.AddWithValue("@amount", 9000);
+                            cmd.Parameters.AddWithValue("@name", FeeName);
+                            cmd.Parameters.AddWithValue("@idstudent", Id);
+                            Program.Insert(conn, cmd, rdr);
+                            NumberOfPayment = 1;
                             PaymentIsOk = true;
                         }
                     }
@@ -197,9 +332,18 @@ namespace Virtual_Global_College
                         else
                         {
                             this.Money -= 3000;
-                            FeesHistory.Add($"Spend 3000 euros for payment in thrice");
-                            TimesNumberOfPayment++;
-                            if (TimesNumberOfPayment == 3)
+                            FeeName = "Spend 3000 euros for payment in thrice";
+                            //sqlInsert = $"INSERT INTO Fees (Date, Amount, Name, IdStudent) VALUES ('{thisDay}','3000', '{FeeName}', '{Id}')";
+                            sql = "INSERT INTO Fees SET Date = @date, Amount = @amount, Name = @name, IdStudent = @idstudent";
+                            cmd = new MySqlCommand(sql, conn);
+                            cmd.Prepare();
+                            cmd.Parameters.AddWithValue("@date", thisDay);
+                            cmd.Parameters.AddWithValue("@amount", 3000);
+                            cmd.Parameters.AddWithValue("@name", FeeName);
+                            cmd.Parameters.AddWithValue("@idstudent", Id);
+                            Program.Insert(conn, cmd, rdr);
+                            NumberOfPayment++;
+                            if (NumberOfPayment == 3)
                                 PaymentIsOk = true;
                         }
                     }
@@ -216,35 +360,116 @@ namespace Virtual_Global_College
             }
         }
 
+
         /// <summary>
-        /// Print the content of the list "FeesHistory"
-        /// <summary>
-        public void Print_Payment_History()
+        /// Allow the student to see his/her fees history
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmdRead"></param>
+        /// <param name="rdr"></param>
+        public void Print_Fees_History(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
-            foreach (string element in FeesHistory)
-            {
-                Console.WriteLine(element);
-            }
+            string sqlRead = $"SELECT Date, Name FROM Fees WHERE IdStudent={Id}";
+            cmdRead = new MySqlCommand(sqlRead, conn);
+            int anyFees = Program.Read(conn, cmdRead, rdr, 1);
+            if (anyFees == 0)
+                Console.WriteLine("You haven't any fees in your history.");
         }
 
         /// <summary>
-        /// Show the abscense of the student
+        /// Allow the student to see his/her abscenses and lates
         /// </summary>
-        public void ToStringShowTheAttendance()
+        /// <param name="conn"></param>
+        /// <param name="cmdRead"></param>
+        /// <param name="rdr"></param>
+        public void Print_Attendances(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
-            if (Attendance.Count != 0)
+            string sqlRead = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent={Id}";
+            cmdRead = new MySqlCommand(sqlRead, conn);
+            int anyAbsencesOrLates = Program.Read(conn, cmdRead, rdr, 1);
+            if (anyAbsencesOrLates == 0)
+                Console.WriteLine("You haven't any absences or lates.");
+        }
+
+        /// <summary>
+        /// Allow the student to see his/her abscenses and lates
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmdRead"></param>
+        /// <param name="rdr"></param>
+        public void Print_Assignments(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
+        {
+            string sqlRead = $"SELECT Date, Subject, Name FROM Assignments WHERE IdStudent={Id}";
+            cmdRead = new MySqlCommand(sqlRead, conn);
+            int anyAssignments = Program.Read(conn, cmdRead, rdr, 1);
+            if (anyAssignments == 0)
+                Console.WriteLine("You haven't any assignments yet.");
+        }
+
+        /// <summary>
+        /// Allow the student to see his/her grades
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        public void Print_Grades(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
+        {
+            string sql;
+            int gradeExist; int index;
+            string[,] Names_Marks;
+            List<string> Subjects; List<string> Names_Marks_Sql;
+            LinkedList<string[,]> Grades_NoteBook = new LinkedList<string[,]>();
+
+
+            // WE OBTAIN THE TEACHER SUBJECTS
+
+            sql = $"SELECT NameSubject FROM Subjects INNER JOIN TeachersStudents ON TeachersStudents.IdSubject = Subjects.IdSubject AND TeachersStudents.Idstudent='{Id}'";
+            cmd = new MySqlCommand(sql, conn);
+            Subjects = Program.Pick(conn, cmd, rdr);
+
+            // WE REPEAT THE OPERATION FOR EACH SUBJECT
+
+            foreach (string subject in Subjects)
             {
-                Console.WriteLine("The abscense of the student :");
-                foreach (string element in Attendance)
+                // WE EXAMINE IF THERE ARE ANY GRADES OF THE STUDENTS IN THE SUBJECT
+
+                sql = $"SELECT IdGrade FROM Grades WHERE NameSubject='{subject}' AND IdStudent='{Id}'";
+                cmd = new MySqlCommand(sql, conn);
+                gradeExist = Program.Read(conn, cmd, rdr, 4);
+
+                if (gradeExist != 0)
                 {
-                    Console.WriteLine(element);
+                    // WE OBTAIN ALL THE NAME GRADES OF EACH GRADES
+
+                    index = 0;
+                    sql = $"SELECT GradeName, Mark FROM Grades WHERE NameSubject='{subject}' AND IdStudent='{Id}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    Names_Marks_Sql = Program.Pick(conn, cmd, rdr);
+
+                    Names_Marks = new string[Names_Marks_Sql.Count / 2 + 1, 3];
+                    Names_Marks[0, 0] = $"{FirstName} {LastName}";
+                    Names_Marks[1, 0] = "Grades";
+                    Names_Marks[2, 0] = $"{subject}";
+                    Names_Marks[0, 1] = "Grade Name";
+                    Names_Marks[0, 2] = "Mark";
+
+                    foreach (string data in Names_Marks_Sql)
+                    {
+                        if (index % 2 == 0)
+                            Names_Marks[index / 2 + 1, 1] = Names_Marks_Sql.ElementAt(index);
+                        else
+                            Names_Marks[index / 2, 2] = Names_Marks_Sql.ElementAt(index);
+                        index++;
+                    }
+
+                    Grades_NoteBook.AddLast(Names_Marks);
                 }
             }
-            else
-            {
-                Console.WriteLine("The student have no abscense.");
-            }
+
+            Teacher.GradeExam(Grades_NoteBook);
         }
+
+
 
         /// <summary>
         /// Show the timetable for a student
@@ -325,34 +550,34 @@ namespace Virtual_Global_College
         /// <summary>
         /// We create the report card of the student
         /// </summary>
-        public void ReportCard(SortedList<Subject, string[,]> Grade)
-        {
-            List<string[]> gradeOfTheStudent = new List<string[]>();
-            string[] start = new string[1] { "Report card of " + Name + Surname + " :" };
-            gradeOfTheStudent.Add(start);
-            string[] start2 = new string[5] { "Name Assignment :", "NameSubject :", "Date :", "Hours :", "Grade :" };
-            gradeOfTheStudent.Add(start2);
-            foreach (KeyValuePair<Subject, string[,]> grade in Grade)
-            {
-                for(int index = 0; index < grade.Value.GetLength(0); index++)
-                {
-                    if (grade.Value[index,1] == Id)
-                    {
-                        if (grade.Value[index, 2].Length == 1)
-                        {
-                            string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3, 0], 0 + grade.Value[index, 2] };
-                            gradeOfTheStudent.Add(mark);
-                        }
-                        else
-                        {
-                            string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3, 0], grade.Value[index, 2] };
-                            gradeOfTheStudent.Add(mark);
-                        }
-                    }
-                }
-            }
-            ToStringGradeStudent(gradeOfTheStudent);
-        }
+        //public void ReportCard(SortedList<Subject, string[,]> Grade)
+        //{
+        //    List<string[]> gradeOfTheStudent = new List<string[]>();
+        //    string[] start = new string[1] { "Report card of " + Name + Surname + " :" };
+        //    gradeOfTheStudent.Add(start);
+        //    string[] start2 = new string[5] { "Name Assignment :", "NameSubject :", "Date :", "Hours :", "Grade :" };
+        //    gradeOfTheStudent.Add(start2);
+        //    foreach (KeyValuePair<Subject, string[,]> grade in Grade)
+        //    {
+        //        for(int index = 0; index < grade.Value.GetLength(0); index++)
+        //        {
+        //            if (grade.Value[index,1] == Id)
+        //            {
+        //                if (grade.Value[index, 2].Length == 1)
+        //                {
+        //                    string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3, 0], 0 + grade.Value[index, 2] };
+        //                    gradeOfTheStudent.Add(mark);
+        //                }
+        //                else
+        //                {
+        //                    string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3, 0], grade.Value[index, 2] };
+        //                    gradeOfTheStudent.Add(mark);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    ToStringGradeStudent(gradeOfTheStudent);
+        //}
 
         /// <summary>
         /// Show the report card for a student
@@ -393,5 +618,6 @@ namespace Virtual_Global_College
                 Console.WriteLine();
             }
         }
-    }        
+        #endregion
+    }
 }

@@ -3,33 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace Virtual_Global_College
 {
     public abstract class User
     {
-        public string Name { get; }
-        public string Surname { get; }
-        public string Id { get; }
+        #region : Properties
+
+        [Key]
+        public int Id { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
         public string PhoneNumber { get; set; }
-        public string Sexe { get; }
+        public string Sexe { get; set; }
         public string Mail { get; set; }
-        public string Password { get; set; }        
+        public string Password { get; set; }
+        #endregion
 
-        public User (string name, string surname, string id, string phoneNumber, string sexe, string mail, string password)
-        {
-            Name = name;
-            Surname = surname;
-            Id = id;
-            PhoneNumber = phoneNumber;
-            Sexe = sexe;
-            Mail = mail;
-            Password = password;
-        }
 
-        public override string ToString() => $"Profile :\n\n{Name} {Surname}\nId : {Id}/nPhone number : {PhoneNumber}\nSexe : {Sexe}\nMail : {Mail}\nPassword : {Password}";
-        
 
+        #region : Methods
         public bool VerifyLogin(string passwordToVerify)
         {
             bool passwordVerified = false;
@@ -84,5 +79,6 @@ namespace Virtual_Global_College
                 }
             }
         }
+        #endregion
     }
 }
