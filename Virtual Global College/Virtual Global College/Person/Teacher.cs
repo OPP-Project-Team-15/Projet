@@ -128,13 +128,16 @@ namespace Virtual_Global_College
 
             string subj = "";
             bool subjExist = false;
-            while (subjExist != true)
+            while (subjExist == false)
             {
                 Console.WriteLine("Specify the subject :");
                 subj = Console.ReadLine();
                 for (int index1 = 0; index1 < SubjectStudent.Count && subjExist != true; index1++)
                 {
-                    subjExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(subj);
+                    if (subjExist = SubjectStudent.ElementAt(index1).Key.NameSubject ==  subj)
+                    {
+                        subjExist = true;
+                    }
                 }
             }
 
@@ -263,26 +266,40 @@ namespace Virtual_Global_College
                         }
                         Console.Write(grade[index1, index2] + "\t\t\t\t      ");
                     }
+                    else if (grade[index1, index2].Length < grade[0, index2].Length || grade[index1, index2].Length > grade[0, index2].Length)
+                    {
+                        Console.Write(grade[index1, index2]);
+                        for (int i = 0; i < grade[0, index2].Length + 38 - grade[index1, index2].Length; i++)
+                        {
+                            Console.Write(" ");
+                        }
+                            //if (grade[index1, index2].Length < grade[0, index2].Length || grade[index1, index2].Length > grade[0, index2].Length)
+                            //{
+                            //    //Console.Write(grade[index1, index2] + "\t\t\t\t      ");
+                            //    //for (int i = 0; i < grade[0, index2].Length - grade[index1, index2].Length; i++)
+                            //    //{
+                            //    //    Console.Write(" ");
+                            //    //}
+
+                            //    Console.Write(grade[index1, index2]);
+                            //    for (int i = 0; i < grade[0, index2].Length + 38 - grade[index1, index2].Length; i++)
+                            //    {
+                            //        Console.Write(" ");
+                            //    }
+                            //}
+                            //else if (grade[index1, index2].Length > grade[0, index2].Length)
+                            //{
+                            //    int number = grade[index1,index2].Length - grade[0, index2].Length;
+                            //    Console.Write(grade[index1, index2]);
+                            //    for (int i = 0; i < grade[index1, index2].Length + 32 + "      ".Length - grade[0, index2].Length; i++)
+                            //    {
+                            //        Console.Write(" ");
+                            //    }
+                            //}
+                    }
                     else
                     {
-                        if (grade[index1, index2].Length < grade[0, index2].Length)
-                        {
-                            Console.Write(grade[index1, index2] + "\t\t\t\t      ");
-                        }
-                        else if (grade[index1, index2].Length > grade[0, index2].Length)
-                        {
-                            int number = grade[index1, 0].Length;
-
-                            Console.Write(grade[index1, index2]);
-                            for (int i = 0; i < 32 + "      ".Length - number; i++)
-                            {
-                                Console.Write(" ");
-                            }
-                        }
-                        else
-                        {
-                            Console.Write(grade[index1, index2] + "\t\t\t\t      ");
-                        }
+                        Console.Write(grade[index1, index2] + "\t\t\t\t      ");
                     }
                 }
                 Console.WriteLine();
