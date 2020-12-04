@@ -419,7 +419,7 @@ namespace Virtual_Global_College
             foreach (string subject in Subjects)
             {
                 // WE EXAMINE IF THERE ARE ANY GRADES OF THE TEACHER IN THE SUBJECT
-                sql = $"SELECT IdGrade FROM Grades WHERE NameSubject='{subject}' AND IdTeacher='{Id}'";
+                sql = $"SELECT IdGrades FROM Grades WHERE NameSubject='{subject}' AND IdTeacher='{Id}'";
                 cmd = new MySqlCommand(sql, conn);
                 gradeExist = Program.Read(conn, cmd, rdr, 4);
 
@@ -450,7 +450,7 @@ namespace Virtual_Global_College
                         cmd = new MySqlCommand(sql, conn);
                         Names_Marks_Sql = Program.Pick(conn, cmd, rdr);
 
-                        Names_Marks = new string[Names_Marks_Sql.Count / 2 + 1, 3];
+                        Names_Marks = new string[Names_Marks_Sql.Count + 3, 3];
                         Names_Marks[0, 0] = $"{FirstName} {LastName}";
                         Names_Marks[1, 0] = $"{subject}";
                         Names_Marks[2, 0] = $"{name}";
@@ -461,8 +461,8 @@ namespace Virtual_Global_College
                         {
                             if (index % 2 == 0)
                                 Names_Marks[index / 2 + 1, 1] = Names_Marks_Sql.ElementAt(index);
-                            else if (index / 2 != 0)
-                                Names_Marks[index / 2, 2] = Names_Marks_Sql.ElementAt(index);
+                            else if ((index+1) / 2 != 0)
+                                Names_Marks[(index+1) / 2, 2] = Names_Marks_Sql.ElementAt(index);
                             index++;
                         }
 
