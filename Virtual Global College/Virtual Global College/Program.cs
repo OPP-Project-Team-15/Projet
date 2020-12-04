@@ -457,7 +457,7 @@ namespace Virtual_Global_College
             while (pass == false)
             {
                 Console.Write("Wrong password. Please type again: ");
-                password = Console.ReadLine();
+                password = ReadPassword();
 
                 sql = $"SELECT Password FROM Students WHERE Id = '{id}'";
                 cmd = new MySqlCommand(sql, conn);
@@ -489,7 +489,7 @@ namespace Virtual_Global_College
                     {
                         List<Admin> listing = dbCtx.Admins.ToList();
                         admin = listing[i-1];
-                        Console.WriteLine(admin.ToString());
+                        Console.WriteLine(admin.ToString(conn, cmd, rdr));
                         Console.WriteLine();
                         Console.WriteLine();
                         string key = " ";
@@ -513,6 +513,7 @@ namespace Virtual_Global_College
                                 Console.WriteLine("11 - Delete student");
                                 Console.WriteLine("12 - Delete teacher");
                                 choice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
                             }
 
                             switch (choice)
@@ -567,7 +568,7 @@ namespace Virtual_Global_College
                     {
                         List<Teacher> listing = dbCtx.Teachers.ToList();
                         teacher = listing[i-100];
-                        Console.WriteLine(teacher.ToString());
+                        Console.WriteLine(teacher.ToString(conn, cmd, rdr));
                         Console.WriteLine();
                         Console.WriteLine();
                         string key = " ";
@@ -585,6 +586,8 @@ namespace Virtual_Global_College
                                 Console.WriteLine("5 - Print grades notebook");
                                 Console.WriteLine("6 - Modify student grade");
                                 choice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+
                             }
 
                             switch (choice)
@@ -621,7 +624,7 @@ namespace Virtual_Global_College
                     {
                         List<Student> listing = dbCtx.Students.ToList();
                         student = listing[i-1001];
-                        Console.WriteLine(student.ToString());
+                        Console.WriteLine(student.ToString(conn, cmd, rdr));
                         Console.WriteLine();
                         Console.WriteLine();
                         string key = " ";
@@ -642,6 +645,8 @@ namespace Virtual_Global_College
                                 Console.WriteLine("8 - Report card");
                                 Console.WriteLine("9 - TimetableWeek");
                                 choice = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine();
+
                             }
 
                             switch (choice)
