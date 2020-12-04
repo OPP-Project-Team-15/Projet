@@ -497,7 +497,7 @@ namespace Virtual_Global_College
                         while (key != "Exit")
                         {
                             int choice = 0;
-                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10 && choice != 11 && choice != 12)
+                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10 && choice != 11 && choice != 12 && choice != 13 && choice != 14)
                             {
                                 Console.WriteLine("What do you want to do ?");
                                 Console.WriteLine("1 - Create a subject, an exam or delete a course");
@@ -512,6 +512,8 @@ namespace Virtual_Global_College
                                 Console.WriteLine("10 - Modify subject");
                                 Console.WriteLine("11 - Delete student");
                                 Console.WriteLine("12 - Delete teacher");
+                                Console.WriteLine("13 - Modify your contact");
+                                Console.WriteLine("14 - Fill the timetable at the start of the year");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
                             }
@@ -554,11 +556,18 @@ namespace Virtual_Global_College
                                 case 12:
                                     admin.Delete_Teacher(conn, cmd, rdr);
                                     break;
+                                case 13:
+                                    admin.ModifyContact();
+                                    break;
+                                //case 14:
+                                //    admin.SubjectMandatory();
+                                //    break;
                                 default:
                                     return;
                             }
                             Console.WriteLine("If you want to stop. Type : Exit");
                             key = Console.ReadLine();
+                            Console.Clear();
                         }
                     }
                 }
@@ -576,7 +585,7 @@ namespace Virtual_Global_College
                         while (key != "Exit")
                         {
                             int choice = 0;
-                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6)
+                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7)
                             {
                                 Console.WriteLine("What do you want to do ?");
                                 Console.WriteLine("1 - Add assignment");
@@ -585,6 +594,7 @@ namespace Virtual_Global_College
                                 Console.WriteLine("4 - Print student attendances");
                                 Console.WriteLine("5 - Print grades notebook");
                                 Console.WriteLine("6 - Modify student grade");
+                                Console.WriteLine("7 - Modify your contact");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
@@ -610,11 +620,15 @@ namespace Virtual_Global_College
                                 case 6:
                                     teacher.Modify_Student_Grade(conn, cmd, rdr);
                                     break;
+                                case 7:
+                                    teacher.ModifyContact();
+                                    break;
                                 default:
                                     return;
                             }
                             Console.WriteLine("If you want to stop. Type : Exit");
                             key = Console.ReadLine();
+                            Console.Clear();
                         }
                     }
                 }
@@ -632,7 +646,7 @@ namespace Virtual_Global_College
                         while (key != "Exit")
                         {
                             int choice = 0;
-                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9)
+                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10)
                             {
                                 Console.WriteLine("What do you want to do ?");
                                 Console.WriteLine("1 - Course registration");
@@ -644,6 +658,7 @@ namespace Virtual_Global_College
                                 Console.WriteLine("7 - Print grades");
                                 Console.WriteLine("8 - Report card");
                                 Console.WriteLine("9 - TimetableWeek");
+                                Console.WriteLine("10 - Modify your contact");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
@@ -678,11 +693,15 @@ namespace Virtual_Global_College
                                 case 9:
                                     student.TimetableWeek();
                                     break;
+                                case 10:
+                                    student.ModifyContact();
+                                    break;
                                 default:
                                     return;
                             }
                             Console.WriteLine("If you want to stop. Type : Exit");
                             key = Console.ReadLine();
+                            Console.Clear();
                         }
                     }
                 }
