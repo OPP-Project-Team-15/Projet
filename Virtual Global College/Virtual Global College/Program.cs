@@ -336,6 +336,39 @@ namespace Virtual_Global_College
             return stringDate;
         }
 
+        public static string ReadPassword()
+        {
+            string password = "";
+            ConsoleKeyInfo info = Console.ReadKey(true);
+            while (info.Key != ConsoleKey.Enter)
+            {
+                if (info.Key != ConsoleKey.Backspace)
+                {
+                    Console.Write("*");
+                    password += info.KeyChar;
+                }
+                else if (info.Key == ConsoleKey.Backspace)
+                {
+                    if (!string.IsNullOrEmpty(password))
+                    {
+                        // remove one character from the list of password characters
+                        password = password.Substring(0, password.Length - 1);
+                        // get the location of the cursor
+                        int pos = Console.CursorLeft;
+                        // move the cursor to the left by one character
+                        Console.SetCursorPosition(pos - 1, Console.CursorTop);
+                        // replace it with space
+                        Console.Write(" ");
+                        // move the cursor to the left by one character again
+                        Console.SetCursorPosition(pos - 1, Console.CursorTop);
+                    }
+                }
+                info = Console.ReadKey(true);
+            }
+            // add a new line because user pressed enter at the end of their password
+            Console.WriteLine();
+            return password;
+        }
 
 
 
@@ -352,20 +385,303 @@ namespace Virtual_Global_College
             MySqlCommand cmd = null;
             MySqlDataReader rdr = null;
 
+            bool pass; bool exist;
+            string id = " ";
+            
+            string sql;
 
+            Console.Write("ID : ");
+            id = Console.ReadLine();
+            sql = "SELECT Id From Students";
+            cmd = new MySqlCommand(sql, conn);
+            exist = Exist(id, conn, cmd, rdr);
 
-            using (var dbCtx = new VGC_SqlContext())
+            if (exist == false)
             {
-                List<Student> listing = dbCtx.Students.ToList();
-                student = listing[0];
-                student.Course_Registration(conn, cmd, rdr, random);
-                dbCtx.SaveChanges();
-
+                sql = "SELECT Id From Teachers";
+                cmd = new MySqlCommand(sql, conn);
+                exist = Exist(id, conn, cmd, rdr);
             }
 
+            if (exist == false)
+            {
+                sql = "SELECT Id From Admins";
+                cmd = new MySqlCommand(sql, conn);
+                exist = Exist(id, conn, cmd, rdr);
+            }
 
+            while (exist == false)
+            {
+                Console.Write("This ID doesn't exist. Please enter an existing ID : ");
+                id = Console.ReadLine();
 
-            Console.ReadKey();
+                sql = "SELECT Id FROM Students";
+                cmd = new MySqlCommand(sql, conn);
+                exist = Program.Exist(id, conn, cmd, rdr);
+
+                if (exist == false)
+                {
+                    sql = "SELECT Id From Teachers";
+                    cmd = new MySqlCommand(sql, conn);
+                    exist = Exist(id, conn, cmd, rdr);
+                }
+
+                if (exist == false)
+                {
+                    sql = "SELECT Id From Admins";
+                    cmd = new MySqlCommand(sql, conn);
+                    exist = Exist(id, conn, cmd, rdr);
+                }
+            }
+
+            Console.Write("Password : ");
+            var password = ReadPassword();
+            sql = $"SELECT Password FROM Students WHERE Id = '{id}'";
+            cmd = new MySqlCommand(sql, conn);
+            pass = Exist(password, conn, cmd, rdr);
+
+            if (pass == false)
+            {
+                sql = $"SELECT Password From Teachers WHERE Id = '{id}' ";
+                cmd = new MySqlCommand(sql, conn);
+                pass = Exist(password, conn, cmd, rdr);
+            }
+
+            if (pass == false)
+            {
+                sql = $"SELECT Password From Admins WHERE Id = '{id}' ";
+                cmd = new MySqlCommand(sql, conn);
+                pass = Exist(password, conn, cmd, rdr);
+            }
+
+            while (pass == false)
+            {
+                Console.Write("Wrong password. Please type again: ");
+                password = Console.ReadLine();
+
+                sql = $"SELECT Password FROM Students WHERE Id = '{id}'";
+                cmd = new MySqlCommand(sql, conn);
+                pass = Program.Exist(password, conn, cmd, rdr);
+
+                if (pass == false)
+                {
+                    sql = $"SELECT Password From Teachers WHERE Id = '{id}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    pass = Exist(password, conn, cmd, rdr);
+                }
+
+                if (pass == false)
+                {
+                    sql = $"SELECT Password From Admins WHERE Id = '{id}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    pass = Exist(password, conn, cmd, rdr);
+                }
+            }
+
+            Console.WriteLine("Success");
+
+            int i = Convert.ToInt32(id);
+            if (pass == true)
+            {
+                if (i > 0 && i <= 99)
+                {
+                    using (var dbCtx = new VGC_SqlContext())
+                    {
+                        List<Admin> listing = dbCtx.Admins.ToList();
+                        admin = listing[i-1];
+                        Console.WriteLine(admin.ToString());
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        string key = " ";
+
+                        while (key != "Exit")
+                        {
+                            int choice = 0;
+                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10 && choice != 11 && choice != 12)
+                            {
+                                Console.WriteLine("What do you want to do ?");
+                                Console.WriteLine("1 - Create a subject, an exam or delete a course");
+                                Console.WriteLine("2 - Print student information");
+                                Console.WriteLine("3 - Print student attendance");
+                                Console.WriteLine("4 - Print student fees history");
+                                Console.WriteLine("5 - Add attendances for a student");
+                                Console.WriteLine("6 - Add subject");
+                                Console.WriteLine("7 - Add teacher");
+                                Console.WriteLine("8 - Add subject teacher");
+                                Console.WriteLine("9 - Modify student attendances");
+                                Console.WriteLine("10 - Modify subject");
+                                Console.WriteLine("11 - Delete student");
+                                Console.WriteLine("12 - Delete teacher");
+                                choice = Convert.ToInt32(Console.ReadLine());
+                            }
+
+                            switch (choice)
+                            {
+                                //case 1:
+                                //    admin.CreateExamOrCourse(conn, cmd, rdr);
+                                //    break;
+                                case 2:
+                                    admin.Print_Student_Informations(conn, cmd, rdr);
+                                    break;
+                                case 3:
+                                    admin.Print_Student_Attendances(conn, cmd, rdr);
+                                    break;
+                                case 4:
+                                    admin.Print_Student_Fees_History(conn, cmd, rdr);
+                                    break;
+                                case 5:
+                                    admin.Add_Student_Attendances(conn, cmd, rdr);
+                                    break;
+                                case 6:
+                                    admin.Add_Subject(conn, cmd, rdr);
+                                    break;
+                                case 7:
+                                    admin.Add_Teacher(conn, cmd, rdr);
+                                    break;
+                                case 8:
+                                    admin.Add_Subject_Teacher(conn, cmd, rdr);
+                                    break;
+                                case 9:
+                                    admin.Modify_Student_Attendances(conn, cmd, rdr);
+                                    break;
+                                case 10:
+                                    admin.Modify_Subject(conn, cmd, rdr);
+                                    break;
+                                case 11:
+                                    admin.Delete_Student(conn, cmd, rdr);
+                                    break;
+                                case 12:
+                                    admin.Delete_Teacher(conn, cmd, rdr);
+                                    break;
+                                default:
+                                    return;
+                            }
+                            Console.WriteLine("If you want to stop. Type : Exit");
+                            key = Console.ReadLine();
+                        }
+                    }
+                }
+                else if (i >= 100 && i <= 999)
+                {
+                    using (var dbCtx = new VGC_SqlContext())
+                    {
+                        List<Teacher> listing = dbCtx.Teachers.ToList();
+                        teacher = listing[i-100];
+                        Console.WriteLine(teacher.ToString());
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        string key = " ";
+
+                        while (key != "Exit")
+                        {
+                            int choice = 0;
+                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6)
+                            {
+                                Console.WriteLine("What do you want to do ?");
+                                Console.WriteLine("1 - Add assignment");
+                                Console.WriteLine("2 - Add grades");
+                                Console.WriteLine("3 - Print student informations");
+                                Console.WriteLine("4 - Print student attendances");
+                                Console.WriteLine("5 - Print grades notebook");
+                                Console.WriteLine("6 - Modify student grade");
+                                choice = Convert.ToInt32(Console.ReadLine());
+                            }
+
+                            switch (choice)
+                            {
+                                case 1:
+                                    teacher.Add_Assignment(conn, cmd, rdr);
+                                    break;
+                                case 2:
+                                    teacher.Add_Grades(conn, cmd, rdr);
+                                    break;
+                                case 3:
+                                    teacher.Print_Student_Informations(conn, cmd, rdr);
+                                    break;
+                                case 4:
+                                    teacher.Print_Student_Attendances(conn, cmd, rdr);
+                                    break;
+                                case 5:
+                                    teacher.Print_Grades_Notebook(conn, cmd, rdr);
+                                    break;
+                                case 6:
+                                    teacher.Modify_Student_Grade(conn, cmd, rdr);
+                                    break;
+                                default:
+                                    return;
+                            }
+                            Console.WriteLine("If you want to stop. Type : Exit");
+                            key = Console.ReadLine();
+                        }
+                    }
+                }
+                else if (i > 1000)
+                {
+                    using (var dbCtx = new VGC_SqlContext())
+                    {
+                        List<Student> listing = dbCtx.Students.ToList();
+                        student = listing[i-1001];
+                        Console.WriteLine(student.ToString());
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        string key = " ";
+
+                        while (key != "Exit")
+                        {
+                            int choice = 0;
+                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9)
+                            {
+                                Console.WriteLine("What do you want to do ?");
+                                Console.WriteLine("1 - Course registration");
+                                Console.WriteLine("2 - Add money");
+                                Console.WriteLine("3 - Payment");
+                                Console.WriteLine("4 - Print fees history");
+                                Console.WriteLine("5 - Print attendances");
+                                Console.WriteLine("6 - Print assignments");
+                                Console.WriteLine("7 - Print grades");
+                                Console.WriteLine("8 - Report card");
+                                Console.WriteLine("9 - TimetableWeek");
+                                choice = Convert.ToInt32(Console.ReadLine());
+                            }
+
+                            switch (choice)
+                            {
+                                case 1:
+                                    student.Course_Registration(conn, cmd, rdr, random);
+                                    break;
+                                case 2:
+                                    student.Add_Money(conn, cmd, rdr);
+                                    break;
+                                case 3:
+                                    student.Payment(conn, cmd, rdr);
+                                    break;
+                                case 4:
+                                    student.Print_Fees_History(conn, cmd, rdr);
+                                    break;
+                                case 5:
+                                    student.Print_Attendances(conn, cmd, rdr);
+                                    break;
+                                case 6:
+                                    student.Print_Assignments(conn, cmd, rdr);
+                                    break;
+                                case 7:
+                                    student.Print_Grades(conn, cmd, rdr);
+                                    break;
+                                //case 8:
+                                //    student.ReportCard();
+                                //    break;
+                                case 9:
+                                    student.TimetableWeek();
+                                    break;
+                                default:
+                                    return;
+                            }
+                            Console.WriteLine("If you want to stop. Type : Exit");
+                            key = Console.ReadLine();
+                        }
+                    }
+                }
+            }
         }
     }
 }

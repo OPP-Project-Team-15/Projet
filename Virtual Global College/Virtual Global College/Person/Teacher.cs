@@ -57,35 +57,9 @@ namespace Virtual_Global_College
             return index;
         }
 
-        /// <summary>
-        /// Allow the teacher to publish a new grade for a specific subject and a specific student
-        /// </summary>
-        /// <param name="studentGrade"></param>
-        public void Publish_Grade(Student studentGraded)
-        {
-            bool subjectExist = false;
-            string choice = "";
-            while (subjectExist == false)
-            {
-                Console.WriteLine("\nIn which subject do you want to put grade ?");
-                choice = Console.ReadLine();
-                for (int index1 = 0; index1 < SubjectStudent.Count && subjectExist != true; index1++)
-                {
-                    subjectExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(choice);
-                }
-            }
-            Console.WriteLine("\nGive a name for the assignment :");
-            string nameAssignment = Console.ReadLine();
-            Console.WriteLine("\nGive a grade for " + studentGraded.FirstName + " for " + choice);
-            int grade = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Give a date for the exam :");
-            string date = Console.ReadLine();
-            // Ici ajouter les informations aux fichiers notes de la matiere en question
-        }
-
 
         /// <summary>
-        /// Allow the teacher to create a new assignment for its students
+        /// Allow the teacher to create a new assignment for it's students
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="cmd"></param>

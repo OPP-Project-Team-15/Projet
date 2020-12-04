@@ -86,7 +86,7 @@ namespace Virtual_Global_College
         {
             List<Student> studentNewSubject = new List<Student>();
             Console.WriteLine("What do you want to do ? ");
-            Console.WriteLine("1 Create a course");
+            Console.WriteLine("1 Create a subject");
             Console.WriteLine("2 Create an exam");
             Console.WriteLine("3 Delete a course");
             int cx = Convert.ToInt32(Console.ReadLine());
