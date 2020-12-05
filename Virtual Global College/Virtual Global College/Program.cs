@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Timers;
+using System.Threading;
 
 
 
@@ -498,22 +500,28 @@ namespace Virtual_Global_College
                 }
             }
 
-            Console.Write("Success. Datas loading ...");
+            Console.WriteLine("Success");
             ConsoleSpiner spin = new ConsoleSpiner();
+            Console.Write("Loading....");
             for (int delay = 0; delay < 15000; delay++)
+            {
                 spin.Turn();
-            Console.WriteLine("\n");
+            }
+
 
             int i = Convert.ToInt32(id);
             if (pass == true)
             {
+
                 if (i > 0 && i <= 99)
                 {
                     using (var dbCtx = new VGC_SqlContext())
                     {
                         List<Admin> listing = dbCtx.Admins.ToList();
                         admin = listing[i-1];
-                        Console.WriteLine($"{admin.ToString(conn, cmd, rdr)}\n\n");
+                        Console.WriteLine(admin.ToString(conn, cmd, rdr));
+                        Console.WriteLine();
+                        Console.WriteLine();
                         string key = " ";
 
                         while (key != "Exit")
@@ -540,7 +548,6 @@ namespace Virtual_Global_College
                                 Console.WriteLine();
                             }
 
-                            Console.Clear();
                             switch (choice)
                             {
                                 //case 1:
@@ -580,7 +587,7 @@ namespace Virtual_Global_College
                                     admin.Delete_Teacher(conn, cmd, rdr);
                                     break;
                                 case 13:
-                                    admin.ModifyContact();
+                                    admin.ModifyContact(conn, cmd, rdr, "admin");
                                     break;
                                 //case 14:
                                 //    admin.SubjectMandatory();
@@ -588,7 +595,7 @@ namespace Virtual_Global_College
                                 default:
                                     return;
                             }
-                            Console.WriteLine("If you want to stop, write : Exit\nElse, type Enter");
+                            Console.WriteLine("If you want to stop. Type : Exit");
                             key = Console.ReadLine();
                             Console.Clear();
                         }
@@ -600,12 +607,13 @@ namespace Virtual_Global_College
                     {
                         List<Teacher> listing = dbCtx.Teachers.ToList();
                         teacher = listing[i-100];
+                        Console.WriteLine(teacher.ToString(conn, cmd, rdr));
+                        Console.WriteLine();
+                        Console.WriteLine();
                         string key = " ";
 
                         while (key != "Exit")
                         {
-                            Console.WriteLine($"{teacher.ToString(conn, cmd, rdr)}\n\n");
-
                             int choice = 0;
                             while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7)
                             {
@@ -622,7 +630,6 @@ namespace Virtual_Global_College
 
                             }
 
-                            Console.Clear();
                             switch (choice)
                             {
                                 case 1:
@@ -644,12 +651,12 @@ namespace Virtual_Global_College
                                     teacher.Modify_Student_Grade(conn, cmd, rdr);
                                     break;
                                 case 7:
-                                    teacher.ModifyContact();
+                                    teacher.ModifyContact(conn, cmd, rdr, "teacher");
                                     break;
                                 default:
                                     return;
                             }
-                            Console.WriteLine("If you want to stop, write : Exit\nElse, type Enter");
+                            Console.WriteLine("If you want to stop. Type : Exit");
                             key = Console.ReadLine();
                             Console.Clear();
                         }
@@ -661,12 +668,13 @@ namespace Virtual_Global_College
                     {
                         List<Student> listing = dbCtx.Students.ToList();
                         student = listing[i-1001];
+                        Console.WriteLine(student.ToString(conn, cmd, rdr));
+                        Console.WriteLine();
+                        Console.WriteLine();
                         string key = " ";
 
                         while (key != "Exit")
                         {
-                            Console.WriteLine($"{student.ToString(conn, cmd, rdr)}\n\n");
-
                             int choice = 0;
                             while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10)
                             {
@@ -680,13 +688,12 @@ namespace Virtual_Global_College
                                 Console.WriteLine("7 - Print grades");
                                 Console.WriteLine("8 - Report card");
                                 Console.WriteLine("9 - TimetableWeek");
-                                Console.WriteLine("10 - Modify your contact\n");
+                                Console.WriteLine("10 - Modify your contact");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
                             }
 
-                            Console.Clear();
                             switch (choice)
                             {
                                 case 1:
@@ -717,12 +724,12 @@ namespace Virtual_Global_College
                                     student.TimetableWeek();
                                     break;
                                 case 10:
-                                    student.ModifyContact();
+                                    student.ModifyContact(conn, cmd, rdr, "student");
                                     break;
                                 default:
                                     return;
                             }
-                            Console.WriteLine("If you want to stop, write : Exit\nElse, type Enter");
+                            Console.WriteLine("If you want to stop. Type : Exit");
                             key = Console.ReadLine();
                             Console.Clear();
                         }

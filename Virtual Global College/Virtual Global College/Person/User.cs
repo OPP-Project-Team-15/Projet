@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using MySql.Data.MySqlClient;
+
+
 
 
 namespace Virtual_Global_College
@@ -26,35 +29,105 @@ namespace Virtual_Global_College
 
         #region : Methods
 
-        public void ModifyContact()
+        public void ModifyContact(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr, string user)
         {
-            bool Modify = true;
+            bool Modify = true; string sql;
 
             while (Modify)
             {
-                Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number\n- Password");
-                string ModifyInfo = Console.ReadLine();
-                switch (ModifyInfo)
+                if (user == "student")
                 {
-                    case "Phone number":
-                        Console.WriteLine("\nWhat is your new phone number ?");
-                        PhoneNumber = Console.ReadLine();
-                        Console.WriteLine("\nYour phone number has been changed");
-                        break;
-
-                    case "Password":
-                        Console.WriteLine("\nWhat is your new password ?");
-                        Password = Console.ReadLine();
-                        Console.WriteLine("\nYour password has been changed");
-                        break;
+                    Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Password");
+                    string ModifyInfo = Console.ReadLine();
+                    switch (ModifyInfo)
+                    {
+                        case "Phone number":
+                            Console.WriteLine("\nWhat is your new phone number ?");
+                            PhoneNumber = Console.ReadLine();
+                            sql = $"UPDATE Students SET PhoneNumber ='{PhoneNumber}' WHERE Id = @id";
+                            cmd = new MySqlCommand(sql, conn);
+                            cmd.Prepare();
+                            cmd.Parameters.AddWithValue("@id", Id);
+                            Program.Insert(conn, cmd, rdr);
+                            Console.WriteLine("\nYour phone number has been changed");
+                            break;
+                        case "Password":
+                            Console.WriteLine("\nWhat is your new password ?");
+                            Password = Console.ReadLine();
+                            sql = $"UPDATE Students SET Password ='{Password}' WHERE Id = @id";
+                            cmd = new MySqlCommand(sql, conn);
+                            cmd.Prepare();
+                            cmd.Parameters.AddWithValue("@id", Id);
+                            Program.Insert(conn, cmd, rdr);
+                            Console.WriteLine("\nYour password has been changed");
+                            break;
+                    }
                 }
 
-                Console.WriteLine("Do you want to change something else ? Please write your response as it's written\n- yes \n- no");
+                if (user == "admin")
+                {
+                    Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Password");
+                    string ModifyInfo = Console.ReadLine();
+                    switch (ModifyInfo)
+                    {
+                        case "Phone number":
+                            Console.WriteLine("\nWhat is your new phone number ?");
+                            PhoneNumber = Console.ReadLine();
+                            sql = $"UPDATE Admins SET PhoneNumber ='{PhoneNumber}' WHERE Id = @id";
+                            cmd = new MySqlCommand(sql, conn);
+                            cmd.Prepare();
+                            cmd.Parameters.AddWithValue("@id", Id);
+                            Program.Insert(conn, cmd, rdr);
+                            Console.WriteLine("\nYour phone number has been changed");
+                            break;
+                        case "Password":
+                            Console.WriteLine("\nWhat is your new password ?");
+                            Password = Console.ReadLine();
+                            sql = $"UPDATE Admins SET Password ='{Password}' WHERE Id = @id";
+                            cmd = new MySqlCommand(sql, conn);
+                            cmd.Prepare();
+                            cmd.Parameters.AddWithValue("@id", Id);
+                            Program.Insert(conn, cmd, rdr);
+                            Console.WriteLine("\nYour password has been changed");
+                            break;
+                    }
+                }
+
+                if (user == "teacher")
+                {
+                    Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Password");
+                    string ModifyInfo = Console.ReadLine();
+                    switch (ModifyInfo)
+                    {
+                        case "Phone number":
+                            Console.WriteLine("\nWhat is your new phone number ?");
+                            PhoneNumber = Console.ReadLine();
+                            sql = $"UPDATE Teachers SET PhoneNumber ='{PhoneNumber}' WHERE Id = @id";
+                            cmd = new MySqlCommand(sql, conn);
+                            cmd.Prepare();
+                            cmd.Parameters.AddWithValue("@id", Id);
+                            Program.Insert(conn, cmd, rdr);
+                            Console.WriteLine("\nYour phone number has been changed");
+                            break;
+                        case "Password":
+                            Console.WriteLine("\nWhat is your new password ?");
+                            Password = Console.ReadLine();
+                            sql = $"UPDATE Teachers SET Password ='{Password}' WHERE Id = @id";
+                            cmd = new MySqlCommand(sql, conn);
+                            cmd.Prepare();
+                            cmd.Parameters.AddWithValue("@id", Id);
+                            Program.Insert(conn, cmd, rdr);
+                            Console.WriteLine("\nYour password has been changed");
+                            break;
+                    }
+                }
+
+                Console.WriteLine("Do you want to change something else ? Please write your response as it's written\n- Yes \n- No");
 
                 string response = Console.ReadLine();
-                while (response != "yes" && response != "no")
+                while (response != "Yes" && response != "No")
                 {
-                    Console.WriteLine("\nPlease write as it's written :");
+                    Console.WriteLine("\nPlease write as it's written : \n- Yes \n- No");
                     response = Console.ReadLine();
                 }
 
