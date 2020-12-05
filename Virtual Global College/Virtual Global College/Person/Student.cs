@@ -462,6 +462,8 @@ namespace Virtual_Global_College
                         index++;
                     }
 
+                    
+
                     Grades_NoteBook.AddLast(Names_Marks);
                 }
             }
