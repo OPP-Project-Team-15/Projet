@@ -446,10 +446,7 @@ namespace Virtual_Global_College
                     cmd = new MySqlCommand(sql, conn);
                     Names_Marks_Sql = Program.Pick(conn, cmd, rdr);
 
-                    if (Names_Marks_Sql.Count < 6)
-                        Names_Marks = new string[3, 3];
-                    else
-                        Names_Marks = new string[Names_Marks_Sql.Count / 2 + 1, 3];
+                    Names_Marks = new string[Names_Marks_Sql.Count / 2 + 1, 3];
 
                     Names_Marks[0, 0] = $"{FirstName} {LastName}";
                     Names_Marks[1, 0] = "Grades";
