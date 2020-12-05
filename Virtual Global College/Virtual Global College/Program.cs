@@ -407,48 +407,19 @@ namespace Virtual_Global_College
             MySqlCommand cmd = null;
             MySqlDataReader rdr = null;
 
-            bool pass; bool exist;
+            bool pass = false; bool exist;
             string id = " ";
-            
+            int j = 0;
             string sql;
-            //DateTime absenceDate = new DateTime(2020, 12, 1);
-            //List<string> absenceType = new List<string>();
-            //sql = $"SELECT Type FROM Attendances WHERE IdStudent='1001' AND Subject = 'Numerical Analysis' AND Date = '2020-12-01'";
-            //cmd = new MySqlCommand(sql, conn);
-            //absenceType = Pick(conn, cmd, rdr);
-            //foreach (string element in absenceType)
-            //    Console.WriteLine(element);
-            //Console.WriteLine("ok");
-            //Console.ReadKey();
+            bool forgetPassword = false;
 
-            Console.Write("ID : ");
-            id = Console.ReadLine();
-            sql = "SELECT Id From Students";
-            cmd = new MySqlCommand(sql, conn);
-            exist = Exist(id, conn, cmd, rdr);
-
-            if (exist == false)
+            while (forgetPassword == false)
             {
-                sql = "SELECT Id From Teachers";
-                cmd = new MySqlCommand(sql, conn);
-                exist = Exist(id, conn, cmd, rdr);
-            }
-
-            if (exist == false)
-            {
-                sql = "SELECT Id From Admins";
-                cmd = new MySqlCommand(sql, conn);
-                exist = Exist(id, conn, cmd, rdr);
-            }
-
-            while (exist == false)
-            {
-                Console.Write("This ID doesn't exist. Please enter an existing ID : ");
+                Console.Write("ID : ");
                 id = Console.ReadLine();
-
-                sql = "SELECT Id FROM Students";
+                sql = "SELECT Id From Students";
                 cmd = new MySqlCommand(sql, conn);
-                exist = Program.Exist(id, conn, cmd, rdr);
+                exist = Exist(id, conn, cmd, rdr);
 
                 if (exist == false)
                 {
@@ -463,51 +434,97 @@ namespace Virtual_Global_College
                     cmd = new MySqlCommand(sql, conn);
                     exist = Exist(id, conn, cmd, rdr);
                 }
-            }
 
-            Console.Write("Password : ");
-            var password = ReadPassword();
-            sql = $"SELECT Password FROM Students WHERE Id = '{id}'";
-            cmd = new MySqlCommand(sql, conn);
-            pass = Exist(password, conn, cmd, rdr);
+                while (exist == false)
+                {
+                    Console.Write("This ID doesn't exist. Please enter an existing ID : ");
+                    id = Console.ReadLine();
 
-            if (pass == false)
-            {
-                sql = $"SELECT Password From Teachers WHERE Id = '{id}' ";
-                cmd = new MySqlCommand(sql, conn);
-                pass = Exist(password, conn, cmd, rdr);
-            }
+                    sql = "SELECT Id FROM Students";
+                    cmd = new MySqlCommand(sql, conn);
+                    exist = Program.Exist(id, conn, cmd, rdr);
 
-            if (pass == false)
-            {
-                sql = $"SELECT Password From Admins WHERE Id = '{id}' ";
-                cmd = new MySqlCommand(sql, conn);
-                pass = Exist(password, conn, cmd, rdr);
-            }
+                    if (exist == false)
+                    {
+                        sql = "SELECT Id From Teachers";
+                        cmd = new MySqlCommand(sql, conn);
+                        exist = Exist(id, conn, cmd, rdr);
+                    }
 
-            while (pass == false)
-            {
-                Console.Write("Wrong password. Please type again: ");
-                password = ReadPassword();
+                    if (exist == false)
+                    {
+                        sql = "SELECT Id From Admins";
+                        cmd = new MySqlCommand(sql, conn);
+                        exist = Exist(id, conn, cmd, rdr);
+                    }
+                }
 
+                Console.Write("Password : ");
+                var password = ReadPassword();
                 sql = $"SELECT Password FROM Students WHERE Id = '{id}'";
                 cmd = new MySqlCommand(sql, conn);
-                pass = Program.Exist(password, conn, cmd, rdr);
+                pass = Exist(password, conn, cmd, rdr);
 
                 if (pass == false)
                 {
-                    sql = $"SELECT Password From Teachers WHERE Id = '{id}'";
+                    sql = $"SELECT Password From Teachers WHERE Id = '{id}' ";
                     cmd = new MySqlCommand(sql, conn);
                     pass = Exist(password, conn, cmd, rdr);
                 }
 
                 if (pass == false)
                 {
-                    sql = $"SELECT Password From Admins WHERE Id = '{id}'";
+                    sql = $"SELECT Password From Admins WHERE Id = '{id}' ";
                     cmd = new MySqlCommand(sql, conn);
                     pass = Exist(password, conn, cmd, rdr);
+                }
+
+                forgetPassword = true;
+
+                while (pass == false)
+                {
+                    j += 1;
+                    Console.Write("Wrong password. Please type again: ");
+                    password = ReadPassword();
+
+                    sql = $"SELECT Password FROM Students WHERE Id = '{id}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    pass = Program.Exist(password, conn, cmd, rdr);
+
+                    if (pass == false)
+                    {
+                        sql = $"SELECT Password From Teachers WHERE Id = '{id}'";
+                        cmd = new MySqlCommand(sql, conn);
+                        pass = Exist(password, conn, cmd, rdr);
+                    }
+
+                    if (pass == false)
+                    {
+                        sql = $"SELECT Password From Admins WHERE Id = '{id}'";
+                        cmd = new MySqlCommand(sql, conn);
+                        pass = Exist(password, conn, cmd, rdr);
+                    }
+
+                    forgetPassword = true;
+
+                    if (j > 2)
+                    {
+                        Console.WriteLine("You have to change your password ? Write a new one");
+                        string passwordForget = Console.ReadLine();
+                        sql = $"UPDATE Students SET Password ='{passwordForget}' WHERE Id = @id";
+                        cmd = new MySqlCommand(sql, conn);
+                        cmd.Prepare();
+                        cmd.Parameters.AddWithValue("@id", id);
+                        Program.Insert(conn, cmd, rdr);
+                        Console.WriteLine("\nYour password has been changed");
+                        forgetPassword = false;
+                        pass = true;
+                        Console.Clear();
+                    }
                 }
             }
+            
+            
 
             Console.WriteLine("Success");
             ConsoleSpiner spin = new ConsoleSpiner();
@@ -562,9 +579,9 @@ namespace Virtual_Global_College
                                 case 2:
                                     admin.Print_Student_Informations(conn, cmd, rdr);
                                     break;
-                                case 3:
-                                    admin.Print_Student_Attendances(conn, cmd, rdr);
-                                    break;
+                                //case 3:
+                                //    admin.Print_Student_Attendances(conn, cmd, rdr);
+                                //    break;
                                 case 4:
                                     admin.Print_Student_Fees_History(conn, cmd, rdr);
                                     break;
@@ -650,9 +667,9 @@ namespace Virtual_Global_College
                                 case 5:
                                     teacher.Print_Grades_Notebook(conn, cmd, rdr);
                                     break;
-                                case 6:
-                                    teacher.Modify_Student_Grade(conn, cmd, rdr);
-                                    break;
+                                //case 6:
+                                //    teacher.Modify_Student_Grade(conn, cmd, rdr);
+                                //    break;
                                 case 7:
                                     teacher.ModifyContact(conn, cmd, rdr, "teacher");
                                     break;
@@ -679,7 +696,7 @@ namespace Virtual_Global_College
                             Console.WriteLine(student.ToString(conn, cmd, rdr));
 
                             int choice = 0;
-                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10)
+                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9)
                             {
                                 Console.WriteLine("\n\nWhat do you want to do ?");
                                 Console.WriteLine(" 1 - Course registration");
@@ -722,12 +739,9 @@ namespace Virtual_Global_College
                                     student.Print_Grades(conn, cmd, rdr);
                                     break;
                                 //case 8:
-                                //    student.ReportCard();
+                                //    student.TimetableWeek();
                                 //    break;
                                 case 9:
-                                    student.TimetableWeek();
-                                    break;
-                                case 10:
                                     student.ModifyContact(conn, cmd, rdr, "student");
                                     break;
                                 default:
