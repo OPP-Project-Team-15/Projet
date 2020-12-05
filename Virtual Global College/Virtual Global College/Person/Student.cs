@@ -446,8 +446,7 @@ namespace Virtual_Global_College
                     cmd = new MySqlCommand(sql, conn);
                     Names_Marks_Sql = Program.Pick(conn, cmd, rdr);
 
-                    Names_Marks = new string[Names_Marks_Sql.Count / 2 + 1, 3];
-
+                    Names_Marks = new string[Names_Marks_Sql.Count + 3, 3];
                     Names_Marks[0, 0] = $"{FirstName} {LastName}";
                     Names_Marks[1, 0] = "Grades";
                     Names_Marks[2, 0] = $"{subject}";
@@ -459,7 +458,7 @@ namespace Virtual_Global_College
                         if (index % 2 == 0)
                             Names_Marks[index / 2 + 1, 1] = Names_Marks_Sql.ElementAt(index);
                         else
-                            Names_Marks[index / 2, 2] = Names_Marks_Sql.ElementAt(index);
+                            Names_Marks[(index+1) / 2, 2] = Names_Marks_Sql.ElementAt(index);
                         index++;
                     }
 
