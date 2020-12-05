@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Timers;
+using System.Threading;
 
 
 
@@ -370,6 +372,26 @@ namespace Virtual_Global_College
             return password;
         }
 
+        public class ConsoleSpiner
+        {
+            int counter;
+            public ConsoleSpiner()
+            {
+                counter = 0;
+            }
+            public void Turn()
+            {
+                counter++;
+                switch (counter % 4)
+                {
+                    case 0: Console.Write("/"); break;
+                    case 1: Console.Write("-"); break;
+                    case 2: Console.Write("\\"); break;
+                    case 3: Console.Write("|"); break;
+                }
+                Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+            }
+        }
 
 
         public static void Main(string[] args)
@@ -479,10 +501,18 @@ namespace Virtual_Global_College
             }
 
             Console.WriteLine("Success");
+            ConsoleSpiner spin = new ConsoleSpiner();
+            Console.Write("Loading....");
+            for (int delay = 0; delay < 15000; delay++)
+            {
+                spin.Turn();
+            }
+
 
             int i = Convert.ToInt32(id);
             if (pass == true)
             {
+
                 if (i > 0 && i <= 99)
                 {
                     using (var dbCtx = new VGC_SqlContext())
@@ -557,7 +587,7 @@ namespace Virtual_Global_College
                                     admin.Delete_Teacher(conn, cmd, rdr);
                                     break;
                                 case 13:
-                                    admin.ModifyContact();
+                                    admin.ModifyContact(conn, cmd, rdr, "admin");
                                     break;
                                 //case 14:
                                 //    admin.SubjectMandatory();
@@ -621,7 +651,7 @@ namespace Virtual_Global_College
                                     teacher.Modify_Student_Grade(conn, cmd, rdr);
                                     break;
                                 case 7:
-                                    teacher.ModifyContact();
+                                    teacher.ModifyContact(conn, cmd, rdr, "teacher");
                                     break;
                                 default:
                                     return;
@@ -694,7 +724,7 @@ namespace Virtual_Global_College
                                     student.TimetableWeek();
                                     break;
                                 case 10:
-                                    student.ModifyContact();
+                                    student.ModifyContact(conn, cmd, rdr, "student");
                                     break;
                                 default:
                                     return;
