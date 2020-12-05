@@ -461,13 +461,9 @@ namespace Virtual_Global_College
                             Names_Marks[(index+1) / 2, 2] = Names_Marks_Sql.ElementAt(index);
                         index++;
                     }
-
-                    
-
                     Grades_NoteBook.AddLast(Names_Marks);
                 }
             }
-
             Teacher.GradeExam(Grades_NoteBook);
         }
 
@@ -546,78 +542,6 @@ namespace Virtual_Global_College
                     default:
                         return;
                 }
-            }
-        }
-
-        /// <summary>
-        /// We create the report card of the student
-        /// </summary>
-        //public void ReportCard(SortedList<Subject, string[,]> Grade)
-        //{
-        //    List<string[]> gradeOfTheStudent = new List<string[]>();
-        //    string[] start = new string[1] { "Report card of " + Name + Surname + " :" };
-        //    gradeOfTheStudent.Add(start);
-        //    string[] start2 = new string[5] { "Name Assignment :", "NameSubject :", "Date :", "Hours :", "Grade :" };
-        //    gradeOfTheStudent.Add(start2);
-        //    foreach (KeyValuePair<Subject, string[,]> grade in Grade)
-        //    {
-        //        for(int index = 0; index < grade.Value.GetLength(0); index++)
-        //        {
-        //            if (grade.Value[index,1] == Id)
-        //            {
-        //                if (grade.Value[index, 2].Length == 1)
-        //                {
-        //                    string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3, 0], 0 + grade.Value[index, 2] };
-        //                    gradeOfTheStudent.Add(mark);
-        //                }
-        //                else
-        //                {
-        //                    string[] mark = new string[5] { grade.Value[0, 0], grade.Value[1, 0], grade.Value[2, 0], grade.Value[3, 0], grade.Value[index, 2] };
-        //                    gradeOfTheStudent.Add(mark);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    ToStringGradeStudent(gradeOfTheStudent);
-        //}
-
-        /// <summary>
-        /// Show the report card for a student
-        /// </summary>
-        public void ToStringGradeStudent(List<string[]> grade)
-        {
-            int index2 = 0;
-            foreach (string[] exam in grade)
-            {
-                index2++;
-                for (int index1 = 0; index1 < exam.Length; index1++)
-                {
-                    if (exam[index1].Length < grade[0].Length)
-                    {
-                        for (int i = 0; i < grade[0].Length - exam[index1].Length; i++)
-                        {
-                            Console.Write(" ");
-                        }
-                        Console.Write(exam[index1] + "\t\t\t\t      ");
-                        Console.Write(exam[index1]);
-                    }
-                    else if (grade[0].Length < exam[index1].Length)
-                    {
-                        for (int i = 0; i < 32 + "      ".Length - exam[index1].Length; i++)
-                        {
-                            Console.Write(" ");
-                        }
-                        Console.Write(exam[index1]);
-                    }
-                    else
-                    {
-                        Console.Write(exam[index1] + "\t\t\t\t      ");
-                    }
-                }
-                Console.WriteLine();
-                Console.Write("--------------------------------------------------------------------------------------------------------");
-                Console.Write("--------------------------------------------------------------------------------------------------------");
-                Console.WriteLine();
             }
         }
         #endregion

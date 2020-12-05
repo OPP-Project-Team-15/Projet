@@ -582,9 +582,9 @@ namespace Virtual_Global_College
                                 case 2:
                                     admin.Print_Student_Informations(conn, cmd, rdr);
                                     break;
-                                case 3:
-                                    admin.Print_Student_Attendances(conn, cmd, rdr);
-                                    break;
+                                //case 3:
+                                //    admin.Print_Student_Attendances(conn, cmd, rdr);
+                                //    break;
                                 case 4:
                                     admin.Print_Student_Fees_History(conn, cmd, rdr);
                                     break;
@@ -673,9 +673,9 @@ namespace Virtual_Global_College
                                 case 5:
                                     teacher.Print_Grades_Notebook(conn, cmd, rdr);
                                     break;
-                                case 6:
-                                    teacher.Modify_Student_Grade(conn, cmd, rdr);
-                                    break;
+                                //case 6:
+                                //    teacher.Modify_Student_Grade(conn, cmd, rdr);
+                                //    break;
                                 case 7:
                                     teacher.ModifyContact(conn, cmd, rdr, "teacher");
                                     break;
@@ -702,7 +702,7 @@ namespace Virtual_Global_College
                         while (key != "Exit")
                         {
                             int choice = 0;
-                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10)
+                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9)
                             {
                                 Console.WriteLine("What do you want to do ?");
                                 Console.WriteLine("1 - Course registration");
@@ -712,9 +712,8 @@ namespace Virtual_Global_College
                                 Console.WriteLine("5 - Print attendances");
                                 Console.WriteLine("6 - Print assignments");
                                 Console.WriteLine("7 - Print grades");
-                                Console.WriteLine("8 - Report card");
-                                Console.WriteLine("9 - TimetableWeek");
-                                Console.WriteLine("10 - Modify your contact");
+                                Console.WriteLine("8 - TimetableWeek");
+                                Console.WriteLine("9 - Modify your contact");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
@@ -743,13 +742,10 @@ namespace Virtual_Global_College
                                 case 7:
                                     student.Print_Grades(conn, cmd, rdr);
                                     break;
-                                //case 8:
-                                //    student.ReportCard();
-                                //    break;
-                                case 9:
+                                case 8:
                                     student.TimetableWeek();
                                     break;
-                                case 10:
+                                case 9:
                                     student.ModifyContact(conn, cmd, rdr, "student");
                                     break;
                                 default:
