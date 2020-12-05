@@ -742,9 +742,9 @@ namespace Virtual_Global_College
                                 case 7:
                                     student.Print_Grades(conn, cmd, rdr);
                                     break;
-                                case 8:
-                                    student.TimetableWeek();
-                                    break;
+                                //case 8:
+                                //    student.TimetableWeek();
+                                //    break;
                                 case 9:
                                     student.ModifyContact(conn, cmd, rdr, "student");
                                     break;
