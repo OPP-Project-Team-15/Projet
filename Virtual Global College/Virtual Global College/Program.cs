@@ -356,11 +356,10 @@ namespace Virtual_Global_College
 
             using (var dbCtx = new VGC_SqlContext())
             {
-                List<Student> listing = dbCtx.Students.ToList();
-                student = listing[0];
-                student.Course_Registration(conn, cmd, rdr, random);
+                List<Admin> listing = dbCtx.Admins.ToList();
+                admin = listing[0];
+                admin.Modify_Student_Attendances(conn, cmd, rdr);
                 dbCtx.SaveChanges();
-
             }
 
 

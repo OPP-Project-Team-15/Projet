@@ -110,3 +110,4 @@ C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global Colleg
 C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CopyComplete
 C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.exe
 C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.pdb
+C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csprojAssemblyReference.cache
