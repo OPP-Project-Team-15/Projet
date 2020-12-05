@@ -21,7 +21,7 @@ namespace Virtual_Global_College
             cmd = new MySqlCommand(sql, conn);
             List<string> informations = Program.Pick(conn, cmd, rdr);
 
-            string student_Informations = $"\nStudent Informations :\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}";
+            string student_Informations = $"\nTeacher Informations :\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}\n";
             student_Informations += $"Sexe : {informations.ElementAt(4)}\nPhone Number : {informations.ElementAt(5)}\nMail : {informations.ElementAt(6)}";
 
             return student_Informations;
@@ -57,35 +57,9 @@ namespace Virtual_Global_College
             return index;
         }
 
-        /// <summary>
-        /// Allow the teacher to publish a new grade for a specific subject and a specific student
-        /// </summary>
-        /// <param name="studentGrade"></param>
-        public void Publish_Grade(Student studentGraded)
-        {
-            bool subjectExist = false;
-            string choice = "";
-            while (subjectExist == false)
-            {
-                Console.WriteLine("\nIn which subject do you want to put grade ?");
-                choice = Console.ReadLine();
-                for (int index1 = 0; index1 < SubjectStudent.Count && subjectExist != true; index1++)
-                {
-                    subjectExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(choice);
-                }
-            }
-            Console.WriteLine("\nGive a name for the assignment :");
-            string nameAssignment = Console.ReadLine();
-            Console.WriteLine("\nGive a grade for " + studentGraded.FirstName + " for " + choice);
-            int grade = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Give a date for the exam :");
-            string date = Console.ReadLine();
-            // Ici ajouter les informations aux fichiers notes de la matiere en question
-        }
-
 
         /// <summary>
-        /// Allow the teacher to create a new assignment for its students
+        /// Allow the teacher to create a new assignment for it's students
         /// </summary>
         /// <param name="conn"></param>
         /// <param name="cmd"></param>
@@ -445,7 +419,7 @@ namespace Virtual_Global_College
             foreach (string subject in Subjects)
             {
                 // WE EXAMINE IF THERE ARE ANY GRADES OF THE TEACHER IN THE SUBJECT
-                sql = $"SELECT IdGrade FROM Grades WHERE NameSubject='{subject}' AND IdTeacher='{Id}'";
+                sql = $"SELECT IdGrades FROM Grades WHERE NameSubject='{subject}' AND IdTeacher='{Id}'";
                 cmd = new MySqlCommand(sql, conn);
                 gradeExist = Program.Read(conn, cmd, rdr, 4);
 
@@ -476,7 +450,7 @@ namespace Virtual_Global_College
                         cmd = new MySqlCommand(sql, conn);
                         Names_Marks_Sql = Program.Pick(conn, cmd, rdr);
 
-                        Names_Marks = new string[Names_Marks_Sql.Count / 2 + 1, 3];
+                        Names_Marks = new string[Names_Marks_Sql.Count + 3, 3];
                         Names_Marks[0, 0] = $"{FirstName} {LastName}";
                         Names_Marks[1, 0] = $"{subject}";
                         Names_Marks[2, 0] = $"{name}";
@@ -487,8 +461,8 @@ namespace Virtual_Global_College
                         {
                             if (index % 2 == 0)
                                 Names_Marks[index / 2 + 1, 1] = Names_Marks_Sql.ElementAt(index);
-                            else if (index / 2 != 0)
-                                Names_Marks[index / 2, 2] = Names_Marks_Sql.ElementAt(index);
+                            else if ((index+1) / 2 != 0)
+                                Names_Marks[(index+1) / 2, 2] = Names_Marks_Sql.ElementAt(index);
                             index++;
                         }
 

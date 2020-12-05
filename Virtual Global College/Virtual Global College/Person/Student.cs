@@ -61,7 +61,7 @@ namespace Virtual_Global_College
             cmd = new MySqlCommand(sql, conn);
             List<string> informations = Program.Pick(conn, cmd, rdr);
 
-            string student_Informations = $"\nStudent Informations :\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}";
+            string student_Informations = $"\nStudent Informations :\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}\n";
             student_Informations += $"Sexe : {informations.ElementAt(4)}\nPhone Number : {informations.ElementAt(5)}\nMail : {informations.ElementAt(6)}\nBranch : {informations.ElementAt(7)}";
 
             return student_Informations;

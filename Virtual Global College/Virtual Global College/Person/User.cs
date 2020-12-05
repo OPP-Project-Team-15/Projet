@@ -25,15 +25,6 @@ namespace Virtual_Global_College
 
 
         #region : Methods
-        public bool VerifyLogin(string passwordToVerify)
-        {
-            bool passwordVerified = false;
-            
-            if (passwordToVerify == Password)
-                passwordVerified = true;
-            
-            return passwordVerified;
-        }
 
         public void ModifyContact()
         {

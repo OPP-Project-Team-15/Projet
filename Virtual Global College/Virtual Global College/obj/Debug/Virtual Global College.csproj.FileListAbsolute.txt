@@ -11,6 +11,13 @@ C:/Users/Alexandre/OneDrive - De Vinci/Bureau/Dublin/POO/Virtual Global College/
 /Volumes/Elements/Esilv/A3/S1/POO/Projet Final/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csprojAssemblyReference.cache
 /Volumes/Elements/Esilv/A3/S1/POO/Projet Final/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.exe
 /Volumes/Elements/Esilv/A3/S1/POO/Projet Final/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.pdb
+C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csprojAssemblyReference.cache
+C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csproj.CoreCompileInputs.cache
+C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.exe
+C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.pdb
+C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.exe.config
+C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.exe
+C:/Users/Alexandre/Source/Repos/OPP-Project-Team-15/Projet/Virtual Global College/Virtual Global College/bin/Debug/Virtual Global College.pdb
 C:/Users/33770/Source/Repos/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csprojAssemblyReference.cache
 C:/Users/33770/Source/Repos/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.csproj.CoreCompileInputs.cache
 C:/Users/33770/Source/Repos/Projet/Virtual Global College/Virtual Global College/obj/Debug/Virtual Global College.exe
@@ -34,80 +41,68 @@ C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Vi
 C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.exe
 C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.pdb
 C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csprojAssemblyReference.cache
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.exe.config
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.exe
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Virtual Global College.pdb
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\BouncyCastle.Crypto.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Google.Protobuf.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Compression.LZ4.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Compression.LZ4.Streams.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Hash.xxHash.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Bcl.HashCode.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.Abstractions.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Caching.Abstractions.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Caching.Memory.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.Binder.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Logging.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Options.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Primitives.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\MySql.Data.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\MySql.Data.EntityFramework.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Renci.SshNet.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Buffers.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Collections.Immutable.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.ComponentModel.Annotations.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Diagnostics.DiagnosticSource.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Memory.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Numerics.Vectors.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Threading.Tasks.Extensions.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Ubiety.Dns.Core.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Zstandard.Net.dll
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Google.Protobuf.pdb
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Google.Protobuf.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Compression.LZ4.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Compression.LZ4.Streams.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Hash.xxHash.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Bcl.HashCode.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.Abstractions.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.Relational.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Caching.Abstractions.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Caching.Memory.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.Binder.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Logging.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Options.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Primitives.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\MySql.Data.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\MySql.Data.EntityFramework.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Renci.SshNet.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Buffers.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Collections.Immutable.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Diagnostics.DiagnosticSource.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Memory.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Numerics.Vectors.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Threading.Tasks.Extensions.xml
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CoreCompileInputs.cache
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csproj.CopyComplete
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.exe
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.pdb
-C:\Users\Alexandre\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\obj\Debug\Virtual Global College.csprojAssemblyReference.cache
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Google.Protobuf.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Compression.LZ4.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Compression.LZ4.Streams.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Hash.xxHash.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Bcl.HashCode.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Logging.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Options.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Primitives.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\MySql.Data.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\MySql.Data.EntityFramework.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Renci.SshNet.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Buffers.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Collections.Immutable.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Memory.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Ubiety.Dns.Core.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Zstandard.Net.dll
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Google.Protobuf.pdb
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Google.Protobuf.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Compression.LZ4.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Compression.LZ4.Streams.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\K4os.Hash.xxHash.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Bcl.HashCode.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.Abstractions.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.EntityFrameworkCore.Relational.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Caching.Abstractions.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Caching.Memory.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Configuration.Binder.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Logging.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Options.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Microsoft.Extensions.Primitives.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\MySql.Data.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\MySql.Data.EntityFramework.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\Renci.SshNet.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Buffers.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Collections.Immutable.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Memory.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\thoma\Source\Repos\OPP-Project-Team-15\Projet\Virtual Global College\Virtual Global College\bin\Debug\System.Threading.Tasks.Extensions.xml
