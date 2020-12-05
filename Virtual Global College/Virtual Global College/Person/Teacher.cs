@@ -21,7 +21,7 @@ namespace Virtual_Global_College
             cmd = new MySqlCommand(sql, conn);
             List<string> informations = Program.Pick(conn, cmd, rdr);
 
-            string student_Informations = $"\nTeacher Informations :\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}\n";
+            string student_Informations = $"######## TEACHERS INFORMATIONS ########\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}\n";
             student_Informations += $"Sexe : {informations.ElementAt(4)}\nPhone Number : {informations.ElementAt(5)}\nMail : {informations.ElementAt(6)}";
 
             return student_Informations;
@@ -66,11 +66,14 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Add_Assignment(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD ASSIGNMENT ########\n");
+
             string sql; string answer; string stringDate;
             string assignmentSubject; string assignmentName; DateTime assignmentDate;
             List<string> Subjects = new List<string>();
             List<string> IdStudents = new List<string>();
             List<string> idAssignmentSubject = new List<string>();
+            char[] split = { '-' }; string[] dateSplited;
 
             // ASK FOR THE SUBJECT OF THE ASSIGNMENT
 
@@ -84,7 +87,7 @@ namespace Virtual_Global_College
             answer = Console.ReadLine();
             while (!Subjects.Contains(answer))
             {
-                Console.WriteLine("\nPlease write as it's written");
+                Console.WriteLine("Please write as it's written");
                 answer = Console.ReadLine();
             }
             assignmentSubject = answer;
@@ -98,25 +101,8 @@ namespace Virtual_Global_College
             // ASK FOR THE DATE OF THE ASSIGNMENT
 
             Console.WriteLine("\nSpecify the date of the assignment (MM-DD-YYYY) :");
-            stringDate = Console.ReadLine();
-            char[] split = { '-' };
-            while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
-            {
-                Console.WriteLine("Please separate by a '-'");
-                stringDate = Console.ReadLine();
-            }
-            string[] dateSplited = stringDate.Split(split);
-            while (Convert.ToInt32(dateSplited[1]) > 31 || Convert.ToInt32(dateSplited[1]) < 0 || Convert.ToInt32(dateSplited[0]) > 12 || Convert.ToInt32(dateSplited[0]) < 0 || Convert.ToInt32(dateSplited[2]) > 2021 || Convert.ToInt32(dateSplited[2]) < 1900)
-            {
-                Console.WriteLine("Please write your date of birth as the correct form (MM-DD-YYYY)");
-                stringDate = Console.ReadLine();
-                while (stringDate[2] != '-' || stringDate[5] != '-' || stringDate.Length != 10)
-                {
-                    Console.WriteLine("Please separate by a '-'");
-                    stringDate = Console.ReadLine();
-                }
-                dateSplited = stringDate.Split(split);
-            }
+            stringDate = Program.Ask_Date();
+            dateSplited = stringDate.Split(split);
             assignmentDate = new DateTime(Convert.ToInt32(dateSplited[2]), Convert.ToInt32(dateSplited[0]), Convert.ToInt32(dateSplited[1]));
 
             // ASK FOR THE NAME OF THE ASSIGNMENT
@@ -135,12 +121,11 @@ namespace Virtual_Global_College
                 //sql = $"INSERT INTO Assignments (Date, Subject, Name, IdStudent) VALUES ('{assignmentDate}', '{assignmentSubject}', '{assignmentName}', '{idStudent}')";
                 //cmd = new MySqlCommand(sql, conn);
                 sql = "INSERT INTO Assignments SET Date = @date, Subject = @subject, Name = @name, IdStudent = @idstudent";
-                conn.Open();
                 cmd = new MySqlCommand(sql, conn);
                 cmd.Prepare();
                 cmd.Parameters.AddWithValue("@date", assignmentDate);
                 cmd.Parameters.AddWithValue("@subject", assignmentSubject);
-                cmd.Parameters.AddWithValue("@type", assignmentName);
+                cmd.Parameters.AddWithValue("@name", assignmentName);
                 cmd.Parameters.AddWithValue("@idstudent", idStudent);
                 Program.Insert(conn, cmd, rdr);
             }
@@ -156,6 +141,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Add_Grades(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD GRADES ########\n");
+
             string sql; string subjectGrade; string answer; string nameGrade; string markGrade;
             int compteur;
             string[,] Grades;
@@ -271,7 +258,6 @@ namespace Virtual_Global_College
                 //cmd = new MySqlCommand(sql, conn);
                 //Program.Insert(conn, cmd, rdr);
                 sql = "INSERT INTO Grades SET NameSubject = @namesubject, GradeName = @gradename, Mark = @mark, IdStudent = @idstudent, IdTeacher = @idteacher";
-                conn.Open();
                 cmd = new MySqlCommand(sql, conn);
                 cmd.Prepare();
                 cmd.Parameters.AddWithValue("@namesubject", subjectGrade);
@@ -293,6 +279,8 @@ namespace Virtual_Global_College
         /// </summary>
         public void Print_Student_Informations(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## STUDENT INFORMATIONS ########\n");
+
             string idOfStudent; string sql; string result;
             List<string> StudentInformations;
             bool idExist;
@@ -332,7 +320,10 @@ namespace Virtual_Global_College
             }
 
             if (result == "yes")
+            {
+                Console.Clear();
                 Print_Student_Informations(conn, cmd, rdr);
+            }
 
             else
                 Console.WriteLine("Goodbye ;-(");
@@ -353,6 +344,8 @@ namespace Virtual_Global_College
 
             while (endMethod == false)
             {
+                Console.WriteLine("######## STUDENT ATTENDANCES ########\n");
+
                 Console.WriteLine("Please enter the ID of the student who you want to see his attendances :");
                 idOfStudent = Console.ReadLine();
                 sqlRead = "SELECT Id FROM Students";
@@ -372,7 +365,7 @@ namespace Virtual_Global_College
                 if (anyAttendances == 0)
                     Console.WriteLine("The student hasn't any lates or absences\n");
 
-                Console.WriteLine("Do you want to see the attendances of another student ? Please write as it's written :\n- yes\n- no\n");
+                Console.WriteLine("Do you want to see the attendances of another student ? Please write as it's written :\n- yes\n- no");
                 answer = Console.ReadLine();
                 while (answer != "yes" && answer != "no")
                 {
@@ -387,7 +380,7 @@ namespace Virtual_Global_College
                 }
 
                 else
-                    Console.WriteLine();
+                    Console.Clear();
             }
         }
 
@@ -402,7 +395,7 @@ namespace Virtual_Global_College
             LinkedList<string[,]> Grades_NoteBook = new LinkedList<string[,]>();
             List<string> Subjects = new List<string>();
             List<string> AllGradesName = new List<string>();
-            List<string> gradesName = new List<string>();
+            List<string> gradesName;
             List<string> Names_Marks_Sql = new List<string>();
             string[,] Names_Marks;
             string sql; int index;
@@ -434,6 +427,7 @@ namespace Virtual_Global_College
 
                     // WE OBTAIN ALL THE NAME GRADES WITHOUT DOUBLES
 
+                    gradesName = new List<string>();
                     foreach (string name in AllGradesName)
                     {
                         if (!gradesName.Contains(name))

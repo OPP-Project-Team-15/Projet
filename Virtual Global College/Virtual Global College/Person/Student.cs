@@ -61,7 +61,7 @@ namespace Virtual_Global_College
             cmd = new MySqlCommand(sql, conn);
             List<string> informations = Program.Pick(conn, cmd, rdr);
 
-            string student_Informations = $"\nStudent Informations :\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}\n";
+            string student_Informations = $"######## STUDENT INFORMATIONS ########\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(2)} {informations.ElementAt(1)}\nBirth Date : {informations.ElementAt(3)}\n";
             student_Informations += $"Sexe : {informations.ElementAt(4)}\nPhone Number : {informations.ElementAt(5)}\nMail : {informations.ElementAt(6)}\nBranch : {informations.ElementAt(7)}";
 
             return student_Informations;
@@ -77,6 +77,8 @@ namespace Virtual_Global_College
         /// <param name="random"></param>
         public void Course_Registration(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr, Random random)
         {
+            Console.WriteLine("######## COURSE REGISTRATION ########\n");
+
             if (SubjectsPicked)
                 Console.WriteLine("You have already chosen your courses");
             else
@@ -218,6 +220,7 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Add_Money(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD MONEY ########\n");
             Console.WriteLine("How much money do you want to add?");
             decimal moneyAdded = Convert.ToDecimal(Console.ReadLine());
             this.Money += moneyAdded;
@@ -243,6 +246,9 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Payment(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD MONEY ########\n");
+
+
             string FeeName;
             string sql;
             DateTime thisDay = DateTime.Today;
@@ -253,11 +259,11 @@ namespace Virtual_Global_College
             {
                 if (ProcessPayment == null)
                 {
-                    Console.WriteLine("\nWhich payment process would you take ? Please write your response as it's written\n- once\n- thrice");
+                    Console.WriteLine("Which payment process would you take ? Please write your response as it's written\n- once\n- thrice");
                     string process = Console.ReadLine();
                     while (process != "once" && process != "thrice")
                     {
-                        Console.WriteLine("\nThis process doesn't exist, please write as it's written");
+                        Console.WriteLine("This process doesn't exist, please write as it's written");
                         process = Console.ReadLine();
                     }
 
@@ -369,6 +375,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Print_Fees_History(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## FEES HISTORY ########");
+
             string sqlRead = $"SELECT Date, Name FROM Fees WHERE IdStudent={Id}";
             cmdRead = new MySqlCommand(sqlRead, conn);
             int anyFees = Program.Read(conn, cmdRead, rdr, 1);
@@ -384,6 +392,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Print_Attendances(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
+            Console.WriteLine("########## ATTENDANCES ##########\n");
+
             string sqlRead = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent={Id}";
             cmdRead = new MySqlCommand(sqlRead, conn);
             int anyAbsencesOrLates = Program.Read(conn, cmdRead, rdr, 1);
@@ -399,6 +409,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Print_Assignments(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
+            Console.WriteLine("########## ASSIGNMENTS ##########");
+
             string sqlRead = $"SELECT Date, Subject, Name FROM Assignments WHERE IdStudent={Id}";
             cmdRead = new MySqlCommand(sqlRead, conn);
             int anyAssignments = Program.Read(conn, cmdRead, rdr, 1);
@@ -461,8 +473,6 @@ namespace Virtual_Global_College
                             Names_Marks[(index+1) / 2, 2] = Names_Marks_Sql.ElementAt(index);
                         index++;
                     }
-
-                    
 
                     Grades_NoteBook.AddLast(Names_Marks);
                 }

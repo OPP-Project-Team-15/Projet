@@ -22,7 +22,7 @@ namespace Virtual_Global_College
             cmd = new MySqlCommand(sql, conn);
             List<string> informations = Program.Pick(conn, cmd, rdr);
 
-            string admin_Informations = $"\nAdmin Informations :\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(1)} {informations.ElementAt(2)}\nBirth Date : {informations.ElementAt(3)}\n";
+            string admin_Informations = $"######## ADMIN INFORMATIONS ########\n\nId : {informations.ElementAt(0)}\nName : {informations.ElementAt(1)} {informations.ElementAt(2)}\nBirth Date : {informations.ElementAt(3)}\n";
             admin_Informations += $"Sexe : {informations.ElementAt(4)}\nPhone Number : {informations.ElementAt(5)}\nMail : {informations.ElementAt(6)}";
 
             return admin_Informations;
@@ -212,6 +212,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Print_Student_Informations(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## STUDENT INFORMATIONS ########\n");
+
             string idOfStudent; string sql; string result;
             List<string> StudentInformations;
             bool idExist;
@@ -251,7 +253,10 @@ namespace Virtual_Global_College
             }
 
             if (result == "yes")
+            {
+                Console.Clear();
                 Print_Student_Informations(conn, cmd, rdr);
+            }
 
             else
                 Console.WriteLine("Goodbye ;-(");
@@ -271,6 +276,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Print_Student_Fees_History(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## STUDENT FEES HISTORY ########\n");
+
             string sqlRead = "SELECT Id FROM Students";
             cmd = new MySqlCommand(sqlRead, conn);
 
@@ -283,11 +290,13 @@ namespace Virtual_Global_College
                 idOfStudent = Console.ReadLine();
                 idExist = Program.Exist(idOfStudent, conn, cmd, rdr);
             }
+            Console.WriteLine();
 
             sqlRead = $"SELECT Date, Name FROM Fees WHERE IdStudent={idOfStudent}";
             cmd = new MySqlCommand(sqlRead, conn);
-
-            Program.Read(conn, cmd, rdr, 1);
+            int anyFees = Program.Read(conn, cmd, rdr, 1);
+            if (anyFees == 0)
+                Console.WriteLine("The student hasn't any fees in your history.");
         }
 
 
@@ -299,13 +308,15 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Add_Student_Attendances(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD STUDENT ATTENDANCES ########\n");
+
             string sql; string idOfStudent;
             string stringDate; char[] split = { '-' }; string[] dateSplited; DateTime absenceDate;
             string absenceSubject = ""; string absenceType;
             bool exist; bool newAbsenceSameID = true; bool exist1;
 
             // ASK FOR THE ID OF THE STUDENT
-            Console.WriteLine("\nWrite the ID of the student you want to add an absence/late : ");
+            Console.WriteLine("Write the ID of the student you want to add an absence/late : ");
             idOfStudent = Console.ReadLine();
 
             sql = "SELECT Id FROM Students";
@@ -322,18 +333,18 @@ namespace Virtual_Global_College
                 exist = Program.Exist(idOfStudent, conn, cmd, rdr);
             }
 
-            Console.WriteLine("\nHere is the attendances of the student :");
+            Console.WriteLine("\nHere is the attendances of the student :\n");
 
             sql = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent={idOfStudent}";
             cmd = new MySqlCommand(sql, conn);
-            int absence = Program.Read(conn, cmd, rdr, 2);
+            int absence = Program.Read(conn, cmd, rdr, 1);
             if (absence == 0)
-                Console.WriteLine("The student doesn't have absence.");
+                Console.WriteLine("The student doesn't have any absences.");
 
             while (newAbsenceSameID == true)
             {
                 // ASK FOR THE DATE OF THE ABSENCE 
-                Console.WriteLine("Specify the date of the absence (MM-DD-YYYY) : ");
+                Console.WriteLine("\nSpecify the date of the absence (MM-DD-YYYY) : ");
                 stringDate = Program.Ask_Date();
                 dateSplited = stringDate.Split(split);
                 absenceDate = new DateTime(Convert.ToInt32(dateSplited[2]), Convert.ToInt32(dateSplited[0]), Convert.ToInt32(dateSplited[1]));
@@ -381,7 +392,10 @@ namespace Virtual_Global_College
                 }
 
                 if (answer == "no")
+                {
+                    Console.Clear();
                     Add_Student_Attendances(conn, cmd, rdr);
+                }
 
                 // ADD THE ATTENDANCE IN THE DATA BASE
 
@@ -438,6 +452,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Add_Subject(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD SUBJECT ########\n");
+
             string subjectName = ""; string subjectBranch = ""; bool subjectRequired = false;
             string[] dateSplited; char[] split = { '-' }; DateTime birthDate;
             string sql = ""; string answer = "no"; string requiredAnswer;
@@ -447,7 +463,7 @@ namespace Virtual_Global_College
 
             while (answer == "no") // asnwer is 'no' at the end if the admin make a mistake in the adding of the subject
             {
-                Console.WriteLine("\nEnter the name of the subject you want to add :");
+                Console.WriteLine("Enter the name of the subject you want to add :");
                 while (subjectExist)
                 {
                     // NAME OF THE SUBJECT
@@ -614,10 +630,10 @@ namespace Virtual_Global_College
             }
 
             if (teachersName.Count == 1)
-                Console.WriteLine($"\nThe subject {subjectName} can be teach next semester.\nIt will be teach by {teachersName.Count} teacher for the moment : {teachersName[0]}");
+                Console.WriteLine($"\nThe subject {subjectName} can be teach next semester.\nIt will be teached by {teachersName.Count} teacher for the moment : {teachersName[0]}");
             else
             {
-                Console.WriteLine($"\nThe subject {subjectName} can be teach next semester.\nIt will be teach by {teachersName.Count} teachers for the moment :");
+                Console.WriteLine($"\nThe subject {subjectName} can be teach next semester.\nIt will be teached by {teachersName.Count} teachers for the moment :");
                 foreach (string name in teachersName)
                     Console.WriteLine(name);
             }
@@ -633,6 +649,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Add_Teacher(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD TEACHER ########\n");
+
             string sql; string answer; string subjectPicked;
             string[] dateSplited; char[] split = { '-' }; DateTime birthDate;
             List<string> teacher_Info; List<string> teacherId;
@@ -640,7 +658,7 @@ namespace Virtual_Global_College
             bool otherSubject = true;
 
             // ASK FOR THE TEACHER INFORMATION
-            Console.WriteLine("\nPlease write the informations about the teacher :");
+            Console.WriteLine("Please write the informations about the teacher :");
             teacher_Info = Program.User_Informations();
 
             dateSplited = teacher_Info[2].Split(split);
@@ -756,6 +774,8 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Add_Subject_Teacher(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD SUBJECT TEACHER ########\n");
+
             string idOfTeacher = ""; string sql; string answer; string subjectPicked;
             bool idExist = false; bool otherSubject = true;
             List<string> teacherSubjects; List<string> branchSubjects;
@@ -763,7 +783,7 @@ namespace Virtual_Global_College
 
             // WE ASK FOR THE TEACHER ID
 
-            Console.WriteLine("\nPlease enter the ID of the teacher you want to add a subject :");
+            Console.WriteLine("Please enter the ID of the teacher you want to add a subject :");
 
             while (idExist == false)
             {
@@ -809,7 +829,7 @@ namespace Virtual_Global_College
             }
 
             // WE ASK THE NEW TEACHER'S SUBJECT
-            Console.WriteLine("\nWhich subject will the teacher teach ?");
+            Console.WriteLine("\nWhich subject will be teached by him/her ?");
 
             while (otherSubject)
             {
@@ -877,13 +897,15 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Modify_Student_Attendances(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## MODIFY STUDENT ATTENDANCES ########\n");
+
             string answer; string idOfStudent; string modifySubjectAbsence;
             string sql; string stringDate; int absence; string answer2;
             bool exist; bool verif; bool modif = true;
             string[] dateSplited; char[] split = { '-' }; DateTime absenceDate;
             List<string> absenceType; List<string> studentName;
 
-            Console.WriteLine("\nDo you want to modify the attendances of a student ?\n - yes\n - no");
+            Console.WriteLine("Do you want to modify the attendances of a student ?\n - yes\n - no");
             answer = Console.ReadLine();
             while (answer != "yes" && answer != "no")
             {
@@ -926,7 +948,7 @@ namespace Virtual_Global_College
 
                 // ASK FOR THE SUBJECT OF THE ABSENCE
 
-                Console.WriteLine($"\nFor which course do you want to modify the absence of {studentName[0]} {studentName[1]}");
+                Console.WriteLine($"\nFor which subject do you want to modify the absence of {studentName[0]} {studentName[1]} :");
                 modifySubjectAbsence = Console.ReadLine();
 
                 sql = $"SELECT Subject FROM Attendances WHERE IdStudent={idOfStudent}";
@@ -956,8 +978,9 @@ namespace Virtual_Global_College
                 }
                 dateSplited = stringDate.Split(split);
                 absenceDate = new DateTime(Convert.ToInt32(dateSplited[2]), Convert.ToInt32(dateSplited[0]), Convert.ToInt32(dateSplited[1]));
-
-                sql = $"SELECT Type FROM Attendances WHERE IdStudent='{idOfStudent}' AND Date = '{absenceDate}' AND Subject = '{modifySubjectAbsence}'";
+                string stringDateOrder = $"{stringDate[6]}{stringDate[7]}{stringDate[8]}{stringDate[9]}-{stringDate[0]}{stringDate[1]}-{stringDate[3]}{stringDate[4]}";
+                
+                sql = $"SELECT Type FROM Attendances WHERE IdStudent='{idOfStudent}' AND Date = '{stringDateOrder}' AND Subject = '{modifySubjectAbsence}'";
                 cmd = new MySqlCommand(sql, conn);
                 absenceType = Program.Pick(conn, cmd, rdr);
 
@@ -969,7 +992,7 @@ namespace Virtual_Global_College
                     Console.WriteLine($"Incorrect. Please write as it's written.\n - yes\n - no");
                     answer2 = Console.ReadLine();
                 }
-
+                
                 if (answer2 == "yes")
                 {
                     Console.WriteLine("\nDo you want to modify it or delete it?\n - modify\n - delete");
@@ -991,15 +1014,14 @@ namespace Virtual_Global_College
 
                                 if (answer3 == "late")
                                 {
-                                    //sql = $"UPDATE Attendances SET Type ='Late' WHERE Date = '{absenceDate}' AND Subject = '{modifySubjectAbsence}' AND Type = '{absenceType[0]}' AND IdStudent='{idOfStudent}'";
-                                    //cmd = new SqlCommand(sql, conn);
-                                    sql = "UPDATE Attendances SET Type ='Late' WHERE Date = @date, Subject = @subject, Type = @type, IdStudent = @idstudent";
+                                    sql = $"UPDATE Attendances SET Type ='Late' WHERE Date = '{stringDateOrder}' AND Subject = '{modifySubjectAbsence}' AND Type = '{absenceType[0]}' AND IdStudent='{idOfStudent}'";
                                     cmd = new MySqlCommand(sql, conn);
-                                    cmd.Prepare();
-                                    cmd.Parameters.AddWithValue("@date", absenceDate);
-                                    cmd.Parameters.AddWithValue("@subject", modifySubjectAbsence);
-                                    cmd.Parameters.AddWithValue("@type", absenceType[0]);
-                                    cmd.Parameters.AddWithValue("@idstudent", idOfStudent);
+                                    //sql = "UPDATE Attendances SET Type = 'Late' WHERE Date = @date, Subject = @subject, IdStudent = @idstudent";
+                                    //cmd = new MySqlCommand(sql, conn);
+                                    //cmd.Prepare();
+                                    //cmd.Parameters.AddWithValue("@date", stringDateOrder);
+                                    //cmd.Parameters.AddWithValue("@subject", modifySubjectAbsence);
+                                    //cmd.Parameters.AddWithValue("@idstudent", idOfStudent);
                                     Program.Insert(conn, cmd, rdr);
                                     Console.WriteLine("\nThe attendance has been modified to : late");
                                     modif = false;
@@ -1007,13 +1029,14 @@ namespace Virtual_Global_College
 
                                 else
                                 {
-                                    sql = "UPDATE Attendances SET Type ='Absent' WHERE Date = @date, Subject = @subject, Type = @type, IdStudent = @idstudent";
+                                    sql = $"UPDATE Attendances SET Type ='Absent' WHERE Date = '{stringDateOrder}' AND Subject = '{modifySubjectAbsence}' AND Type = '{absenceType[0]}' AND IdStudent='{idOfStudent}'";
+                                    //sql = "UPDATE Attendances SET Type ='Absent' WHERE Date = @date, Subject = @subject, Type = @type, IdStudent = @idstudent";
                                     cmd = new MySqlCommand(sql, conn);
-                                    cmd.Prepare();
-                                    cmd.Parameters.AddWithValue("@date", absenceDate);
-                                    cmd.Parameters.AddWithValue("@subject", modifySubjectAbsence);
-                                    cmd.Parameters.AddWithValue("@type", absenceType[0]);
-                                    cmd.Parameters.AddWithValue("@idstudent", idOfStudent);
+                                    //cmd.Prepare();
+                                    //cmd.Parameters.AddWithValue("@date", stringDateOrder);
+                                    //cmd.Parameters.AddWithValue("@subject", modifySubjectAbsence);
+                                    //cmd.Parameters.AddWithValue("@type", absenceType[0]);
+                                    //cmd.Parameters.AddWithValue("@idstudent", idOfStudent);
                                     Program.Insert(conn, cmd, rdr);
 
                                     Console.WriteLine("\nThe attendance has been modified to : absent");
@@ -1021,7 +1044,7 @@ namespace Virtual_Global_College
                                 }
                                 break;
                             case "delete":
-                                sql = $"DELETE FROM Attendances WHERE Date = '{absenceDate}' AND Subject = '{modifySubjectAbsence}' AND Type = '{absenceType[0]}' AND IdStudent='{idOfStudent}'";
+                                sql = $"DELETE FROM Attendances WHERE Date = '{stringDateOrder}' AND Subject = '{modifySubjectAbsence}' AND Type = '{absenceType[0]}' AND IdStudent='{idOfStudent}'";
                                 cmd = new MySqlCommand(sql, conn);
                                 Program.Delete(conn, cmd, rdr);
                                 Console.WriteLine("\nThe attendance has been deleted.");
@@ -1055,11 +1078,13 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Delete_Student(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## DELETE STUDENT ########\n");
+
             string idOfStudent; string answer; string sql;
             bool exist;
 
             // RECUPE THE ID OF THE STUDENT 
-            Console.WriteLine("\nEnter the ID of the student you want to delete : ");
+            Console.WriteLine("Enter the ID of the student you want to delete : ");
             idOfStudent = Console.ReadLine();
 
             sql = "SELECT Id FROM Students";
@@ -1136,7 +1161,10 @@ namespace Virtual_Global_College
             }
 
             if (answer2 == "yes")
+            {
+                Console.Clear();
                 Delete_Student(conn, cmd, rdr);
+            }
 
             else
                 Console.WriteLine("\nOK. Goodbye :-)");
@@ -1150,12 +1178,14 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Delete_Teacher(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## DELETE TEACHER ########\n");
+
             string sql; string answer;
             bool exist;
             string idOfTeacher; List<string> teacherName;
 
             // RECUPE THE ID OF THE TEACHER 
-            Console.WriteLine("\nEnter the ID of the teacher you want to delete : ");
+            Console.WriteLine("Enter the ID of the teacher you want to delete : ");
             idOfTeacher = Console.ReadLine();
 
             sql = "SELECT Id FROM Teachers";
@@ -1222,7 +1252,10 @@ namespace Virtual_Global_College
             }
 
             if (answer2 == "yes")
+            {
+                Console.Clear();
                 Delete_Teacher(conn, cmd, rdr);
+            }
 
             else
                 Console.WriteLine("\nOK. Goodbye :-)");

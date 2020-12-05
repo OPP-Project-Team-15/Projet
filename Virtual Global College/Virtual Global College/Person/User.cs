@@ -31,17 +31,19 @@ namespace Virtual_Global_College
 
         public void ModifyContact(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr, string user)
         {
+            Console.WriteLine("######## MODIFY CONTACT ########\n");
+
             bool Modify = true; string sql;
 
             while (Modify)
             {
                 if (user == "student")
                 {
-                    Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Password");
+                    Console.WriteLine("What do you want to change ? Please write your response as it's written :\n- phone number \n- password");
                     string ModifyInfo = Console.ReadLine();
                     switch (ModifyInfo)
                     {
-                        case "Phone number":
+                        case "phone number":
                             Console.WriteLine("\nWhat is your new phone number ?");
                             PhoneNumber = Console.ReadLine();
                             sql = $"UPDATE Students SET PhoneNumber ='{PhoneNumber}' WHERE Id = @id";
@@ -51,7 +53,7 @@ namespace Virtual_Global_College
                             Program.Insert(conn, cmd, rdr);
                             Console.WriteLine("\nYour phone number has been changed");
                             break;
-                        case "Password":
+                        case "password":
                             Console.WriteLine("\nWhat is your new password ?");
                             Password = Console.ReadLine();
                             sql = $"UPDATE Students SET Password ='{Password}' WHERE Id = @id";
@@ -66,11 +68,11 @@ namespace Virtual_Global_College
 
                 if (user == "admin")
                 {
-                    Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Password");
+                    Console.WriteLine("What do you want to change ? Please write your response as it's written\n- phone number \n- password");
                     string ModifyInfo = Console.ReadLine();
                     switch (ModifyInfo)
                     {
-                        case "Phone number":
+                        case "phone number":
                             Console.WriteLine("\nWhat is your new phone number ?");
                             PhoneNumber = Console.ReadLine();
                             sql = $"UPDATE Admins SET PhoneNumber ='{PhoneNumber}' WHERE Id = @id";
@@ -80,7 +82,7 @@ namespace Virtual_Global_College
                             Program.Insert(conn, cmd, rdr);
                             Console.WriteLine("\nYour phone number has been changed");
                             break;
-                        case "Password":
+                        case "password":
                             Console.WriteLine("\nWhat is your new password ?");
                             Password = Console.ReadLine();
                             sql = $"UPDATE Admins SET Password ='{Password}' WHERE Id = @id";
@@ -95,11 +97,11 @@ namespace Virtual_Global_College
 
                 if (user == "teacher")
                 {
-                    Console.WriteLine("What do you want to change ? Please write your response as it's written\n- Phone number \n- Password");
+                    Console.WriteLine("What do you want to change ? Please write your response as it's written\n- phone number \n- password");
                     string ModifyInfo = Console.ReadLine();
                     switch (ModifyInfo)
                     {
-                        case "Phone number":
+                        case "phone number":
                             Console.WriteLine("\nWhat is your new phone number ?");
                             PhoneNumber = Console.ReadLine();
                             sql = $"UPDATE Teachers SET PhoneNumber ='{PhoneNumber}' WHERE Id = @id";
@@ -109,7 +111,7 @@ namespace Virtual_Global_College
                             Program.Insert(conn, cmd, rdr);
                             Console.WriteLine("\nYour phone number has been changed");
                             break;
-                        case "Password":
+                        case "password":
                             Console.WriteLine("\nWhat is your new password ?");
                             Password = Console.ReadLine();
                             sql = $"UPDATE Teachers SET Password ='{Password}' WHERE Id = @id";
@@ -122,16 +124,16 @@ namespace Virtual_Global_College
                     }
                 }
 
-                Console.WriteLine("Do you want to change something else ? Please write your response as it's written\n- Yes \n- No");
+                Console.WriteLine("Do you want to change something else ? Please write your response as it's written\n- yes \n- no");
 
                 string response = Console.ReadLine();
-                while (response != "Yes" && response != "No")
+                while (response != "yes" && response != "no")
                 {
-                    Console.WriteLine("\nPlease write as it's written : \n- Yes \n- No");
+                    Console.WriteLine("\nPlease write as it's written : \n- yes \n- no");
                     response = Console.ReadLine();
                 }
 
-                if (response == "No")
+                if (response == "no")
                 {
                     Modify = false;
                 }

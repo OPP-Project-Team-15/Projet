@@ -42,7 +42,7 @@ namespace Virtual_Global_College
                         {
                             if (DateTime.TryParse(rdr[i].ToString(), out mydate))
                             {
-                                Console.WriteLine(rdr[i].ToString().Remove(10, 9));
+                                Console.WriteLine($"{rdr[i].ToString()[3]}{rdr[i].ToString()[4]}-{rdr[i].ToString()[0]}{rdr[i].ToString()[1]}-{rdr[i].ToString()[6]}{rdr[i].ToString()[7]}{rdr[i].ToString()[8]}{rdr[i].ToString()[9]}");
                                 rdrCount++;
                             }
                             else
@@ -60,7 +60,7 @@ namespace Virtual_Global_College
                         {
                             if (DateTime.TryParse(rdr[i].ToString(), out mydate))
                             {
-                                Console.Write($" - {rdr[i].ToString().Remove(10, 9)}");
+                                Console.Write($" - {rdr[i].ToString()[3]}{rdr[i].ToString()[4]}-{rdr[i].ToString()[0]}{rdr[i].ToString()[1]}-{rdr[i].ToString()[6]}{rdr[i].ToString()[7]}{rdr[i].ToString()[8]}{rdr[i].ToString()[9]}");
                                 rdrCount++;
                             }
                             else
@@ -80,7 +80,7 @@ namespace Virtual_Global_College
                             {
                                 if (index < 10)
                                 {
-                                    Console.WriteLine($" {index} - {rdr[i].ToString().Remove(10, 9)}");
+                                    Console.WriteLine($" {index} - {rdr[i].ToString()[3]}{rdr[i].ToString()[4]}-{rdr[i].ToString()[0]}{rdr[i].ToString()[1]}-{rdr[i].ToString()[6]}{rdr[i].ToString()[7]}{rdr[i].ToString()[8]}{rdr[i].ToString()[9]}");
                                     rdrCount++;
                                 }
                                 else
@@ -411,6 +411,15 @@ namespace Virtual_Global_College
             string id = " ";
             
             string sql;
+            //DateTime absenceDate = new DateTime(2020, 12, 1);
+            //List<string> absenceType = new List<string>();
+            //sql = $"SELECT Type FROM Attendances WHERE IdStudent='1001' AND Subject = 'Numerical Analysis' AND Date = '2020-12-01'";
+            //cmd = new MySqlCommand(sql, conn);
+            //absenceType = Pick(conn, cmd, rdr);
+            //foreach (string element in absenceType)
+            //    Console.WriteLine(element);
+            //Console.WriteLine("ok");
+            //Console.ReadKey();
 
             Console.Write("ID : ");
             id = Console.ReadLine();
@@ -504,10 +513,7 @@ namespace Virtual_Global_College
             ConsoleSpiner spin = new ConsoleSpiner();
             Console.Write("Loading....");
             for (int delay = 0; delay < 15000; delay++)
-            {
                 spin.Turn();
-            }
-
 
             int i = Convert.ToInt32(id);
             if (pass == true)
@@ -519,35 +525,35 @@ namespace Virtual_Global_College
                     {
                         List<Admin> listing = dbCtx.Admins.ToList();
                         admin = listing[i-1];
-                        Console.WriteLine(admin.ToString(conn, cmd, rdr));
-                        Console.WriteLine();
-                        Console.WriteLine();
                         string key = " ";
 
                         while (key != "Exit")
                         {
+                            Console.Clear();
+                            Console.WriteLine(admin.ToString(conn, cmd, rdr));
+
                             int choice = 0;
                             while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10 && choice != 11 && choice != 12 && choice != 13 && choice != 14)
                             {
-                                Console.WriteLine("What do you want to do ?");
-                                Console.WriteLine("1 - Create a subject, an exam or delete a course");
-                                Console.WriteLine("2 - Print student information");
-                                Console.WriteLine("3 - Print student attendance");
-                                Console.WriteLine("4 - Print student fees history");
-                                Console.WriteLine("5 - Add attendances for a student");
-                                Console.WriteLine("6 - Add subject");
-                                Console.WriteLine("7 - Add teacher");
-                                Console.WriteLine("8 - Add subject teacher");
-                                Console.WriteLine("9 - Modify student attendances");
-                                Console.WriteLine("10 - Modify subject");
-                                Console.WriteLine("11 - Delete student");
-                                Console.WriteLine("12 - Delete teacher");
-                                Console.WriteLine("13 - Modify your contact");
-                                Console.WriteLine("14 - Fill the timetable at the start of the year");
+                                Console.WriteLine("\n\nWhat do you want to do ?");
+                                Console.WriteLine(" 1 - Create a subject, an exam or delete a course");
+                                Console.WriteLine(" 2 - Print student information");
+                                Console.WriteLine(" 3 - Print student attendance");
+                                Console.WriteLine(" 4 - Print student fees history\n");
+                                Console.WriteLine(" 5 - Add attendances for a student");
+                                Console.WriteLine(" 6 - Add subject");
+                                Console.WriteLine(" 7 - Add teacher");
+                                Console.WriteLine(" 8 - Add subject teacher\n");
+                                Console.WriteLine(" 9 - Modify student attendances");
+                                Console.WriteLine("10 - Delete student");
+                                Console.WriteLine("11 - Delete teacher");
+                                Console.WriteLine("12 - Modify your contact");
+                                Console.WriteLine("13 - Fill the timetable at the start of the year\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
                             }
 
+                            Console.Clear();
                             switch (choice)
                             {
                                 //case 1:
@@ -578,26 +584,22 @@ namespace Virtual_Global_College
                                     admin.Modify_Student_Attendances(conn, cmd, rdr);
                                     break;
                                 case 10:
-                                    admin.Modify_Subject(conn, cmd, rdr);
-                                    break;
-                                case 11:
                                     admin.Delete_Student(conn, cmd, rdr);
                                     break;
-                                case 12:
+                                case 11:
                                     admin.Delete_Teacher(conn, cmd, rdr);
                                     break;
-                                case 13:
+                                case 12:
                                     admin.ModifyContact(conn, cmd, rdr, "admin");
                                     break;
-                                //case 14:
+                                //case 13:
                                 //    admin.SubjectMandatory();
                                 //    break;
                                 default:
                                     return;
                             }
-                            Console.WriteLine("If you want to stop. Type : Exit");
+                            Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
-                            Console.Clear();
                         }
                     }
                 }
@@ -607,29 +609,30 @@ namespace Virtual_Global_College
                     {
                         List<Teacher> listing = dbCtx.Teachers.ToList();
                         teacher = listing[i-100];
-                        Console.WriteLine(teacher.ToString(conn, cmd, rdr));
-                        Console.WriteLine();
-                        Console.WriteLine();
                         string key = " ";
 
                         while (key != "Exit")
                         {
+                            Console.Clear();
+                            Console.WriteLine(teacher.ToString(conn, cmd, rdr));
+
                             int choice = 0;
                             while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7)
                             {
-                                Console.WriteLine("What do you want to do ?");
-                                Console.WriteLine("1 - Add assignment");
-                                Console.WriteLine("2 - Add grades");
-                                Console.WriteLine("3 - Print student informations");
-                                Console.WriteLine("4 - Print student attendances");
-                                Console.WriteLine("5 - Print grades notebook");
-                                Console.WriteLine("6 - Modify student grade");
-                                Console.WriteLine("7 - Modify your contact");
+                                Console.WriteLine("\n\nWhat do you want to do ?");
+                                Console.WriteLine(" 1 - Add assignment");
+                                Console.WriteLine(" 2 - Add grades");
+                                Console.WriteLine(" 3 - Print student informations");
+                                Console.WriteLine(" 4 - Print student attendances");
+                                Console.WriteLine(" 5 - Print grades notebook");
+                                Console.WriteLine(" 6 - Modify student grade");
+                                Console.WriteLine(" 7 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
                             }
 
+                            Console.Clear();
                             switch (choice)
                             {
                                 case 1:
@@ -656,7 +659,7 @@ namespace Virtual_Global_College
                                 default:
                                     return;
                             }
-                            Console.WriteLine("If you want to stop. Type : Exit");
+                            Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
                             Console.Clear();
                         }
@@ -668,32 +671,33 @@ namespace Virtual_Global_College
                     {
                         List<Student> listing = dbCtx.Students.ToList();
                         student = listing[i-1001];
-                        Console.WriteLine(student.ToString(conn, cmd, rdr));
-                        Console.WriteLine();
-                        Console.WriteLine();
                         string key = " ";
 
                         while (key != "Exit")
                         {
+                            Console.Clear();
+                            Console.WriteLine(student.ToString(conn, cmd, rdr));
+
                             int choice = 0;
                             while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10)
                             {
-                                Console.WriteLine("What do you want to do ?");
-                                Console.WriteLine("1 - Course registration");
-                                Console.WriteLine("2 - Add money");
-                                Console.WriteLine("3 - Payment");
-                                Console.WriteLine("4 - Print fees history");
-                                Console.WriteLine("5 - Print attendances");
-                                Console.WriteLine("6 - Print assignments");
-                                Console.WriteLine("7 - Print grades");
-                                Console.WriteLine("8 - Report card");
-                                Console.WriteLine("9 - TimetableWeek");
-                                Console.WriteLine("10 - Modify your contact");
+                                Console.WriteLine("\n\nWhat do you want to do ?");
+                                Console.WriteLine(" 1 - Course registration");
+                                Console.WriteLine(" 2 - Add money");
+                                Console.WriteLine(" 3 - Payment");
+                                Console.WriteLine(" 4 - Print fees history");
+                                Console.WriteLine(" 5 - Print attendances");
+                                Console.WriteLine(" 6 - Print assignments");
+                                Console.WriteLine(" 7 - Print grades");
+                                Console.WriteLine(" 8 - Report card");
+                                Console.WriteLine(" 9 - TimetableWeek");
+                                Console.WriteLine("10 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
                             }
 
+                            Console.Clear();
                             switch (choice)
                             {
                                 case 1:
@@ -729,7 +733,7 @@ namespace Virtual_Global_College
                                 default:
                                     return;
                             }
-                            Console.WriteLine("If you want to stop. Type : Exit");
+                            Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
                             Console.Clear();
                         }
