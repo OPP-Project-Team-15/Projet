@@ -23,7 +23,6 @@ namespace Virtual_Global_College
     {
         private string branch;
         private bool paymentIsOk = false;
-        public LinkedList<string[,]> timetablePerWeek = new LinkedList<string[,]>();
 
 
         #region : Properties
@@ -236,6 +235,8 @@ namespace Virtual_Global_College
             cmd.Parameters.AddWithValue("@name", FeeName);
             cmd.Parameters.AddWithValue("@idstudent", Id);
             Program.Insert(conn, cmd, rdr);
+
+            Console.WriteLine($"\nYou added {moneyAdded} euros in your student account.");
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Payment(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
-            Console.WriteLine("######## ADD MONEY ########\n");
+            Console.WriteLine("######## PAYMENT ########\n");
 
 
             string FeeName;

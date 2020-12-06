@@ -627,7 +627,7 @@ namespace Virtual_Global_College
                                     admin.Print_Student_Fees_History(conn, cmd, rdr);
                                     break;
                                 case 4:
-                                    admin.Add_Lesson();
+                                    admin.Add_Lesson(conn, cmd, rdr);
                                     break;
                                 case 5:
                                     admin.Add_Student_Attendances(conn, cmd, rdr);
@@ -659,9 +659,10 @@ namespace Virtual_Global_College
                                 default:
                                     return;
                             }
+
+                            dbCtx.SaveChanges();
                             Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
-                            dbCtx.SaveChanges();
                         }
                     }
                 }
@@ -721,9 +722,10 @@ namespace Virtual_Global_College
                                 default:
                                     return;
                             }
+
+                            dbCtx.SaveChanges();
                             Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
-                            dbCtx.SaveChanges();
                         }
                     }
                 }
@@ -795,10 +797,10 @@ namespace Virtual_Global_College
                                 default:
                                     return;
                             }
-                            
+
+                            dbCtx.SaveChanges();
                             Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
-                            dbCtx.SaveChanges();
                         }
                     }
                 }

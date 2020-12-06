@@ -130,7 +130,7 @@ namespace Virtual_Global_College
                 Program.Insert(conn, cmd, rdr);
             }
 
-
+            Console.WriteLine($"\nThe assignment has been added for all your students in the subject {assignmentSubject}");
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Virtual_Global_College
                 }
 
                 Console.WriteLine();
-                sqlRead = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent={idOfStudent}";
+                sqlRead = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent='{idOfStudent}'";
                 cmdRead = new MySqlCommand(sqlRead, conn);
                 anyAttendances = Program.Read(conn, cmdRead, rdr, 1);
                 if (anyAttendances == 0)
@@ -468,11 +468,12 @@ namespace Virtual_Global_College
             GradeExam(Grades_NoteBook);
         }
 
-
         public void Modify_Student_Grade(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
 
         }
+
+
 
 
         /// <summary>

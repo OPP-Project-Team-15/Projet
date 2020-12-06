@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using MySql.Data.MySqlClient;
-
+using System.Windows;
+using System.Windows.Forms;
 
 namespace Virtual_Global_College
 {
@@ -286,7 +287,7 @@ namespace Virtual_Global_College
                 }
 
                 Console.WriteLine();
-                sqlRead = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent={idOfStudent}";
+                sqlRead = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent='{idOfStudent}'";
                 cmdRead = new MySqlCommand(sqlRead, conn);
                 anyAttendances = Program.Read(conn, cmdRead, rdr, 1);
                 if (anyAttendances == 0)
@@ -378,7 +379,7 @@ namespace Virtual_Global_College
 
             Console.WriteLine("\nHere is the attendances of the student :\n");
 
-            sql = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent={idOfStudent}";
+            sql = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent='{idOfStudent}'";
             cmd = new MySqlCommand(sql, conn);
             int absence = Program.Read(conn, cmd, rdr, 1);
             if (absence == 0)
@@ -932,9 +933,215 @@ namespace Virtual_Global_College
 
         }
 
-        public void Add_Lesson()
+        public void Add_Lesson(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("######## ADD LESSON ########\n");
 
+            string sql; string idOfTeacher; string answer;
+            string subject; string week; string day; string hour;
+            bool exist; bool possibleLesson = true;
+            List<string> Subjects; List<string> existingLesson;
+
+            // ASK FOR THE ID OF THE STUDENT
+            Console.WriteLine("Write the ID of the teacher you want to add a lesson : ");
+            idOfTeacher = Console.ReadLine();
+
+            sql = "SELECT Id FROM Teachers";
+            cmd = new MySqlCommand(sql, conn);
+            exist = Program.Exist(idOfTeacher, conn, cmd, rdr);
+
+            while (exist == false)
+            {
+                Console.WriteLine("This ID doesn't exist. Please enter an existing ID :");
+                idOfTeacher = Console.ReadLine();
+
+                sql = "SELECT Id FROM Teachers";
+                cmd = new MySqlCommand(sql, conn);
+                exist = Program.Exist(idOfTeacher, conn, cmd, rdr);
+            }
+
+            // ASK FOR THE SUBJECT
+            Console.WriteLine("Here, the subjects of the teacher :\n");
+            sql = $"SELECT NameSubject FROM Subjects INNER JOIN SubjectsTeachers ON Subjects.IdSubject = SubjectsTeachers.IdSubject AND IdTeacher='{idOfTeacher}'";
+            cmd = new MySqlCommand(sql, conn);
+            Program.Read(conn, cmd, rdr, 2);
+            Subjects = Program.Pick(conn, cmd, rdr);
+
+            if (Subjects.Count == 0)
+                Console.WriteLine("The teacher hasn't any subjects.");
+            else
+            {
+                Console.WriteLine("\nSelect the subject which you want to add a lesson for this teacher :");
+                subject = Console.ReadLine();
+                while (!Subjects.Contains(subject))
+                {
+                    Console.WriteLine("Please select a valid subject :");
+                    subject = Console.ReadLine();
+                }
+
+                // ASK FOR THE DATE OF THE LESSON
+                Console.WriteLine("\nSelect the week of the lesson :");
+                week = Console.ReadLine();
+                while (!week.All(char.IsDigit) || Convert.ToInt32(week) < 1)
+                {
+                    Console.WriteLine("Enter a correct week :");
+                    week = Console.ReadLine();
+                }
+
+                Console.WriteLine("\nSelect the day of the lesson (1, 2, 3, 4 or 5) :");
+                day = Console.ReadLine();
+                while (!day.All(char.IsDigit) || !Enumerable.Range(1, 5).Contains(Convert.ToInt32(day)))
+                {
+                    Console.WriteLine("Enter a correct day :");
+                    day = Console.ReadLine();
+                }
+
+                Console.WriteLine("\nSelect the hour of the lesson (8 to 14) :");
+                hour = Console.ReadLine();
+                while (!hour.All(char.IsDigit) || !Enumerable.Range(8, 7).Contains(Convert.ToInt32(hour)))
+                {
+                    Console.WriteLine("Enter a correct day :");
+                    hour = Console.ReadLine();
+                }
+
+                // VERIFY IF ANY LESSON EXIST IN THE SAME DATE
+                sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour)}' AND IdTeacher = '{idOfTeacher}'";
+                cmd = new MySqlCommand(sql, conn);
+                existingLesson = Program.Pick(conn, cmd, rdr);
+                if (existingLesson.Count != 0)
+                {
+                    possibleLesson = false;
+                    Console.WriteLine("\nThe teacher has already a lesson at the same date. It is not possible to add the lesson.\nWould you want to add another lesson ?\n- yes\n- no");
+                    answer = Console.ReadLine();
+                    while (answer != "yes" && answer != "no")
+                    {
+                        Console.WriteLine("Please write as it's written");
+                        answer = Console.ReadLine();
+                    }
+                    if (answer == "yes")
+                    {
+                        Console.Clear();
+                        Add_Lesson(conn, cmd, rdr);
+                    }
+                    else
+                        Console.WriteLine("\nThank you. Have a good day :)");
+                }
+
+                else if (possibleLesson)
+                {
+                    sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour) + 1}' AND IdTeacher = '{idOfTeacher}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    existingLesson = Program.Pick(conn, cmd, rdr);
+                    if (existingLesson.Count != 0)
+                    {
+                        possibleLesson = false;
+                        Console.WriteLine("\nThe teacher has already a lesson at the same date. It is not possible to add the lesson.\nWould you want to add another lesson ?\n- yes\n- no");
+                        answer = Console.ReadLine();
+                        while (answer != "yes" && answer != "no")
+                        {
+                            Console.WriteLine("Please write as it's written");
+                            answer = Console.ReadLine();
+                        }
+                        if (answer == "yes")
+                        {
+                            Console.Clear();
+                            Add_Lesson(conn, cmd, rdr);
+                        }
+                        else
+                            Console.WriteLine("\nThank you. Have a good day :)");
+                    }
+                }
+
+                else if (possibleLesson)
+                {
+                    sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour) + 2}' AND IdTeacher = '{idOfTeacher}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    existingLesson = Program.Pick(conn, cmd, rdr);
+                    if (existingLesson.Count != 0)
+                    {
+                        possibleLesson = false;
+                        Console.WriteLine("\nThe teacher has already a lesson at the same date. It is not possible to add the lesson.\nWould you want to add another lesson ?\n- yes\n- no");
+                        answer = Console.ReadLine();
+                        while (answer != "yes" && answer != "no")
+                        {
+                            Console.WriteLine("Please write as it's written");
+                            answer = Console.ReadLine();
+                        }
+                        if (answer == "yes")
+                        {
+                            Console.Clear();
+                            Add_Lesson(conn, cmd, rdr);
+                        }
+                        else
+                            Console.WriteLine("\nThank you. Have a good day :)");
+                    }
+                }
+
+                else if (possibleLesson)
+                {
+                    sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour) - 1}' AND IdTeacher = '{idOfTeacher}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    existingLesson = Program.Pick(conn, cmd, rdr);
+                    if (existingLesson.Count != 0)
+                    {
+                        possibleLesson = false;
+                        Console.WriteLine("\nThe teacher has already a lesson at the same date. It is not possible to add the lesson.\nWould you want to add another lesson ?\n- yes\n- no");
+                        answer = Console.ReadLine();
+                        while (answer != "yes" && answer != "no")
+                        {
+                            Console.WriteLine("Please write as it's written");
+                            answer = Console.ReadLine();
+                        }
+                        if (answer == "yes")
+                        {
+                            Console.Clear();
+                            Add_Lesson(conn, cmd, rdr);
+                        }
+                        else
+                            Console.WriteLine("\nThank you. Have a good day :)");
+                    }
+                }
+
+                else if (possibleLesson)
+                {
+                    sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour) - 2}' AND IdTeacher = '{idOfTeacher}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    existingLesson = Program.Pick(conn, cmd, rdr);
+                    if (existingLesson.Count != 0)
+                    {
+                        possibleLesson = false;
+                        Console.WriteLine("\nThe teacher has already a lesson at the same date. It is not possible to add the lesson.\nWould you want to add another lesson ?\n- yes\n- no");
+                        answer = Console.ReadLine();
+                        while (answer != "yes" && answer != "no")
+                        {
+                            Console.WriteLine("Please write as it's written");
+                            answer = Console.ReadLine();
+                        }
+                        if (answer == "yes")
+                        {
+                            Console.Clear();
+                            Add_Lesson(conn, cmd, rdr);
+                        }
+                        else
+                            Console.WriteLine("\nThank you. Have a good day :)");
+                    }
+                }
+
+                if (possibleLesson)
+                {
+                    sql = "INSERT INTO Lessons SET Subject = @subject, Week = @week, Day = @day, Hour = @hour, IdTeacher = @idteacher";
+                    cmd = new MySqlCommand(sql, conn);
+                    cmd.Prepare();
+                    cmd.Parameters.AddWithValue("@subject", subject);
+                    cmd.Parameters.AddWithValue("@week", Convert.ToInt32(week));
+                    cmd.Parameters.AddWithValue("@day", Convert.ToInt32(day));
+                    cmd.Parameters.AddWithValue("@hour", Convert.ToInt32(hour));
+                    cmd.Parameters.AddWithValue("@idteacher", idOfTeacher);
+                    Program.Insert(conn, cmd, rdr);
+
+                    Console.WriteLine("The lesson has been added in the database.");
+                }
+            }
         }
 
 
