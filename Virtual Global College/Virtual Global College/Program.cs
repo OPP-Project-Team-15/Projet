@@ -677,7 +677,7 @@ namespace Virtual_Global_College
                         while (key != "Exit")
                         {
                             choice = 0;
-                            while (!Enumerable.Range(1, 7).Contains(choice))
+                            while (!Enumerable.Range(1, 6).Contains(choice))
                             {
                                 Console.Clear();
                                 Console.WriteLine(teacher.ToString(conn, cmd, rdr));
@@ -688,8 +688,7 @@ namespace Virtual_Global_College
                                 Console.WriteLine(" 3 - Print student informations");
                                 Console.WriteLine(" 4 - Print student attendances");
                                 Console.WriteLine(" 5 - Print grades notebook\n");
-                                Console.WriteLine(" 6 - Modify student grade");
-                                Console.WriteLine(" 7 - Modify your contact\n");
+                                Console.WriteLine(" 6 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
@@ -713,10 +712,7 @@ namespace Virtual_Global_College
                                 case 5:
                                     teacher.Print_Grades_Notebook(conn, cmd, rdr);
                                     break;
-                                //case 6:
-                                //    teacher.Modify_Student_Grade(conn, cmd, rdr);
-                                //    break;
-                                case 7:
+                                case 6:
                                     teacher.ModifyContact(conn, cmd, rdr, "teacher");
                                     break;
                                 default:
@@ -740,7 +736,7 @@ namespace Virtual_Global_College
                         while (key != "Exit")
                         {
                             choice = 0;
-                            while (!Enumerable.Range(1, 10).Contains(choice))
+                            while (!Enumerable.Range(1, 9).Contains(choice))
                             {
                                 Console.Clear();
                                 Console.WriteLine(student.ToString(conn, cmd, rdr));
@@ -753,9 +749,8 @@ namespace Virtual_Global_College
                                 Console.WriteLine(" 5 - Print attendances");
                                 Console.WriteLine(" 6 - Print assignments");
                                 Console.WriteLine(" 7 - Print grades");
-                                Console.WriteLine(" 8 - Report card (not working)");
-                                Console.WriteLine(" 9 - Print timetable");
-                                Console.WriteLine("10 - Modify your contact\n");
+                                Console.WriteLine(" 8 - Print timetable");
+                                Console.WriteLine(" 9 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
@@ -785,13 +780,10 @@ namespace Virtual_Global_College
                                 case 7:
                                     student.Print_Grades(conn, cmd, rdr);
                                     break;
-                                //case 8:
-                                //    student.ReportCard();
-                                //    break;
-                                case 9:
+                                case 8:
                                     student.Print_Timetable(conn, cmd, rdr);
                                     break;
-                                case 10:
+                                case 9:
                                     student.ModifyContact(conn, cmd, rdr, "student");
                                     break;
                                 default:
