@@ -263,9 +263,52 @@ namespace Virtual_Global_College
 
         }
 
-        public void Print_Student_Attendances(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
+        public void Print_Student_Attendances(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
+            bool endMethod = false; bool idExist;
+            string answer; string idOfStudent; string sqlRead;
+            int anyAttendances;
 
+            while (endMethod == false)
+            {
+                Console.WriteLine("######## STUDENT ATTENDANCES ########\n");
+
+                Console.WriteLine("Please enter the ID of the student who you want to see his attendances :");
+                idOfStudent = Console.ReadLine();
+                sqlRead = "SELECT Id FROM Students";
+                cmdRead = new MySqlCommand(sqlRead, conn);
+                idExist = Program.Exist(idOfStudent, conn, cmdRead, rdr);
+                while (idExist == false)
+                {
+                    Console.WriteLine("This ID doesn't exist. Please enter an existing ID :");
+                    idOfStudent = Console.ReadLine();
+                    idExist = Program.Exist(idOfStudent, conn, cmdRead, rdr);
+                }
+
+                Console.WriteLine();
+                sqlRead = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent={idOfStudent}";
+                cmdRead = new MySqlCommand(sqlRead, conn);
+                anyAttendances = Program.Read(conn, cmdRead, rdr, 1);
+                if (anyAttendances == 0)
+                    Console.WriteLine("The student hasn't any lates or absences\n");
+
+                Console.WriteLine("Do you want to see the attendances of another student ? Please write as it's written :\n- yes\n- no");
+                answer = Console.ReadLine();
+                while (answer != "yes" && answer != "no")
+                {
+                    Console.WriteLine("This answer doesn't exist. Please write as it's written :");
+                    answer = Console.ReadLine();
+                }
+
+                if (answer == "no")
+                {
+                    endMethod = true;
+                    Console.WriteLine("\nThank you. Have a good day.");
+                }
+
+                else
+                    Console.Clear();
+            }
         }
 
         /// <summary>
@@ -889,6 +932,12 @@ namespace Virtual_Global_College
 
         }
 
+        public void Add_Lesson()
+        {
+
+        }
+
+
         /// <summary>
         /// Allow the admin to modify/delete a attendance of a student
         /// </summary>
@@ -1063,12 +1112,6 @@ namespace Virtual_Global_College
 
 
         }
-
-        public void Modify_Subject(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
-        {
-
-        }
-
 
         /// <summary>
         /// Allow the admin to delete all datas about a teacher

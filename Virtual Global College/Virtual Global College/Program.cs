@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 using System.Timers;
 using System.Threading;
+using System.Windows;
 
 
 
@@ -393,6 +394,8 @@ namespace Virtual_Global_College
             }
         }
 
+        
+
 
         public static void Main(string[] args)
         {
@@ -407,6 +410,7 @@ namespace Virtual_Global_College
             MySqlCommand cmd = null;
             MySqlDataReader rdr = null;
 
+            int choice; string key;
             bool pass = false; bool exist;
             string id = " ";
             int j = 0;
@@ -415,7 +419,7 @@ namespace Virtual_Global_College
 
             while (forgetPassword == false)
             {
-                Console.Write("ID : ");
+                Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tID       : ");
                 id = Console.ReadLine();
                 sql = "SELECT Id From Students";
                 cmd = new MySqlCommand(sql, conn);
@@ -437,7 +441,8 @@ namespace Virtual_Global_College
 
                 while (exist == false)
                 {
-                    Console.Write("This ID doesn't exist. Please enter an existing ID : ");
+                    Console.Clear();
+                    Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tThis ID doesn't exist. \n\n\t\t\t\t\t\t\t\t\t\t\t\tID       : ");
                     id = Console.ReadLine();
 
                     sql = "SELECT Id FROM Students";
@@ -459,7 +464,9 @@ namespace Virtual_Global_College
                     }
                 }
 
-                Console.Write("Password : ");
+                Console.Clear();
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tID       : " + id);
+                Console.Write("\t\t\t\t\t\t\t\t\t\t\t\tPassword : ");
                 var password = ReadPassword();
                 sql = $"SELECT Password FROM Students WHERE Id = '{id}'";
                 cmd = new MySqlCommand(sql, conn);
@@ -484,7 +491,8 @@ namespace Virtual_Global_College
                 while (pass == false)
                 {
                     j += 1;
-                    Console.Write("Wrong password. Please type again: ");
+                    Console.Clear();
+                    Console.Write($"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tWrong password. \n\n\t\t\t\t\t\t\t\t\t\t\t\tID       : {id}\n\t\t\t\t\t\t\t\t\t\t\t\tPassword : ");
                     password = ReadPassword();
 
                     sql = $"SELECT Password FROM Students WHERE Id = '{id}'";
@@ -507,18 +515,54 @@ namespace Virtual_Global_College
 
                     forgetPassword = true;
 
-                    if (j > 2)
+                    if (j > 1 && 0 < Convert.ToInt32(id) && Convert.ToInt32(id) < 100 && pass == false)
                     {
-                        Console.WriteLine("You have to change your password ? Write a new one");
+                        Console.Clear();
+                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tYou have to change your password. \n\n\t\t\t\t\t\t\t\t\t\t\t\tWrite a new one : ");
                         string passwordForget = Console.ReadLine();
-                        sql = $"UPDATE Students SET Password ='{passwordForget}' WHERE Id = @id";
+                        sql = $"UPDATE Admins SET Password ='{passwordForget}' WHERE Id = @id";
                         cmd = new MySqlCommand(sql, conn);
                         cmd.Prepare();
                         cmd.Parameters.AddWithValue("@id", id);
                         Program.Insert(conn, cmd, rdr);
-                        Console.WriteLine("\nYour password has been changed");
+                        Console.Write("\n\n\t\t\t\t\t\t\t\t\t\t\t\tYour password has been changed.\n\t\t\t\t\t\t\t\t\t\t\t\tPress 'enter' to connect.");
                         forgetPassword = false;
                         pass = true;
+                        Console.ReadKey();
+                        Console.Clear();
+                    }
+
+                    if (j > 1 && 100 <= Convert.ToInt32(id) && Convert.ToInt32(id) < 1000 && pass == false)
+                    {
+                        Console.Clear();
+                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tYou have to change your password. \n\n\t\t\t\t\t\t\t\t\t\t\t\tWrite a new one : ");
+                        string passwordForget = Console.ReadLine();
+                        sql = $"UPDATE Teachers SET Password ='{passwordForget}' WHERE Id = @id";
+                        cmd = new MySqlCommand(sql, conn);
+                        cmd.Prepare();
+                        cmd.Parameters.AddWithValue("@id", id);
+                        Program.Insert(conn, cmd, rdr);
+                        Console.Write("\n\n\t\t\t\t\t\t\t\t\t\t\t\tYour password has been changed.\n\t\t\t\t\t\t\t\t\t\t\t\tPress 'enter' to connect.");
+                        forgetPassword = false;
+                        pass = true;
+                        Console.ReadKey();
+                        Console.Clear();
+                    }
+
+                    if (j > 1 && Convert.ToInt32(id) > 1000 && pass == false)
+                    {
+                        Console.Clear();
+                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tYou have to change your password. \n\n\t\t\t\t\t\t\t\t\t\t\t\tWrite a new one : ");
+                        string passwordForget = Console.ReadLine();
+                        sql = $"UPDATE Admins SET Password ='{passwordForget}' WHERE Id = @id";
+                        cmd = new MySqlCommand(sql, conn);
+                        cmd.Prepare();
+                        cmd.Parameters.AddWithValue("@id", id);
+                        Program.Insert(conn, cmd, rdr);
+                        Console.Write("\n\n\t\t\t\t\t\t\t\t\t\t\t\tYour password has been changed.\n\t\t\t\t\t\t\t\t\t\t\t\tPress 'enter' to connect.");
+                        forgetPassword = false;
+                        pass = true;
+                        Console.ReadKey();
                         Console.Clear();
                     }
                 }
@@ -526,9 +570,9 @@ namespace Virtual_Global_College
             
             
 
-            Console.WriteLine("Success");
+            Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\t\t\tSuccess");
             ConsoleSpiner spin = new ConsoleSpiner();
-            Console.Write("Loading....");
+            Console.Write("\n\n\t\t\t\t\t\t\t\t\t\t\t\tLoading....");
             for (int delay = 0; delay < 15000; delay++)
                 spin.Turn();
 
@@ -542,30 +586,30 @@ namespace Virtual_Global_College
                     {
                         List<Admin> listing = dbCtx.Admins.ToList();
                         admin = listing[i-1];
-                        string key = " ";
+                        key = " ";
 
                         while (key != "Exit")
                         {
-                            Console.Clear();
-                            Console.WriteLine(admin.ToString(conn, cmd, rdr));
-
-                            int choice = 0;
-                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9 && choice != 10 && choice != 11 && choice != 12 && choice != 13 && choice != 14)
+                            choice = 0;
+                            while (!Enumerable.Range(1,13).Contains(choice))
                             {
-                                Console.WriteLine("\n\nWhat do you want to do ?");
-                                Console.WriteLine(" 1 - Create a subject, an exam or delete a course");
-                                Console.WriteLine(" 2 - Print student information");
-                                Console.WriteLine(" 3 - Print student attendance");
-                                Console.WriteLine(" 4 - Print student fees history\n");
-                                Console.WriteLine(" 5 - Add attendances for a student");
+                                Console.Clear();
+                                Console.WriteLine(admin.ToString(conn, cmd, rdr));
+
+                                Console.WriteLine("\n\nWhat do you want to do ?\n");
+                                Console.WriteLine(" 1 - Print student information");
+                                Console.WriteLine(" 2 - Print student attendance (TO VERIFY)");
+                                Console.WriteLine(" 3 - Print student fees history\n");
+                                Console.WriteLine(" 4 - Add lesson/exam (TO DO)");
+                                Console.WriteLine(" 5 - Add attendance");
                                 Console.WriteLine(" 6 - Add subject");
                                 Console.WriteLine(" 7 - Add teacher");
                                 Console.WriteLine(" 8 - Add subject teacher\n");
                                 Console.WriteLine(" 9 - Modify student attendances");
-                                Console.WriteLine("10 - Delete student");
-                                Console.WriteLine("11 - Delete teacher");
-                                Console.WriteLine("12 - Modify your contact");
-                                Console.WriteLine("13 - Fill the timetable at the start of the year\n");
+                                Console.WriteLine("10 - Delete lesson (TO DO)");
+                                Console.WriteLine("11 - Delete student");
+                                Console.WriteLine("12 - Delete teacher");
+                                Console.WriteLine("13 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
                             }
@@ -573,17 +617,17 @@ namespace Virtual_Global_College
                             Console.Clear();
                             switch (choice)
                             {
-                                //case 1:
-                                //    admin.CreateExamOrCourse(conn, cmd, rdr);
-                                //    break;
-                                case 2:
+                                case 1:
                                     admin.Print_Student_Informations(conn, cmd, rdr);
                                     break;
-                                //case 3:
-                                //    admin.Print_Student_Attendances(conn, cmd, rdr);
-                                //    break;
-                                case 4:
+                                case 2:
+                                    admin.Print_Student_Attendances(conn, cmd, rdr);
+                                    break;
+                                case 3:
                                     admin.Print_Student_Fees_History(conn, cmd, rdr);
+                                    break;
+                                case 4:
+                                    admin.Add_Lesson();
                                     break;
                                 case 5:
                                     admin.Add_Student_Attendances(conn, cmd, rdr);
@@ -600,23 +644,24 @@ namespace Virtual_Global_College
                                 case 9:
                                     admin.Modify_Student_Attendances(conn, cmd, rdr);
                                     break;
-                                case 10:
+                                //case 10:
+                                //    admin.Delete_Lesson(conn, cmd, rdr);
+                                //    break;
+                                case 11:
                                     admin.Delete_Student(conn, cmd, rdr);
                                     break;
-                                case 11:
+                                case 12:
                                     admin.Delete_Teacher(conn, cmd, rdr);
                                     break;
-                                case 12:
+                                case 13:
                                     admin.ModifyContact(conn, cmd, rdr, "admin");
                                     break;
-                                //case 13:
-                                //    admin.SubjectMandatory();
-                                //    break;
                                 default:
                                     return;
                             }
                             Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
+                            dbCtx.SaveChanges();
                         }
                     }
                 }
@@ -626,22 +671,22 @@ namespace Virtual_Global_College
                     {
                         List<Teacher> listing = dbCtx.Teachers.ToList();
                         teacher = listing[i-100];
-                        string key = " ";
+                        key = " ";
 
                         while (key != "Exit")
                         {
-                            Console.Clear();
-                            Console.WriteLine(teacher.ToString(conn, cmd, rdr));
-
-                            int choice = 0;
-                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7)
+                            choice = 0;
+                            while (!Enumerable.Range(1, 7).Contains(choice))
                             {
-                                Console.WriteLine("\n\nWhat do you want to do ?");
+                                Console.Clear();
+                                Console.WriteLine(teacher.ToString(conn, cmd, rdr));
+
+                                Console.WriteLine("\n\nWhat do you want to do ?\n");
                                 Console.WriteLine(" 1 - Add assignment");
-                                Console.WriteLine(" 2 - Add grades");
+                                Console.WriteLine(" 2 - Add grades\n");
                                 Console.WriteLine(" 3 - Print student informations");
                                 Console.WriteLine(" 4 - Print student attendances");
-                                Console.WriteLine(" 5 - Print grades notebook");
+                                Console.WriteLine(" 5 - Print grades notebook\n");
                                 Console.WriteLine(" 6 - Modify student grade");
                                 Console.WriteLine(" 7 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
@@ -678,7 +723,7 @@ namespace Virtual_Global_College
                             }
                             Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
-                            Console.Clear();
+                            dbCtx.SaveChanges();
                         }
                     }
                 }
@@ -688,26 +733,26 @@ namespace Virtual_Global_College
                     {
                         List<Student> listing = dbCtx.Students.ToList();
                         student = listing[i-1001];
-                        string key = " ";
+                        key = " ";
 
                         while (key != "Exit")
                         {
-                            Console.Clear();
-                            Console.WriteLine(student.ToString(conn, cmd, rdr));
-
-                            int choice = 0;
-                            while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 && choice != 7 && choice != 8 && choice != 9)
+                            choice = 0;
+                            while (!Enumerable.Range(1, 10).Contains(choice))
                             {
-                                Console.WriteLine("\n\nWhat do you want to do ?");
+                                Console.Clear();
+                                Console.WriteLine(student.ToString(conn, cmd, rdr));
+
+                                Console.WriteLine("\n\nWhat do you want to do ?\n");
                                 Console.WriteLine(" 1 - Course registration");
                                 Console.WriteLine(" 2 - Add money");
-                                Console.WriteLine(" 3 - Payment");
+                                Console.WriteLine(" 3 - Payment\n");
                                 Console.WriteLine(" 4 - Print fees history");
                                 Console.WriteLine(" 5 - Print attendances");
                                 Console.WriteLine(" 6 - Print assignments");
                                 Console.WriteLine(" 7 - Print grades");
-                                Console.WriteLine(" 8 - Report card");
-                                Console.WriteLine(" 9 - TimetableWeek");
+                                Console.WriteLine(" 8 - Report card (not working)");
+                                Console.WriteLine(" 9 - Print timetable");
                                 Console.WriteLine("10 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
@@ -739,17 +784,21 @@ namespace Virtual_Global_College
                                     student.Print_Grades(conn, cmd, rdr);
                                     break;
                                 //case 8:
-                                //    student.TimetableWeek();
+                                //    student.ReportCard();
                                 //    break;
                                 case 9:
+                                    student.Print_Timetable(conn, cmd, rdr);
+                                    break;
+                                case 10:
                                     student.ModifyContact(conn, cmd, rdr, "student");
                                     break;
                                 default:
                                     return;
                             }
+                            
                             Console.WriteLine("\nIf you want to stop. Type : Exit");
                             key = Console.ReadLine();
-                            Console.Clear();
+                            dbCtx.SaveChanges();
                         }
                     }
                 }

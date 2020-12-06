@@ -80,7 +80,7 @@ namespace Virtual_Global_College
             Console.WriteLine("######## COURSE REGISTRATION ########\n");
 
             if (SubjectsPicked)
-                Console.WriteLine("You have already chosen your courses");
+                Console.WriteLine("You have already chosen your courses.");
             else
             {
                 // VARIABLES CREATIONS
@@ -159,14 +159,14 @@ namespace Virtual_Global_College
                         Console.WriteLine("\nThank you. Please select the second non required subject :");
 
                     answer = Console.ReadLine();
-                    sql = $"SELECT NameSubject FROM Subjects WHERE NameSubject='{answer}'";
+                    sql = $"SELECT NameSubject FROM Subjects WHERE NameSubject='{answer}' AND Branch='{Branch}' AND Required = '0'";
                     cmd = new MySqlCommand(sql, conn);
                     exist = Program.Exist(answer, conn, cmd, rdr);
                     while (!exist)
                     {
-                        Console.WriteLine("\nThis subject doesn't exist. Please write as it's written :");
+                        Console.WriteLine("\nThis subject doesn't exist or is not a non required subject. Please write as it's written :");
                         answer = Console.ReadLine();
-                        sql = $"SELECT NameSubject FROM Subjects WHERE NameSubject='{answer}'";
+                        sql = $"SELECT NameSubject FROM Subjects WHERE NameSubject='{answer}' AND Branch='{Branch}' AND Required = '0'";
                         cmd = new MySqlCommand(sql, conn);
                         exist = Program.Exist(answer, conn, cmd, rdr);
                     }
@@ -207,8 +207,9 @@ namespace Virtual_Global_College
                     Program.Insert(conn, cmd, rdr);
                 }
 
-                Console.WriteLine("\nYour courses have been saved. You have been affected randomly in a teacher classroom for these non required subjects too.\nHave a good day :)");
+                Console.WriteLine("\nYour subjects have been saved. You have been affected randomly in a teacher classroom for these non required subjects too.\nHave a good day :)");
                 SubjectsPicked = true;
+
             }
         }
 
@@ -480,57 +481,189 @@ namespace Virtual_Global_College
             Teacher.GradeExam(Grades_NoteBook);
         }
 
+        /// <summary>
+        /// Allow the student to see his timetable
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        public void Print_Timetable(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
+        {
+            string sql; string answer;
+            int startWeek; int endWeek;
+            List<string> idTeachers; List<string> Subjects = new List<string>(); ; List<string> lessonsDate = new List<string>();
+            string[,] weekTimetable;
+            LinkedList<string[,]> Timetable = new LinkedList<string[,]>();
+            int hour; int day;
+
+            // WE ASK FOR THE NUMBER OF WEEK WE WANT TO SEE THE TIMETABLE
+            Console.WriteLine("Write the week number where the timetable will start :");
+            answer = Console.ReadLine();
+            while (!answer.All(char.IsDigit))
+            {
+                Console.WriteLine("Please enter a number :");
+                answer = Console.ReadLine();
+            }
+            startWeek = Convert.ToInt32(answer);
+            Console.WriteLine("Write the week number where the timetable will end :");
+            answer = Console.ReadLine();
+            while (!answer.All(char.IsDigit))
+            {
+                Console.WriteLine("Please enter a number :");
+                answer = Console.ReadLine();
+            }
+            endWeek = Convert.ToInt32(answer);
+
+            //WE OBTAIN THE TEACHER ID OF THE STUDENT
+            sql = $"SELECT IdTeacher FROM TeachersStudents WHERE IdStudent='{Id}'";
+            cmd = new MySqlCommand(sql, conn);
+            idTeachers = Program.Pick(conn, cmd, rdr);
+
+            // WE OBTAIN THE SUBJECTS OF THE STUDENT
+            sql = $"SELECT NameSubject FROM Subjects INNER JOIN TeachersStudents ON Subjects.IdSubject = TeachersStudents.IdSubject AND TeachersStudents.IdStudent = '{Id}'";
+            cmd = new MySqlCommand(sql, conn);
+            Subjects = Program.Pick(conn, cmd, rdr);
+
+            int index;
+            for (int weekNumber = startWeek; weekNumber <= endWeek; weekNumber++)
+            {
+                weekTimetable = new string[10, 6];
+                weekTimetable[0, 0] = $"Week {weekNumber}";
+                weekTimetable[0, 1] = "Monday";
+                weekTimetable[0, 2] = "Tuesday";
+                weekTimetable[0, 3] = "Wednesday";
+                weekTimetable[0, 4] = "Thursday";
+                weekTimetable[0, 5] = "Friday";
+                weekTimetable[1, 0] = "8h - 9h";
+                weekTimetable[2, 0] = "9h - 10h";
+                weekTimetable[3, 0] = "10h - 11h";
+                weekTimetable[4, 0] = "11h - 12h";
+                weekTimetable[5, 0] = "12h - 13h";
+                weekTimetable[6, 0] = "13h - 14h";
+                weekTimetable[7, 0] = "14h - 15h";
+                weekTimetable[8, 0] = "15h - 16h";
+                weekTimetable[9, 0] = "16h - 17h";
+
+                index = 0;
+                foreach (string id in idTeachers)
+                {
+                    sql = $"SELECT Day, Hour FROM Lessons WHERE Week = '{weekNumber}' AND IdTeacher = '{id}' AND Subject = '{Subjects[index]}'";
+                    cmd = new MySqlCommand(sql, conn);
+                    lessonsDate = Program.Pick(conn, cmd, rdr);
+
+                    if (lessonsDate.Count == 2)
+                    {
+                        day = Convert.ToInt32(lessonsDate[0]);
+                        hour = Convert.ToInt32(lessonsDate[1]);
+
+                        for (int i = hour - 7; i < hour - 4; i++)
+                            weekTimetable[i, day] = Subjects[index];
+                    }
+                    
+                    index++;
+                }
+                Timetable.AddLast(weekTimetable);
+            }
+            TimetableWeek(Timetable);
+        }
+
+        public void Print_Subjects_And_Teachers()
+        {
+
+        }
+
+
+
 
 
         /// <summary>
-        /// Show the timetable for a student
+        /// Method for the display of the timetable
         /// </summary>
-        public void ToStringTimetable(string[,] tmtable)
+        /// <param name="timetable"></param>
+        public static void Timetable_Display(string[,] timetable)
         {
-            for (int index1 = 0; index1 < tmtable.GetLength(0); index1++)
+            int lengthToAdd;
+
+            Console.WriteLine("\n\t\t\t\t\t\t\t\t\t\t\t\t    TIMETABLE");
+            Console.Write("\n\t-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            for (int i = 0; i < timetable.GetLength(0); i++)
             {
-                for (int index2 = 0; index2 < tmtable.GetLength(1); index2++)
+                Console.Write("\n\t|\t\t\t\t|\t\t\t\t|\t\t\t\t|\t\t\t\t|\t\t\t\t|\t\t\t\t|");
+                Console.Write("\n\t|");
+
+                for (int j = 0; j < timetable.GetLength(1); j++)
                 {
-                    if (tmtable[index1, index2] == null)
-                    {
-                        for(int i = 0; i < tmtable[0,index2].Length; i++)
-                        {
-                            Console.Write(" ");
-                        }
-                        Console.Write("\t           ");
-                    }
+                    if (timetable[i, j] == null)
+                        Console.Write("\t\t\t\t|");
                     else
                     {
-                        Console.Write(tmtable[index1, index2] + "\t           ");
-                        if (tmtable[index1,index2].Length < tmtable[0, index2].Length)
+
+                        if (i < timetable.GetLength(0) - 1 && timetable[i + 1, j] != null && timetable[i + 1, j].ToString() == timetable[i, j].ToString())
                         {
-                            for (int i = 0; i < tmtable[0, index2].Length - tmtable[index1, index2].Length; i++)
+                            timetable[i, j] = null;
+                            timetable[i + 2, j] = null;
+                            Console.Write("\t\t\t\t|");
+                        }
+                        else
+                        {
+                            lengthToAdd = 32 - timetable[i, j].Length;
+                            if (lengthToAdd % 2 != 0)
                             {
-                                Console.Write(" ");
+                                for (int k = 0; k < (lengthToAdd - 1) / 2; k++)
+                                    Console.Write(" ");
+                                Console.Write(timetable[i, j]);
+                                for (int k = 0; k < (lengthToAdd + 1) / 2 - 1; k++)
+                                    Console.Write(" ");
                             }
+                            else
+                            {
+                                for (int k = 0; k < lengthToAdd / 2; k++)
+                                    Console.Write(" ");
+                                Console.Write(timetable[i, j]);
+                                for (int k = 0; k < lengthToAdd / 2 - 1; k++)
+                                    Console.Write(" ");
+                            }
+                            Console.Write("|");
                         }
                     }
+
                 }
-                Console.WriteLine();
-                Console.Write("--------------------------------------------------------------------------------------");
-                Console.Write("--------------------------------------------------------------------------------------");
-                Console.WriteLine();
+
+                Console.Write("\n\t|\t\t\t\t|\t\t\t\t|\t\t\t\t|\t\t\t\t|\t\t\t\t|\t\t\t\t|");
+
+                if (i == timetable.GetLength(0) - 1)
+                    Console.Write("\n\t-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                else
+                {
+                    Console.Write("\n\t|-------------------------------|");
+                    for (int jBis = 1; jBis < timetable.GetLength(1); jBis++)
+                    {
+                        if (i > 0 && i < timetable.GetLength(0) - 1 && timetable[i - 1, jBis] == null && timetable[i, jBis] != null)
+                            Console.Write("                               |");
+                        else if (i > 0 && i < timetable.GetLength(0) - 2 && timetable[i, jBis] == null && timetable[i + 1, jBis] != null && timetable[i + 2, jBis] == null)
+                            Console.Write("                               |");
+                        else
+                            Console.Write("-------------------------------|");
+                    }
+                }
             }
-            Console.WriteLine();
         }
 
         /// <summary>
         /// Show the timetable for a student of the different week
         /// </summary>
-        public void TimetableWeek()
+        /// <param name="timetable"></param>
+        public static void TimetableWeek(LinkedList<string[,]> timetable)
         {
             bool choice = true;
-            LinkedListNode<string[,]> current = timetablePerWeek.First;
+            LinkedListNode<string[,]> current = timetable.First;
             while (current != null && choice == true)
             {
                 Console.Clear();
-                ToStringTimetable(current.Value);
-                Console.WriteLine();
+                Timetable_Display(current.Value);
+                Console.WriteLine("\n");
+                Console.Write("\t\t\t\t\t\t\t");
                 Console.Write(current.Previous != null ? "< PREVIOUS [P]" : "");
                 Console.Write(current.Next != null ? "[N] NEXT >".PadLeft(76) : string.Empty);
                 Console.WriteLine();
