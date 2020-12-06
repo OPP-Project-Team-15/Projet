@@ -469,12 +469,6 @@ namespace Virtual_Global_College
         }
 
 
-        public void Modify_Student_Grade(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
-        {
-
-        }
-
-
         /// <summary>
         /// Show the timetable for a student
         /// </summary>
