@@ -17,6 +17,13 @@ namespace Virtual_Global_College
 
         #region : Methods
 
+        /// <summary>
+        /// Return the admin informations
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        /// <returns></returns>
         public string ToString(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
             string sql = $"SELECT Id, FirstName, LastName, BirthDate, Sexe, PhoneNumber, Mail FROM Admins WHERE Id='{Id}'";
@@ -27,181 +34,6 @@ namespace Virtual_Global_College
             admin_Informations += $"Sexe : {informations.ElementAt(4)}\nPhone Number : {informations.ElementAt(5)}\nMail : {informations.ElementAt(6)}";
 
             return admin_Informations;
-        }
-
-        /// <summary>
-        /// Put the subject mandatory in the timetable of the student
-        /// </summary>
-        //public void SubjectMandatory()
-        //{
-        //    foreach (KeyValuePair<Subject, List<Student>> list in SubjectStudent)
-        //    {
-        //        foreach (Student stud in list.Value)
-        //        {
-        //            foreach (string[,] timetable in stud.timetablePerWeek)
-        //            {
-        //                string[] tab = new string[2] { list.Key.Hours, list.Key.Day };
-        //                int[] i = SearchTheIndexOfAnXAndYofMatrix(timetable, tab);
-        //                if (i[0] != 0 && i[1] != 0)
-        //                {
-        //                    timetable[i[0], i[1]] = list.Key.NameSubject;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// To find the index x and y in a matrix
-        /// </summary>
-        /// <param name="timetab"></param>
-        /// <param name="cdx"></param>
-        /// <returns></returns>
-        public int[] SearchTheIndexOfAnXAndYofMatrix(string[,] timetab, string[] cdx)
-        {
-            int[] index = new int[2];
-            for (int index1 = 0; index1 < cdx.Length; index1++)
-            {
-                for (int index2 = 0; index2 < timetab.GetLength(0); index2++)
-                {
-                    for (int index3 = 0; index3 < timetab.GetLength(1); index3++)
-                    {
-                        if (index1 == 0 && timetab[index2, index3] == cdx[0])
-                        {
-                            index[index1] = index2;
-                        }
-                        else if (index1 == 1 && timetab[index2, index3] == cdx[1])
-                        {
-                            index[index1] = index3;
-                        }
-                    }
-                }
-            }
-            return index;
-        }
-
-        /// <summary>
-        /// Allow the admin to modify the timetable
-        /// </summary>
-        public void CreateExamOrCourse(int numb)
-        {
-            List<Student> studentNewSubject = new List<Student>();
-            Console.WriteLine("What do you want to do ? ");
-            Console.WriteLine("1 Create a subject");
-            Console.WriteLine("2 Create an exam");
-            Console.WriteLine("3 Delete a course");
-            int cx = Convert.ToInt32(Console.ReadLine());
-            while (cx != 1 && cx != 2 && cx != 3)
-            {
-                Console.WriteLine("Write something either 1 or 2 or 3");
-                cx = Convert.ToInt32(Console.ReadLine());
-            }
-
-            string branc = "";
-            while (branc != "ESILV" && branc != "EMLV" && branc != "IIM")
-            {
-                Console.WriteLine("Give the name of the branch. The branch must exist.");
-                branc = Console.ReadLine();
-            }
-
-            string subj = "";
-            bool subjExist = false;
-            if (cx == 2 || cx == 3)
-            {
-                while (subjExist != true)
-                {
-                    Console.WriteLine("Specify the subject :");
-                    subj = Console.ReadLine();
-                    for (int index1 = 0; index1 < SubjectStudent.Count && subjExist != true; index1++)
-                    {
-                        subjExist = SubjectStudent.ElementAt(index1).Key.NameSubject.Contains(subj);
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine("Specify the subject :");
-                subj = Console.ReadLine();
-            }
-
-            string week = "Week ";
-            if (cx == 2 || cx == 3)
-            {
-                Console.WriteLine("Specify the week :");
-                int number = 0;
-                while (number < 1 || number > 30)
-                {
-                    Console.WriteLine("Please write a number week between 1 and 30 :");
-                    number = Convert.ToInt32(Console.ReadLine());
-                }
-                week = week + number;
-            }
-
-            string day = "";
-            while (day != "Monday" && day != "Tuesday" && day != "Wednesday" && day != "Thursday" && day != "Friday" && day != "Saturday" && day != "Sunday")
-            {
-                Console.WriteLine("Specify the day :");
-                day = Console.ReadLine();
-            }
-
-            int num = 0;
-            string hour = "";
-            while (num < 7 || num > 20)
-            {
-                Console.WriteLine("Specify the start. It can start at minimum at 7 and maximum at 20. If it's an assignment it must last one hour. You must give exactly one hour.");
-                num = Convert.ToInt32(Console.ReadLine());
-            }
-            hour = num + " - " + Convert.ToString(num + 1);
-
-            string[] assignment = new string[5] { branc, subj, week, day, hour };
-
-
-            foreach (KeyValuePair<Subject, List<Student>> list in SubjectStudent)
-            {
-                if (list.Key.Branch == branc)
-                {
-                    foreach (Student stud in list.Value)
-                    {
-                        bool existAlready = false;
-                        foreach (Student t in studentNewSubject)
-                        {
-                            if (existAlready == false && t.Id == stud.Id)
-                            {
-                                existAlready = true;
-                            }
-                        }
-                        if (existAlready == false)
-                        {
-                            studentNewSubject.Add(stud);
-                        }
-                        foreach (string[,] timetable in stud.timetablePerWeek)
-                        {
-                            if (timetable[0, 8] == week)
-                            {
-                                string[] tab = new string[2] { hour, day };
-                                int[] i = SearchTheIndexOfAnXAndYofMatrix(timetable, tab);
-                                if (i[0] != 0 && i[1] != 0)
-                                {
-                                    if (cx == 2)
-                                    {
-                                        timetable[i[0], i[1]] = "Exam : " + subj;
-                                    }
-                                    else if (cx == 3 && list.Key.NameSubject == subj)
-                                    {
-                                        timetable[i[0], i[1]] = null;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (cx == 1)
-            {
-                //Subject newSubj = new Subject(subj, branc, day, hour, Convert.ToString(numb++));
-                //SubjectStudent.Add(newSubj, studentNewSubject);
-                //SubjectMandatory();
-            }
         }
 
 
@@ -264,6 +96,12 @@ namespace Virtual_Global_College
 
         }
 
+        /// <summary>
+        /// Allow the admin to see student attendances
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmdRead"></param>
+        /// <param name="rdr"></param>
         public void Print_Student_Attendances(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
             bool endMethod = false; bool idExist;
@@ -933,6 +771,12 @@ namespace Virtual_Global_College
 
         }
 
+        /// <summary>
+        /// Allow the admin to add a new lesson for a teacher
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
         public void Add_Lesson(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
             Console.WriteLine("######## ADD LESSON ########\n");
@@ -1000,7 +844,7 @@ namespace Virtual_Global_College
                 hour = Console.ReadLine();
                 while (!hour.All(char.IsDigit) || !Enumerable.Range(8, 7).Contains(Convert.ToInt32(hour)))
                 {
-                    Console.WriteLine("Enter a correct day :");
+                    Console.WriteLine("Enter a correct hour :");
                     hour = Console.ReadLine();
                 }
 
@@ -1027,7 +871,7 @@ namespace Virtual_Global_College
                         Console.WriteLine("\nThank you. Have a good day :)");
                 }
 
-                else if (possibleLesson)
+                if (possibleLesson)
                 {
                     sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour) + 1}' AND IdTeacher = '{idOfTeacher}'";
                     cmd = new MySqlCommand(sql, conn);
@@ -1052,7 +896,7 @@ namespace Virtual_Global_College
                     }
                 }
 
-                else if (possibleLesson)
+                if (possibleLesson)
                 {
                     sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour) + 2}' AND IdTeacher = '{idOfTeacher}'";
                     cmd = new MySqlCommand(sql, conn);
@@ -1077,7 +921,7 @@ namespace Virtual_Global_College
                     }
                 }
 
-                else if (possibleLesson)
+                if (possibleLesson)
                 {
                     sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour) - 1}' AND IdTeacher = '{idOfTeacher}'";
                     cmd = new MySqlCommand(sql, conn);
@@ -1102,7 +946,7 @@ namespace Virtual_Global_College
                     }
                 }
 
-                else if (possibleLesson)
+                if (possibleLesson)
                 {
                     sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour) - 2}' AND IdTeacher = '{idOfTeacher}'";
                     cmd = new MySqlCommand(sql, conn);
@@ -1317,6 +1161,146 @@ namespace Virtual_Global_College
                 Console.WriteLine("\nThank you. Have a good day :)");
             }
 
+
+        }
+
+
+        /// <summary>
+        /// Allow the admin to delete a lesson
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        public void Delete_Lesson(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
+        {
+            Console.WriteLine("######## DELETE LESSON ########\n");
+
+            string sql; string idOfTeacher; string answer;
+            string subject; string week; string day; string hour;
+            bool exist;
+            List<string> Subjects; List<string> Lesson;
+
+            // ASK FOR THE ID OF THE STUDENT
+            Console.WriteLine("Write the ID of the teacher you want to add a lesson : ");
+            idOfTeacher = Console.ReadLine();
+
+            sql = "SELECT Id FROM Teachers";
+            cmd = new MySqlCommand(sql, conn);
+            exist = Program.Exist(idOfTeacher, conn, cmd, rdr);
+
+            while (exist == false)
+            {
+                Console.WriteLine("This ID doesn't exist. Please enter an existing ID :");
+                idOfTeacher = Console.ReadLine();
+
+                sql = "SELECT Id FROM Teachers";
+                cmd = new MySqlCommand(sql, conn);
+                exist = Program.Exist(idOfTeacher, conn, cmd, rdr);
+            }
+
+            // ASK FOR THE SUBJECT
+            Console.WriteLine("Here, the subjects of the teacher :\n");
+            sql = $"SELECT NameSubject FROM Subjects INNER JOIN SubjectsTeachers ON Subjects.IdSubject = SubjectsTeachers.IdSubject AND IdTeacher='{idOfTeacher}'";
+            cmd = new MySqlCommand(sql, conn);
+            Program.Read(conn, cmd, rdr, 2);
+            Subjects = Program.Pick(conn, cmd, rdr);
+
+            if (Subjects.Count == 0)
+                Console.WriteLine("The teacher hasn't any subjects.");
+            else
+            {
+                Console.WriteLine("\nSelect the subject which you want to add a lesson for this teacher :");
+                subject = Console.ReadLine();
+                while (!Subjects.Contains(subject))
+                {
+                    Console.WriteLine("Please select a valid subject :");
+                    subject = Console.ReadLine();
+                }
+
+                // ASK FOR THE DATE OF THE LESSON
+                Console.WriteLine("\nSelect the week of the lesson :");
+                week = Console.ReadLine();
+                while (!week.All(char.IsDigit) || Convert.ToInt32(week) < 1)
+                {
+                    Console.WriteLine("Enter a correct week :");
+                    week = Console.ReadLine();
+                }
+
+                Console.WriteLine("\nSelect the day of the lesson (1, 2, 3, 4 or 5) :");
+                day = Console.ReadLine();
+                while (!day.All(char.IsDigit) || !Enumerable.Range(1, 5).Contains(Convert.ToInt32(day)))
+                {
+                    Console.WriteLine("Enter a correct day :");
+                    day = Console.ReadLine();
+                }
+
+                Console.WriteLine("\nSelect the hour of the lesson (8 to 14) :");
+                hour = Console.ReadLine();
+                while (!hour.All(char.IsDigit) || !Enumerable.Range(8, 7).Contains(Convert.ToInt32(hour)))
+                {
+                    Console.WriteLine("Enter a correct hour :");
+                    hour = Console.ReadLine();
+                }
+
+                // VERIFY IF THE LESSON EXIST
+                sql = $"SELECT IdLesson FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour)}' AND IdTeacher = '{idOfTeacher}' AND Subject = '{subject}'";
+                cmd = new MySqlCommand(sql, conn);
+                Lesson = Program.Pick(conn, cmd, rdr);
+                
+                if (Lesson.Count == 0)
+                {
+                    Console.WriteLine("\nThis lesson doesn't exist. Would you like to delete another lesson ?\n- yes\n- no");
+                    answer = Console.ReadLine();
+                    while (answer != "yes" && answer != "no")
+                    {
+                        Console.WriteLine("Please write as it's written");
+                        answer = Console.ReadLine();
+                    }
+                    if (answer == "yes")
+                    {
+                        Console.Clear();
+                        Delete_Lesson(conn, cmd, rdr);
+                    }
+                    else
+                        Console.WriteLine("\nThank you. Have a good day :)");
+                }
+                else
+                {
+                    Console.WriteLine($"\nWould you really want to delete the lesson of {subject} in the week {week} for the id teacher {idOfTeacher} ?\n- yes\n- no");
+                    answer = Console.ReadLine();
+                    while (answer != "yes" && answer != "no")
+                    {
+                        Console.WriteLine("Please write as it's written");
+                        answer = Console.ReadLine();
+                    }
+                    if (answer == "no")
+                    {
+                        Console.WriteLine("\nWould you like to delete another lesson ?\n- yes\n- no");
+                        answer = Console.ReadLine();
+                        while (answer != "yes" && answer != "no")
+                        {
+                            Console.WriteLine("Please write as it's written");
+                            answer = Console.ReadLine();
+                        }
+                        if (answer == "yes")
+                        {
+                            Console.Clear();
+                            Delete_Lesson(conn, cmd, rdr);
+                        }
+                        else
+                            Console.WriteLine("\nThank you. Have a good day :)");
+                    }
+                    else
+                    {
+                        // DELETE THE STUDENT FROM THE TABLE ATTENDANCES
+                        sql = $"DELETE FROM Lessons WHERE Week = '{Convert.ToInt32(week)}' AND Day = '{Convert.ToInt32(day)}' AND Hour = '{Convert.ToInt32(hour)}' AND IdTeacher = '{idOfTeacher}' AND Subject = '{subject}'";
+                        cmd = new MySqlCommand(sql, conn);
+                        Program.Delete(conn, cmd, rdr);
+
+                        Console.WriteLine("\nThe lesson has been deleted");
+                    }
+                }
+            }
 
         }
 

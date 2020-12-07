@@ -54,6 +54,13 @@ namespace Virtual_Global_College
 
         #region : Methods
 
+        /// <summary>
+        /// Return the student informations
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        /// <returns></returns>
         public string ToString(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
             string sql = $"SELECT Id, LastName, FirstName, BirthDate, Sexe, PhoneNumber, Mail, Branch FROM Students WHERE Id='{Id}'";
@@ -377,7 +384,9 @@ namespace Virtual_Global_College
         /// <param name="rdr"></param>
         public void Print_Fees_History(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
-            Console.WriteLine("######## FEES HISTORY ########");
+            Console.WriteLine("######## FEES HISTORY ########\n");
+
+            Console.WriteLine("Here, your fees history :\n");
 
             string sqlRead = $"SELECT Date, Name FROM Fees WHERE IdStudent={Id}";
             cmdRead = new MySqlCommand(sqlRead, conn);
@@ -396,6 +405,8 @@ namespace Virtual_Global_College
         {
             Console.WriteLine("########## ATTENDANCES ##########\n");
 
+            Console.WriteLine("Here, your attendances :\n");
+
             string sqlRead = $"SELECT Date, Subject, Type FROM Attendances WHERE IdStudent={Id}";
             cmdRead = new MySqlCommand(sqlRead, conn);
             int anyAbsencesOrLates = Program.Read(conn, cmdRead, rdr, 1);
@@ -412,6 +423,8 @@ namespace Virtual_Global_College
         public void Print_Assignments(MySqlConnection conn, MySqlCommand cmdRead, MySqlDataReader rdr)
         {
             Console.WriteLine("########## ASSIGNMENTS ##########");
+
+            Console.WriteLine("Here, your assignments :\n");
 
             string sqlRead = $"SELECT Date, Subject, Name FROM Assignments WHERE IdStudent={Id}";
             cmdRead = new MySqlCommand(sqlRead, conn);
@@ -568,9 +581,37 @@ namespace Virtual_Global_College
             TimetableWeek(Timetable);
         }
 
-        public void Print_Subjects_And_Teachers()
+        /// <summary>
+        /// Allow the student to see his/her subjects and teachers
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        public void Print_Subjects_And_Teachers(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
+            Console.WriteLine("########## SUBJECTS & TEACHERS ##########");
 
+            string sql;
+            List<string> Teachers; List<string> Subjects;
+
+            sql = $"SELECT FirstName, LastName, Id FROM Teachers INNER JOIN TeachersStudents ON Teachers.Id = TeachersStudents.IdTeacher AND TeachersStudents.IdStudent = '{Id}'";
+            cmd = new MySqlCommand(sql, conn);
+            Teachers = Program.Pick(conn, cmd, rdr);
+
+            sql = $"SELECT NameSubject FROM Subjects INNER JOIN TeachersStudents ON Subjects.IdSubject = TeachersStudents.IdSubject AND TeachersStudents.IdStudent = '{Id}'";
+            cmd = new MySqlCommand(sql, conn);
+            Subjects = Program.Pick(conn, cmd, rdr);
+
+            Console.WriteLine("\nYour subjects and your teachers associated are : \n");
+            if (Subjects.Count == 0)
+                Console.WriteLine("Yon have not already chosen your subjects. Please use the 'Course Registration' method");
+            else
+            {
+                for (int i = 0; i < Subjects.Count; i++)
+                    Console.WriteLine($"{Subjects[i]} : {Teachers[i * 3]} {Teachers[i * 3 + 1]} (Id : {Teachers[i * 3 + 2]})");
+            }
+
+            Console.WriteLine("\nHave a good day ;)");
         }
 
 

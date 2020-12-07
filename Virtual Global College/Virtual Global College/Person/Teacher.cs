@@ -10,11 +10,33 @@ namespace Virtual_Global_College
 {
     public class Teacher : User
     {
-        public SortedList<Subject, List<Student>> SubjectStudent { get; set; }
+        private string branch;
+
+        #region : Properties
+        public string Branch
+        {
+            get { return branch; }
+            set
+            {
+                if (value != "ESILV" && value != "EMLV" && value != "IIM")
+                    throw new Exception("This branch doesn't exist");
+                else
+                    branch = value;
+            }
+        }
+        #endregion : Properties
+
 
 
         #region : Methods
 
+        /// <summary>
+        /// Return the teacher informations
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        /// <returns></returns>
         public string ToString(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
         {
             string sql = $"SELECT Id, LastName, FirstName, BirthDate, Sexe, PhoneNumber, Mail FROM Teachers WHERE Id='{Id}'";
@@ -25,36 +47,6 @@ namespace Virtual_Global_College
             student_Informations += $"Sexe : {informations.ElementAt(4)}\nPhone Number : {informations.ElementAt(5)}\nMail : {informations.ElementAt(6)}";
 
             return student_Informations;
-        }
-
-
-        /// <summary>
-        /// To find the index x and y in a matrix
-        /// </summary>
-        /// <param name="timetab"></param>
-        /// <param name="cdx"></param>
-        /// <returns></returns>
-        public int[] SearchTheIndexOfAnXAndYofMatrix(string[,] timetab, string[] cdx)
-        {
-            int[] index = new int[2];
-            for (int index1 = 0; index1 < cdx.Length; index1++)
-            {
-                for (int index2 = 0; index2 < timetab.GetLength(0); index2++)
-                {
-                    for (int index3 = 0; index3 < timetab.GetLength(1); index3++)
-                    {
-                        if (index1 == 0 && timetab[index2, index3] == cdx[0])
-                        {
-                            index[index1] = index2;
-                        }
-                        else if (index1 == 1 && timetab[index2, index3] == cdx[1])
-                        {
-                            index[index1] = index3;
-                        }
-                    }
-                }
-            }
-            return index;
         }
 
 
@@ -224,7 +216,7 @@ namespace Virtual_Global_College
 
                 // ANALYSE IF THE MARK IS A CORRECT MARK
 
-                if (!markGrade.All(char.IsDigit) || ((markGrade.Length == 1 || markGrade.Length == 2) && !markGrade.All(char.IsDigit)) || markGrade.Length > 2 && (Convert.ToInt32(markGrade.Substring(0, 2)) > 19 || Convert.ToInt32(markGrade.Substring(0, 2)) < 0) || (markGrade.Length == 2 && (Convert.ToInt32(markGrade) < 0 || Convert.ToInt32(markGrade) > 20)) || !markGrade[markGrade.Length - 1].ToString().All(char.IsDigit) || !markGrade.All(char.IsDigit) && !markGrade.Contains(','))
+                if (!markGrade.All(char.IsDigit) || ((markGrade.Length == 1 || markGrade.Length == 2) && !markGrade.All(char.IsDigit)) || markGrade.Length > 2 && (Convert.ToInt32(markGrade.Substring(0, 2)) > 19 || Convert.ToInt32(markGrade.Substring(0, 2)) < 0) || (markGrade.Length == 2 && (Convert.ToInt32(markGrade) < 0 || Convert.ToInt32(markGrade) > 20)) || !markGrade[markGrade.Length - 1].ToString().All(char.IsDigit) || !markGrade.All(char.IsDigit) && !markGrade.Contains(',') || markGrade.All(char.IsDigit) && Convert.ToInt32(markGrade) > 20)
                 {
                     compteur = 0;
                     foreach (char number in markGrade)
@@ -232,12 +224,12 @@ namespace Virtual_Global_College
                         if (number.ToString().All(char.IsDigit) == true)
                             compteur++;
                     }
-                    while (compteur != markGrade.Length - 1 || ((markGrade.Length == 1 || markGrade.Length == 2) && !markGrade.All(char.IsDigit) || markGrade.Length > 2 && (Convert.ToInt32(markGrade.Substring(0, 2)) > 19 || Convert.ToInt32(markGrade.Substring(0, 2)) < 0) || (markGrade.Length == 2 && (Convert.ToInt32(markGrade) < 0 || Convert.ToInt32(markGrade) > 20)) || !markGrade[markGrade.Length - 1].ToString().All(char.IsDigit)) || !markGrade.All(char.IsDigit) && !markGrade.Contains(','))
+                    while (compteur != markGrade.Length - 1 || ((markGrade.Length == 1 || markGrade.Length == 2) && !markGrade.All(char.IsDigit) || markGrade.Length > 2 && (Convert.ToInt32(markGrade.Substring(0, 2)) > 19 || Convert.ToInt32(markGrade.Substring(0, 2)) < 0) || (markGrade.Length == 2 && (Convert.ToInt32(markGrade) < 0 || Convert.ToInt32(markGrade) > 20)) || !markGrade[markGrade.Length - 1].ToString().All(char.IsDigit)) || !markGrade.All(char.IsDigit) && !markGrade.Contains(',') || markGrade.All(char.IsDigit) && Convert.ToInt32(markGrade) > 20)
                     {
                         Console.WriteLine("Please write a correct mark out of 20 :");
                         markGrade = Console.ReadLine();
 
-                        if (!markGrade.All(char.IsDigit) || ((markGrade.Length == 1 || markGrade.Length == 2) && !markGrade.All(char.IsDigit)) || markGrade.Length > 2 && (Convert.ToInt32(markGrade.Substring(0, 2)) > 19 || Convert.ToInt32(markGrade.Substring(0, 2)) < 0) || (markGrade.Length == 2 && (Convert.ToInt32(markGrade) < 0 || Convert.ToInt32(markGrade) > 20)) || !markGrade[markGrade.Length - 1].ToString().All(char.IsDigit) || !markGrade.All(char.IsDigit) && !markGrade.Contains(','))
+                        if (!markGrade.All(char.IsDigit) || ((markGrade.Length == 1 || markGrade.Length == 2) && !markGrade.All(char.IsDigit)) || markGrade.Length > 2 && (Convert.ToInt32(markGrade.Substring(0, 2)) > 19 || Convert.ToInt32(markGrade.Substring(0, 2)) < 0) || (markGrade.Length == 2 && (Convert.ToInt32(markGrade) < 0 || Convert.ToInt32(markGrade) > 20)) || !markGrade[markGrade.Length - 1].ToString().All(char.IsDigit) || !markGrade.All(char.IsDigit) && !markGrade.Contains(',') || markGrade.All(char.IsDigit) && Convert.ToInt32(markGrade) > 20)
                         {
                             compteur = 0;
                             foreach (char number in markGrade)
@@ -273,6 +265,66 @@ namespace Virtual_Global_College
             }
         }
 
+
+        /// <summary>
+        /// Allow the teacher to see his/her students in the classroom
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="cmd"></param>
+        /// <param name="rdr"></param>
+        public void Print_Students_Classroom(MySqlConnection conn, MySqlCommand cmd, MySqlDataReader rdr)
+        {
+            Console.WriteLine("######## STUDENT CLASSROOM ########\n");
+
+            string sql; string answer; string subject;
+            List<string> Subjects; List<string> idSubject; List<string> Students;
+
+            // WE PRINT HIS/HER SUBJECTS
+            Console.WriteLine("Here is your subjects. Please select the subject which you want to see your students :");
+
+            sql = $"SELECT NameSubject FROM Subjects INNER JOIN SubjectsTeachers ON Subjects.IdSubject = SubjectsTeachers.IdSubject AND IdTeacher = '{Id}'";
+            cmd = new MySqlCommand(sql, conn);
+            Program.Read(conn, cmd, rdr, 2);
+            Subjects = Program.Pick(conn, cmd, rdr);
+
+            // WE OBTAIN THE SUBJECT HE/SHE WANT TO KNOW HIS/HERS STUDENTS
+            subject = Console.ReadLine();
+            while (!Subjects.Contains(subject))
+            {
+                Console.WriteLine("You don't have this subject. Please write as it's written :");
+                subject = Console.ReadLine();
+            }
+
+            // WE OBTAIN THE ID OF THE SUBJECT
+            sql = $"SELECT IdSubject FROM Subjects WHERE NameSubject = '{subject}'";
+            cmd = new MySqlCommand(sql, conn);
+            idSubject = Program.Pick(conn, cmd, rdr);
+
+            // WE PRINT THE STUDENTS
+            sql = $"SELECT FirstName, LastName, Id FROM Students INNER JOIN TeachersStudents ON Students.Id = TeachersStudents.IdStudent AND IdSubject = '{idSubject[0]}' AND IdTeacher = '{Id}'";
+            cmd = new MySqlCommand(sql, conn);
+            Students = Program.Pick(conn, cmd, rdr);
+
+            Console.WriteLine($"Here, the students in your classroom of {subject}\n");
+            for (int i = 0; i < Students.Count; i += 3)
+                Console.WriteLine($"- {Students[i]} {Students[i + 1]} (Id : {Students[i + 2]})");
+
+            // STUDENTS OF ANOTHER SUBJECT
+            Console.WriteLine("\nDo you want to see students for another subject you have ?\n- yes\n- no");
+            answer = Console.ReadLine();
+            while (answer != "yes" && answer != "no")
+            {
+                Console.WriteLine("Please write as it's written");
+                answer = Console.ReadLine();
+            }
+            if (answer == "yes")
+            {
+                Console.Clear();
+                Print_Students_Classroom(conn, cmd, rdr);
+            }
+            else
+                Console.WriteLine("\nThank you. Have a good day :)");
+        }
 
         /// <summary>
         /// Allow the teacher to see all the coordinates of a specific student
@@ -467,6 +519,8 @@ namespace Virtual_Global_College
 
             GradeExam(Grades_NoteBook);
         }
+
+        
 
 
         /// <summary>

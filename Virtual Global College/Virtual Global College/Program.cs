@@ -421,20 +421,30 @@ namespace Virtual_Global_College
             {
                 Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tID       : ");
                 id = Console.ReadLine();
-                sql = "SELECT Id From Students";
-                cmd = new MySqlCommand(sql, conn);
-                exist = Exist(id, conn, cmd, rdr);
+                while (!id.All(char.IsDigit))
+                {
+                    Console.Clear();
+                    Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tThe ID must contain only number. \n\n\t\t\t\t\t\t\t\t\t\t\t\tID       : ");
+                    id = Console.ReadLine();
+                }
 
-                if (exist == false)
+                if (Convert.ToInt32(id) < 100)
+                {
+                    sql = "SELECT Id From Admins";
+                    cmd = new MySqlCommand(sql, conn);
+                    exist = Exist(id, conn, cmd, rdr);
+                }
+
+                else if (Convert.ToInt32(id) < 1000)
                 {
                     sql = "SELECT Id From Teachers";
                     cmd = new MySqlCommand(sql, conn);
                     exist = Exist(id, conn, cmd, rdr);
                 }
 
-                if (exist == false)
+                else
                 {
-                    sql = "SELECT Id From Admins";
+                    sql = "SELECT Id From Students";
                     cmd = new MySqlCommand(sql, conn);
                     exist = Exist(id, conn, cmd, rdr);
                 }
@@ -444,21 +454,30 @@ namespace Virtual_Global_College
                     Console.Clear();
                     Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tThis ID doesn't exist. \n\n\t\t\t\t\t\t\t\t\t\t\t\tID       : ");
                     id = Console.ReadLine();
+                    while (!id.All(char.IsDigit))
+                    {
+                        Console.Clear();
+                        Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t\t\t\t\t\tThe ID must contain only number. \n\n\t\t\t\t\t\t\t\t\t\t\t\tID       : ");
+                        id = Console.ReadLine();
+                    }
 
-                    sql = "SELECT Id FROM Students";
-                    cmd = new MySqlCommand(sql, conn);
-                    exist = Program.Exist(id, conn, cmd, rdr);
+                    if (Convert.ToInt32(id) < 100)
+                    {
+                        sql = "SELECT Id From Admins";
+                        cmd = new MySqlCommand(sql, conn);
+                        exist = Exist(id, conn, cmd, rdr);
+                    }
 
-                    if (exist == false)
+                    else if (Convert.ToInt32(id) < 1000)
                     {
                         sql = "SELECT Id From Teachers";
                         cmd = new MySqlCommand(sql, conn);
                         exist = Exist(id, conn, cmd, rdr);
                     }
 
-                    if (exist == false)
+                    else
                     {
-                        sql = "SELECT Id From Admins";
+                        sql = "SELECT Id From Students";
                         cmd = new MySqlCommand(sql, conn);
                         exist = Exist(id, conn, cmd, rdr);
                     }
@@ -573,7 +592,7 @@ namespace Virtual_Global_College
             Console.WriteLine("\n\n\t\t\t\t\t\t\t\t\t\t\t\tSuccess");
             ConsoleSpiner spin = new ConsoleSpiner();
             Console.Write("\n\n\t\t\t\t\t\t\t\t\t\t\t\tLoading....");
-            for (int delay = 0; delay < 15000; delay++)
+            for (int delay = 0; delay < 10000; delay++)
                 spin.Turn();
 
             int i = Convert.ToInt32(id);
@@ -598,15 +617,15 @@ namespace Virtual_Global_College
 
                                 Console.WriteLine("\n\nWhat do you want to do ?\n");
                                 Console.WriteLine(" 1 - Print student information");
-                                Console.WriteLine(" 2 - Print student attendance (TO VERIFY)");
+                                Console.WriteLine(" 2 - Print student attendances");
                                 Console.WriteLine(" 3 - Print student fees history\n");
-                                Console.WriteLine(" 4 - Add lesson/exam (TO DO)");
+                                Console.WriteLine(" 4 - Add lesson");
                                 Console.WriteLine(" 5 - Add attendance");
                                 Console.WriteLine(" 6 - Add subject");
                                 Console.WriteLine(" 7 - Add teacher");
                                 Console.WriteLine(" 8 - Add subject teacher\n");
                                 Console.WriteLine(" 9 - Modify student attendances");
-                                Console.WriteLine("10 - Delete lesson (TO DO)");
+                                Console.WriteLine("10 - Delete lesson");
                                 Console.WriteLine("11 - Delete student");
                                 Console.WriteLine("12 - Delete teacher");
                                 Console.WriteLine("13 - Modify your contact\n");
@@ -644,9 +663,9 @@ namespace Virtual_Global_College
                                 case 9:
                                     admin.Modify_Student_Attendances(conn, cmd, rdr);
                                     break;
-                                //case 10:
-                                //    admin.Delete_Lesson(conn, cmd, rdr);
-                                //    break;
+                                case 10:
+                                    admin.Delete_Lesson(conn, cmd, rdr);
+                                    break;
                                 case 11:
                                     admin.Delete_Student(conn, cmd, rdr);
                                     break;
@@ -677,7 +696,7 @@ namespace Virtual_Global_College
                         while (key != "Exit")
                         {
                             choice = 0;
-                            while (!Enumerable.Range(1, 6).Contains(choice))
+                            while (!Enumerable.Range(1, 7).Contains(choice))
                             {
                                 Console.Clear();
                                 Console.WriteLine(teacher.ToString(conn, cmd, rdr));
@@ -685,10 +704,11 @@ namespace Virtual_Global_College
                                 Console.WriteLine("\n\nWhat do you want to do ?\n");
                                 Console.WriteLine(" 1 - Add assignment");
                                 Console.WriteLine(" 2 - Add grades\n");
-                                Console.WriteLine(" 3 - Print student informations");
-                                Console.WriteLine(" 4 - Print student attendances");
-                                Console.WriteLine(" 5 - Print grades notebook\n");
-                                Console.WriteLine(" 6 - Modify your contact\n");
+                                Console.WriteLine(" 3 - Print students classroom");
+                                Console.WriteLine(" 4 - Print student informations");
+                                Console.WriteLine(" 5 - Print student attendances");
+                                Console.WriteLine(" 6 - Print grades notebook");
+                                Console.WriteLine(" 7 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
@@ -704,15 +724,18 @@ namespace Virtual_Global_College
                                     teacher.Add_Grades(conn, cmd, rdr);
                                     break;
                                 case 3:
-                                    teacher.Print_Student_Informations(conn, cmd, rdr);
+                                    teacher.Print_Students_Classroom(conn, cmd, rdr);
                                     break;
                                 case 4:
-                                    teacher.Print_Student_Attendances(conn, cmd, rdr);
+                                    teacher.Print_Student_Informations(conn, cmd, rdr);
                                     break;
                                 case 5:
-                                    teacher.Print_Grades_Notebook(conn, cmd, rdr);
+                                    teacher.Print_Student_Attendances(conn, cmd, rdr);
                                     break;
                                 case 6:
+                                    teacher.Print_Grades_Notebook(conn, cmd, rdr);
+                                    break;
+                                case 7:
                                     teacher.ModifyContact(conn, cmd, rdr, "teacher");
                                     break;
                                 default:
@@ -736,7 +759,7 @@ namespace Virtual_Global_College
                         while (key != "Exit")
                         {
                             choice = 0;
-                            while (!Enumerable.Range(1, 9).Contains(choice))
+                            while (!Enumerable.Range(1, 10).Contains(choice))
                             {
                                 Console.Clear();
                                 Console.WriteLine(student.ToString(conn, cmd, rdr));
@@ -745,12 +768,13 @@ namespace Virtual_Global_College
                                 Console.WriteLine(" 1 - Course registration");
                                 Console.WriteLine(" 2 - Add money");
                                 Console.WriteLine(" 3 - Payment\n");
-                                Console.WriteLine(" 4 - Print fees history");
-                                Console.WriteLine(" 5 - Print attendances");
-                                Console.WriteLine(" 6 - Print assignments");
-                                Console.WriteLine(" 7 - Print grades");
-                                Console.WriteLine(" 8 - Print timetable");
-                                Console.WriteLine(" 9 - Modify your contact\n");
+                                Console.WriteLine(" 4 - Print subjects and teachers");
+                                Console.WriteLine(" 5 - Print fees history");
+                                Console.WriteLine(" 6 - Print attendances");
+                                Console.WriteLine(" 7 - Print assignments");
+                                Console.WriteLine(" 8 - Print grades");
+                                Console.WriteLine(" 9 - Print timetable");
+                                Console.WriteLine("10 - Modify your contact\n");
                                 choice = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine();
 
@@ -769,21 +793,24 @@ namespace Virtual_Global_College
                                     student.Payment(conn, cmd, rdr);
                                     break;
                                 case 4:
-                                    student.Print_Fees_History(conn, cmd, rdr);
+                                    student.Print_Subjects_And_Teachers(conn, cmd, rdr);
                                     break;
                                 case 5:
-                                    student.Print_Attendances(conn, cmd, rdr);
+                                    student.Print_Fees_History(conn, cmd, rdr);
                                     break;
                                 case 6:
-                                    student.Print_Assignments(conn, cmd, rdr);
+                                    student.Print_Attendances(conn, cmd, rdr);
                                     break;
                                 case 7:
-                                    student.Print_Grades(conn, cmd, rdr);
+                                    student.Print_Assignments(conn, cmd, rdr);
                                     break;
                                 case 8:
-                                    student.Print_Timetable(conn, cmd, rdr);
+                                    student.Print_Grades(conn, cmd, rdr);
                                     break;
                                 case 9:
+                                    student.Print_Timetable(conn, cmd, rdr);
+                                    break;
+                                case 10:
                                     student.ModifyContact(conn, cmd, rdr, "student");
                                     break;
                                 default:
